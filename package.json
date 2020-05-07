@@ -1,0 +1,71 @@
+{
+  "name": "mystical",
+  "description": "Atomised CSS constraint based styling",
+  "version": "1.0.0",
+  "author": "David Burles",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "not dead",
+    "not ie < 11",
+    "not op_mini all"
+  ],
+  "scripts": {
+    "prepare": "npm run prepare:clean && npm run prepare:cjs && npm run prepare:prettier",
+    "prepare:clean": "rm -rf lib test",
+    "prepare:cjs": "babel src -d .",
+    "prepare:prettier": "prettier --write lib test",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:cjs",
+    "test:eslint": "eslint .",
+    "test:prettier": "prettier -c .",
+    "test:cjs": "coverage-node -r hard-rejection/register test",
+    "dev": "chokidar src --initial -c 'npm run prepare && npm run test:cjs --silent'"
+  },
+  "files": [
+    "index.d.ts",
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@testing-library/react": "^10.0.2",
+    "babel-eslint": "^10.1.0",
+    "chokidar-cli": "^2.1.0",
+    "coverage-node": "^2.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-env": "^13.0.4",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-compat": "^3.5.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsdoc": "^22.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "hard-rejection": "^2.1.0",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "snapshot-assertion": "^1.0.0",
+    "test-director": "^4.0.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.9.2",
+    "deepmerge": "^4.2.2",
+    "prop-types": "^15.7.2",
+    "stylis": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  }
+}
