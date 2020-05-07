@@ -88,7 +88,9 @@ export const createCache = () => {
 
   const hydrate = () => {
     serverRenderedRules.forEach((identifier) => {
-      identifiers[identifier].commit = true;
+      if (identifiers[identifier]) {
+        identifiers[identifier].commit = true;
+      }
     });
   };
 
