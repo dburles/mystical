@@ -10,7 +10,7 @@ export const transformedCSSToClass = ({
   rules,
   pseudo,
   breakpoint,
-  mq,
+  at,
 }) => {
   let fullSelector = selector;
 
@@ -24,8 +24,8 @@ export const transformedCSSToClass = ({
     return `@media(min-width:${breakpoint}){${selectorRule}}`;
   }
 
-  if (mq) {
-    return `${mq}{${selectorRule}}`;
+  if (at) {
+    return `${at}{${selectorRule}}`;
   }
 
   return selectorRule;
@@ -77,10 +77,10 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
   //   ]
   //   pseudo
   //   breakpoint
-  //   mq
+  //   at // Nested @ rules
   //   commit // Denotes whether this rule been commit to the browser
   // }
-  const makeTransformedObject = ({ atom, pseudo, breakpoint, mq }) => {
+  const makeTransformedObject = ({ atom, pseudo, breakpoint, at }) => {
     const [key, value] = atom;
     const transformed =
       typeof transformer === 'function'
@@ -94,7 +94,7 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
         rules: generateVendorPrefixes(transformedKey, transformedValue),
         pseudo,
         breakpoint,
-        mq,
+        at,
         commit: false,
       };
       if (!selector) {
@@ -131,11 +131,11 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
       .map((key) => {
         const value = css[key];
 
-        const isMediaQuery = key.startsWith('@media');
+        const isNestedAtRule = key.startsWith('@');
         // XXX: Do something smarter here?
-        const isPseudoSelector = !isMediaQuery && isObject(value);
+        const isPseudoSelector = !isNestedAtRule && isObject(value);
 
-        if (isMediaQuery || isPseudoSelector) {
+        if (isNestedAtRule || isPseudoSelector) {
           return flatMap(
             Object.keys(value)
               .filter(filterValidRules(value))
@@ -151,7 +151,7 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
 
                 return makeTransformedObject({
                   atom: [innerKey, innerValue],
-                  ...(isMediaQuery && { mq: key }),
+                  ...(isNestedAtRule && { at: key }),
                   ...(isPseudoSelector && { pseudo: key }),
                 });
               })
