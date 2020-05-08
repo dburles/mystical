@@ -63,7 +63,7 @@
     "@babel/runtime": "^7.9.2",
     "deepmerge": "^4.2.2",
     "prop-types": "^15.7.2",
-    "stylis": "^4.0.0"
+    "stylis": "file:./stylis-4.0.0.tgz"
   },
   "peerDependencies": {
     "react": "^16.13.1"
