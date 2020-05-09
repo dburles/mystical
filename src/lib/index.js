@@ -35,6 +35,7 @@ const defaultTheme = {
     '512px',
   ],
   fontSizes: [
+    '10px',
     '12px',
     '14px',
     '16px',
@@ -48,7 +49,7 @@ const defaultTheme = {
 };
 
 const defaultOptions = {
-  disableCascade: true,
+  disableCascade: false,
   usePrefersColorScheme: true,
 };
 
