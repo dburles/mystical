@@ -1,6 +1,6 @@
 # 🌌 mystical-alpha
 
-Build robust and maintainable React component libraries with ease and confidence.
+Build robust and maintainable React component libraries and applications with ease and confidence.
 
 ## Overview
 
