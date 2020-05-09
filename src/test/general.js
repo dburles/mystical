@@ -5,13 +5,7 @@
 // import { fireEvent, render, screen } from '@testing-library/react';
 import ReactDOMServer from 'react-dom/server';
 import snapshot from 'snapshot-assertion';
-import {
-  MysticalProvider,
-  createCache,
-  jsx,
-  merge,
-  useModifiers,
-} from '../lib';
+import { MysticalProvider, createCache, jsx, useModifiers } from '../lib';
 import theme from './lib/theme';
 import { snapshotPath } from './lib/utils';
 
@@ -57,7 +51,6 @@ export default (tests) => {
     };
 
     const Button = ({
-      css,
       variant = 'primary',
       size = 'small',
       shape = 'rounded',
@@ -73,7 +66,7 @@ export default (tests) => {
       return (
         <button
           {...props}
-          css={merge(
+          css={[
             {
               display: 'flex',
               fontFamily: 'serif',
@@ -82,8 +75,7 @@ export default (tests) => {
               },
             },
             modifierStyle,
-            css
-          )}
+          ]}
         />
       );
     };
