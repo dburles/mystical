@@ -174,10 +174,9 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
 export const getClassNames = (
   transformedCSSArray,
   overrideClassNames,
-  cache,
-  ready
+  cache
 ) => {
-  transformedCSSArray.forEach(cache.add);
+  transformedCSSArray.forEach(cache.addTransformedCSS);
 
   if (overrideClassNames) {
     const overrideClassNamesArray = overrideClassNames.trim().split(' ');
@@ -219,9 +218,7 @@ export const getClassNames = (
       }
     );
 
-    if (ready()) {
-      dedupedTransformedCSSArray.forEach(cache.commit);
-    }
+    cache.commitTransformedCSSArray(dedupedTransformedCSSArray);
 
     return [
       ...overrideClassNamesArray,
@@ -229,9 +226,7 @@ export const getClassNames = (
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    if (ready()) {
-      transformedCSSArray.forEach(cache.commit);
-    }
+    cache.commitTransformedCSSArray(transformedCSSArray);
 
     return transformedCSSArray
       .map((transformedCSS) => {

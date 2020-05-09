@@ -4,13 +4,7 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { createCache } from './cache';
 import murmur2 from './hash';
 import { getClassNames, transformCSS, transformKeyframes } from './transform';
-import {
-  get,
-  isDevelopment,
-  isServer,
-  useIsReady,
-  useLayoutEffect,
-} from './utils';
+import { get, isDevelopment, isServer, useLayoutEffect } from './utils';
 
 export const merge = (...cssArray) => {
   return deepmergeArray(cssArray.filter(Boolean), {
@@ -55,8 +49,6 @@ export const MysticalCSSProvider = ({
   cache = defaultCache,
   children,
 }) => {
-  const ready = useIsReady(!cache.hasServerStyles);
-
   const options = useMemo(() => {
     return {
       ...defaultOptions,
@@ -68,13 +60,8 @@ export const MysticalCSSProvider = ({
     return {
       cache,
       options,
-      ready,
     };
-  }, [cache, options, ready]);
-
-  useLayoutEffect(() => {
-    cache.hydrate();
-  }, [cache]);
+  }, [cache, options]);
 
   return (
     <MysticalCSSContext.Provider value={providerValue}>
@@ -94,7 +81,7 @@ MysticalCSSProvider.propTypes = {
 
 export const useCSS = (css, overrideClassNames) => {
   const json = JSON.stringify(css); // This is used purely as a means of equality checking
-  const { cache, options, ready } = useContext(MysticalCSSContext);
+  const { cache, options } = useContext(MysticalCSSContext);
 
   const transformedCSSArray = useMemo(() => {
     return transformCSS(Array.isArray(css) ? merge(...css) : css, options);
@@ -102,13 +89,13 @@ export const useCSS = (css, overrideClassNames) => {
   }, [json, options]);
 
   return useMemo(() => {
-    return getClassNames(transformedCSSArray, overrideClassNames, cache, ready);
+    return getClassNames(transformedCSSArray, overrideClassNames, cache);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transformedCSSArray, overrideClassNames]);
 };
 
 export const useKeyframes = (css) => {
-  const { cache, ready } = useContext(MysticalCSSContext);
+  const { cache } = useContext(MysticalCSSContext);
   const json = JSON.stringify(css);
   const hash = useMemo(() => {
     return murmur2(json);
@@ -123,9 +110,7 @@ export const useKeyframes = (css) => {
   }
 
   useLayoutEffect(() => {
-    if (ready()) {
-      insertKeyframes();
-    }
+    insertKeyframes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json]);
 

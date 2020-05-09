@@ -1,9 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect as useReactLayoutEffect,
-  useRef,
-} from 'react';
+import { useEffect, useLayoutEffect as useReactLayoutEffect } from 'react';
 import murmur2 from './hash';
 
 export const get = (obj, key, def, p, undef) => {
@@ -62,18 +57,3 @@ export const hashObject = (object) => {
 export const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const useLayoutEffect = isServer ? useEffect : useReactLayoutEffect;
-
-export const useIsReady = (initialState = false) => {
-  const mountedRef = useRef(initialState);
-
-  useLayoutEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  return useCallback(() => {
-    return mountedRef.current;
-  }, []);
-};

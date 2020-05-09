@@ -1,45 +1,55 @@
-import { useCallback, useContext, useRef } from 'react';
+import { useCallback, useContext, useMemo, useRef } from 'react';
 import { MysticalCSSContext } from '../index';
 import { transformCSS } from '../transform';
-import { isServer, useLayoutEffect } from '../utils';
+import { flatMap, hashObject, isServer, useLayoutEffect } from '../utils';
 
 const Global = ({ styles }) => {
   const json = JSON.stringify(styles); // This is used purely as a means of equality checking
-  const { cache, options, ready } = useContext(MysticalCSSContext);
+  const { cache, options } = useContext(MysticalCSSContext);
   const elementRef = useRef();
 
-  useLayoutEffect(() => {
-    if (ready()) {
-      elementRef.current = document.createElement('style');
-      const globalStyleElement = elementRef.current;
-      document.head.appendChild(globalStyleElement);
-      return () => {
-        globalStyleElement.remove();
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options]);
-
-  const insertGlobalStyles = useCallback(() => {
-    const globalStyleElement = elementRef.current;
-    Object.keys(styles).forEach((selector) => {
-      const properties = styles[selector];
-      transformCSS(properties, options, selector).forEach((transformedCSS) => {
-        cache.addGlobal(transformedCSS, globalStyleElement);
-      });
-    });
+  const transformedCSSArray = useMemo(() => {
+    return flatMap(
+      Object.keys(styles).map((selector) => {
+        const properties = styles[selector];
+        return transformCSS(properties, options, selector);
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json, options]);
+
+  const hash = useMemo(() => {
+    return hashObject(transformedCSSArray);
+  }, [transformedCSSArray]);
+
+  const insertGlobalStyles = useCallback(
+    () => {
+      cache.addGlobalTransformedCSSArray(
+        transformedCSSArray,
+        hash,
+        elementRef.current
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hash]
+  );
 
   if (isServer) {
     insertGlobalStyles();
   }
 
   useLayoutEffect(() => {
-    // If we have server rendered styles, we don't want to insert anything
-    // until after the page has rendered.
-    if (ready()) {
+    if (!cache.identifiers[hash]) {
+      elementRef.current = document.createElement('style');
+      const globalStyleElement = elementRef.current;
+      document.head.appendChild(globalStyleElement);
+
       insertGlobalStyles();
+
+      return () => {
+        delete cache.identifiers[hash];
+        globalStyleElement.remove();
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json, options]);

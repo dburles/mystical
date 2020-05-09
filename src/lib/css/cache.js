@@ -12,15 +12,27 @@ export const createCache = () => {
     document.head.appendChild(styleElement);
   }
 
-  const serverRenderedRules =
-    !isServer && hydrateElement
-      ? hydrateElement.getAttribute('data-identifiers').split(',')
-      : [];
-
-  // Key is the identifier, value is the transformedCSS,
-  // except for keyframes where the value is undefined.
+  // Key is the identifier, value is the transformedCSS or
+  // an object containing only the commit value.
   const identifiers = {};
   let serverStyles = '';
+
+  const hydrate = () => {
+    const serverRenderedRules =
+      !isServer && hydrateElement
+        ? hydrateElement.getAttribute('data-identifiers').split(',')
+        : [];
+
+    serverRenderedRules.forEach((identifier) => {
+      if (identifier && !identifiers[identifier]) {
+        identifiers[identifier] = { commit: true };
+      }
+    });
+  };
+
+  if (hydrateElement) {
+    hydrate();
+  }
 
   const getServerStyles = () => {
     return {
@@ -34,74 +46,73 @@ export const createCache = () => {
   };
 
   const commitRule = (hash, rule) => {
-    if (canCommit(hash)) {
-      if (isServer) {
-        serverStyles += rule;
+    if (isServer) {
+      serverStyles += rule;
+    } else {
+      if (isDevelopment) {
+        const atomStyleElement = document.createElement('style');
+        document.head.appendChild(atomStyleElement);
+        atomStyleElement.innerHTML = rule;
       } else {
-        if (isDevelopment) {
-          const atomStyleElement = document.createElement('style');
-          document.head.appendChild(atomStyleElement);
-          atomStyleElement.innerHTML = rule;
-        } else {
-          styleElement.sheet.insertRule(
-            rule,
-            styleElement.sheet.cssRules.length
-          );
-        }
+        styleElement.sheet.insertRule(rule, styleElement.sheet.cssRules.length);
       }
-      identifiers[hash].commit = true;
     }
+    identifiers[hash].commit = true;
   };
 
-  const add = (transformedCSS) => {
+  const addTransformedCSS = (transformedCSS) => {
     const hash = transformedCSS.selector.slice(1);
     if (!identifiers[hash]) {
       identifiers[hash] = transformedCSS;
     }
   };
 
-  const commit = (transformedCSS) => {
-    const hash = transformedCSS.selector.slice(1);
-    const rule = transformedCSSToClass(transformedCSS);
-    commitRule(hash, rule);
+  const commitTransformedCSSArray = (transformedCSSArray) => {
+    transformedCSSArray.forEach((transformedCSS) => {
+      const hash = transformedCSS.selector.slice(1);
+      if (canCommit(hash)) {
+        const rule = transformedCSSToClass(transformedCSS);
+        commitRule(hash, rule);
+      }
+    });
   };
 
   const addKeyframes = (hash, rule) => {
     if (!identifiers[hash]) {
       identifiers[hash] = { commit: false };
     }
-    commitRule(hash, rule);
-  };
-
-  const addGlobal = (transformedCSS, element) => {
-    const rule = transformedCSSToClass(transformedCSS);
-    if (isServer) {
-      serverStyles += rule;
-    } else {
-      if (isDevelopment) {
-        element.appendChild(document.createTextNode(rule));
-      } else {
-        element.sheet.insertRule(rule, element.sheet.cssRules.length);
-      }
+    if (canCommit(hash)) {
+      commitRule(hash, rule);
     }
   };
 
-  const hydrate = () => {
-    serverRenderedRules.forEach((identifier) => {
-      if (identifiers[identifier]) {
-        identifiers[identifier].commit = true;
-      }
-    });
+  const addGlobalTransformedCSSArray = (transformedCSSArray, hash, element) => {
+    if (!identifiers[hash]) {
+      identifiers[hash] = { commit: false };
+    }
+    if (canCommit(hash)) {
+      transformedCSSArray.forEach((transformedCSS) => {
+        const rule = transformedCSSToClass(transformedCSS);
+        if (isServer) {
+          serverStyles += rule;
+        } else {
+          if (isDevelopment) {
+            element.appendChild(document.createTextNode(rule));
+          } else {
+            element.sheet.insertRule(rule, element.sheet.cssRules.length);
+          }
+        }
+      });
+      identifiers[hash].commit = true;
+    }
   };
 
   return {
-    add,
-    commit,
-    addGlobal,
+    addTransformedCSS,
+    commitTransformedCSSArray,
+    addGlobalTransformedCSSArray,
     addKeyframes,
     getServerStyles,
     identifiers,
-    hasServerStyles: !!hydrateElement,
-    hydrate,
   };
 };
