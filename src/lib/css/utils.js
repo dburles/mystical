@@ -19,7 +19,7 @@ export const isObject = (value) => {
   return typeof value === 'object' && value.constructor === Object;
 };
 
-export const isServer = typeof document === 'undefined';
+export const isServer = typeof window === 'undefined';
 
 export const validRule = (value) => {
   return (
