@@ -200,7 +200,7 @@ export const getClassNames = (
         transformedCSS1.property === transformedCSS2.property &&
         transformedCSS1.pseudo === transformedCSS2.pseudo &&
         transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
-        transformedCSS1.mq === transformedCSS2.mq
+        transformedCSS1.at === transformedCSS2.at
       );
     };
 
