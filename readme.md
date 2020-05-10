@@ -187,7 +187,7 @@ Global style component that automatically removes its styles when unmounted.
 
 ```js
 <Global
-  style={{
+  styles={{
     body: {
       backgroundColor: 'white',
       border: 0,
