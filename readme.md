@@ -4,7 +4,8 @@ Build robust and maintainable React component libraries and applications with ea
 
 ## Overview
 
-- Mystical is a small (_Todo: size_) runtime CSS-in-JS library, inspired heavily by [theme-ui](https://theme-ui.com/) but with a more concise API.
+- Mystical is a small (_Todo: size_) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
+- Follows the [System UI theme specification](https://system-ui.com/theme).
 - Purpose built and written entirely from scratch (except for vendor prefixing).
 - Style with a just a CSS prop, begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like emotion, styled-components, etc), instead, property:value pairs become reusable classes. This means that your application styles scale well with SSR or static site generation, a lot less data will be sent across the wire. Sticking with common theme values especially helps.
