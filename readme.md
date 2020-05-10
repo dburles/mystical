@@ -29,6 +29,8 @@ Build robust and maintainable React component libraries and applications with ea
   - [createCache](#createcache)
 - [Defaults](#defaults)
 - [Server Side Rendering](#server-side-rendering)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Install
 
