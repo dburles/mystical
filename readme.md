@@ -281,6 +281,10 @@ Todo
 
 Todo
 
+#### cache.getServerStyles()
+
+Todo
+
 ### Defaults
 
 Your theme object will be merged with the following defaults:
@@ -317,3 +321,13 @@ const theme = {
 ### Server Side Rendering
 
 Todo
+
+### Contributors
+
+- [David Burles](https://github.com/dburles)
+- [Alaister Young](https://github.com/alaister)
+- [Jayden Seric](https://github.com/jaydenseric)
+
+#### License
+
+MIT
