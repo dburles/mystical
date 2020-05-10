@@ -16,6 +16,7 @@ Build robust and maintainable React component libraries and applications with ea
 
 - [Installation](#install)
 - [Getting Started](#getting-started)
+- [Babel Configuration](#babel-configuration)
 - [API](#api)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
@@ -140,9 +141,42 @@ const Button = ({
 };
 ```
 
-### API
+### Babel Configuration
 
-Most of the Mystical API is hook based. Below are some examples of how they're used.
+No explicit babel configuration is required when customising the jsx runtime with [@babel/plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#customizing-with-the-classic-runtime). Just add the comment below at the beginning of files that use the `css` prop, and don't forget to import `jsx` from `mystical`.
+
+```js
+/** @jsx jsx **/
+import { jsx } from 'mystical';
+```
+
+Alternatively, it's possible to do this automatically by installing [@emotion/babel-plugin-jsx-pragmatic](https://www.npmjs.com/package/@emotion/babel-plugin-jsx-pragmatic) and applying the following Babel configuration:
+
+```json
+{
+  "plugins": [
+    [
+      "@emotion/babel-plugin-jsx-pragmatic",
+      {
+        "module": "mystical",
+        "import": "jsx",
+        "export": "jsx"
+      }
+    ],
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "jsx",
+        "pragmaFrag": "React.Fragment"
+      }
+    ]
+  ]
+}
+```
+
+With this configuration, no imports are required for the `css` prop to function. Also, you'll only need to import from `react`, if you wish to use fragments (`React.Fragment`) or of course any other parts of the React API.
+
+## API
 
 #### Global
 
