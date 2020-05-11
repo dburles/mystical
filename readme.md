@@ -6,11 +6,11 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 - Mystical is a small (_Todo: size_) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
 - Purpose built and written almost entirely from scratch (except for vendor prefixing).
-- Style with a just a [css prop](#css-prop), begone `styled`!
+- Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
 - Array values for media query breakpoints, e.g. `margin: [0, 3]`.
-- [useModifiers](#usemodifiers) hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside.
+- A [useModifiers](#usemodifiers) hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside.
 
 ## Table of Contents
 
@@ -68,7 +68,7 @@ const App = () => {
 
 This `Button` component attempts to illustrate some of the important parts of the Mystical API:
 
-1. A [css prop](#css-prop) that transforms CSS property values from the theme, (like [theme-ui](https://theme-ui.com/))
+1. A [`css` prop](#css-prop) that transforms CSS property values from the theme, (like [theme-ui](https://theme-ui.com/))
 2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
@@ -345,7 +345,7 @@ const Component = () => {
 
 #### useTheme
 
-A simple way to pick out values from the theme similar to using the css prop.
+A simple way to pick out values from the theme similar to using the [`css` prop](#css-prop).
 
 ```js
 import { useTheme } from 'mystical';
@@ -355,7 +355,7 @@ const purple = useTheme('colors', 'purple');
 
 #### useMystical
 
-Provides access to the complete theme object.
+Provides access to the complete [theme object](#theme-object).
 
 ```js
 import { useMystical } from 'mystical';
@@ -365,7 +365,7 @@ const { theme } = useMystical();
 
 #### useModifiers
 
-A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the `Button` component above for another example.
+A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
 
 ```js
 import { useModifiers } from 'mystical';
