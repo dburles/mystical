@@ -178,7 +178,7 @@ Alternatively, it's possible to do this automatically by installing [@emotion/ba
 }
 ```
 
-With this configuration, no imports are required for the `css` prop to function. Also, you'll only need to import from `react`, if you wish to use fragments (`React.Fragment`) or of course any other parts of the React API.
+With this configuration, no imports are required for the [`css` prop](#css-prop) to function. Also, you'll only need to import from `react`, if you wish to use fragments (`React.Fragment`) or of course any other parts of the React API.
 
 ## API
 
