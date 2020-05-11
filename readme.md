@@ -365,7 +365,7 @@ const { theme } = useMystical();
 
 #### useModifiers
 
-A declarative API for handling prop based variations to component styles. This example demonstates applying modifier styles to a component with multiple elements. See the `Button` component above for another example.
+A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the `Button` component above for another example.
 
 ```js
 import { useModifiers } from 'mystical';
