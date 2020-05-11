@@ -272,8 +272,8 @@ Instead of explicitly writing media queries, simply pass an array. Breakpoints c
 
 ```js
 const Component = () => {
-  // applies width 100% to all viewport widths,
-  // width 50% above the first breakpoint,
+  // Applies width 100% to all viewport widths,
+  // 50% above the first breakpoint,
   // and 25% above the next breakpoint
   return <div css={{ width: ['100%', '50%', '25%'] }}>...</div>;
 };
