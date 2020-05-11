@@ -19,6 +19,7 @@ Build robust and maintainable React component libraries and applications with ea
 - [Getting Started](#getting-started)
 - [Babel Configuration](#babel-configuration)
 - [API](#api)
+  - [CSS Prop](#css-prop)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
   - [useTheme](#usetheme)
@@ -181,19 +182,100 @@ With this configuration, no imports are required for the `css` prop to function.
 
 ## API
 
+#### CSS Prop
+
+This is the primary method of applying styles to components and elements. Aside from regular styles it supports [nested @ rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) and [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) but _not_ nesting.
+
+```js
+// Example theme:
+const theme = {
+  colors: {
+    primary: '#1282A2',
+  },
+  space: [
+    '0px',
+    '4px',
+    '8px',
+    '16px',
+    '32px',
+    '64px',
+    '128px',
+    '256px',
+    '512px',
+  ],
+  // etc
+};
+
+// `padding` is keyed to the `space` property of the theme and looks up the third index in the array.
+// `backgroundColor` is keyed to the `colors` property of the theme.
+const Component = () => <div css={{ padding: 3, backgroundColor: 'primary' }}>...</div>;
+```
+
+Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup map](https://github.com/dburles/mystical-alpha/blob/master/src/lib/tokens.js), and will default to the literal value if there's no match.
+
+Arrays and Object theme values can be retrieved by using dot properties:
+
+```js
+const theme = {
+  colors: {
+    red: ['#fed7d7', '#feb2b2', '#fc8181'],
+  },
+};
+
+const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
+```
+
+Shorthand properties that relate to edges of a box are also translated from the theme. Given the following example:
+
+```js
+const theme = {
+  space: [
+    '0px',
+    '4px',
+    '8px',
+    '16px',
+    '32px',
+    '64px',
+    '128px',
+    '256px',
+    '512px',
+  ],
+};
+
+const Component = () => <div css={{ margin: '3 5' }}>...</div>;
+```
+
+...The following styles are generated:
+
+```
+.m1gs4698{margin-top:16px}
+.mtxvrlm{margin-right:64px}
+.mfpafnb{margin-bottom:16px}
+.m1g6jlu2{margin-left:64px}
+```
+
 #### Global
 
 Global style component that automatically removes its styles when unmounted.
 
 ```js
-<Global
-  styles={{
-    body: {
-      backgroundColor: 'white',
-      border: 0,
-    },
-  }}
-/>
+import { Global } from 'mystical';
+
+const App = () => {
+  return (
+    <div>
+      <Global
+        styles={{
+          body: {
+            backgroundColor: 'white',
+            border: 0,
+          },
+        }}
+      />
+      ...
+    </div>
+  );
+};
 ```
 
 #### useKeyframes
@@ -201,6 +283,8 @@ Global style component that automatically removes its styles when unmounted.
 Generates keyframe styles and a unique identifier.
 
 ```js
+import { useKeyframes } from 'mystical';
+
 const Component = () => {
   const animation = useKeyframes({
     // ...
@@ -215,6 +299,8 @@ const Component = () => {
 A simple way to pick out values from the theme similar to using the css prop.
 
 ```js
+import { useTheme } from 'mystical';
+
 const purple = useTheme('colors', 'purple');
 ```
 
@@ -223,6 +309,8 @@ const purple = useTheme('colors', 'purple');
 Provides access to the complete theme object.
 
 ```js
+import { useMystical } from 'mystical';
+
 const { theme } = useMystical();
 ```
 
@@ -231,6 +319,8 @@ const { theme } = useMystical();
 A declarative API for handling prop based variations to component styles. This example demonstates applying modifier styles to a component with multiple elements. See the `Button` component above for another example.
 
 ```js
+import { useModifiers } from 'mystical';
+
 const modifiers = {
   // `default` is a special key for applying and overwriting default styles across each element (experimental).
   default: {
@@ -270,6 +360,8 @@ const Component = ({ size = 'small', modifiers: customModifiers }) => {
 Allows for altering the color mode on the fly.
 
 ```js
+import { useColorMode } from 'mystical';
+
 const [colorMode, setColorMode] = useColorMode();
 ```
 
@@ -278,6 +370,8 @@ const [colorMode, setColorMode] = useColorMode();
 Use this if you wish to have access to the generated class names.
 
 ```js
+import { useCSS } from 'mystical';
+
 const classNames = useCSS({ color: 'purple', margin: 0 });
 ```
 
