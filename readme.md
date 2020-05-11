@@ -8,10 +8,10 @@ Build robust and maintainable React component libraries and applications with ea
 - Follows the [System UI theme specification](https://system-ui.com/theme).
 - Purpose built and written entirely from scratch (except for vendor prefixing).
 - Style with a just a CSS prop, begone `styled`!
-- Atomic classes: Rather than serialising entire CSS objects (like emotion, styled-components, etc), instead, property:value pairs become reusable classes. This means that your application styles scale well with SSR or static site generation, a lot less data will be sent across the wire. Sticking with common theme values especially helps.
-- Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The `useColorMode` hook can be used if you wish the ability to switch it manually.
-- Responsive array values.
-- `useModifiers` hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside. _Todo: Add an example of this_.
+- Atomic classes: Rather than serialising entire CSS objects (like emotion, styled-components, etc), instead, property:value pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
+- Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
+- Array values for media query breakpoints, e.g. `margin: [0, 3]`.
+- `useModifiers` hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside. See [useModifiers](#usemodifiers).
 
 ## Table of Contents
 
@@ -287,11 +287,9 @@ Todo
 
 #### createCache
 
-Todo
+Creates and returns a new `cache` object. Used on the server.
 
-#### cache.getServerStyles()
-
-Todo
+See [Server Side Rendering](#server-side-rendering).
 
 ### Defaults
 
@@ -328,7 +326,42 @@ const theme = {
 
 ### Server Side Rendering
 
-Todo
+Example framework agnostic configuration:
+
+```js
+import { createCache } from 'mystical';
+
+const App = ({ cache }) => {
+  // Pass the cache into the MysticalProvider:
+  return <MysticalProvider cache={cache}>...</MysticalProvider>;
+};
+
+// IMPORTANT: Create a new `cache` object per request:
+const cache = createCache();
+
+// Retrieve the generated styles and identifiers
+//
+// getServerStyles returns an object containing two properties:
+//
+// - `identifiers` – A list of unique hash values to hydrate the client.
+// - `css` – The generated styles to insert into the `style` element on the server.
+const { identifiers, css } = cache.getServerStyles();
+
+// Add the style tag to your server rendered markup:
+const serverHTML = `
+  <html>
+    <title>Example</title>
+    <head>
+      <style id="__mystical__" data-identifiers="${identifiers}">{css}</style>
+    </head>
+    <body>
+      ...
+    </body>
+  </html>
+`;
+```
+
+Todo: Add nextjs integration example.
 
 ### Contributors
 
