@@ -478,7 +478,7 @@ const theme = {
 
 ### Server Side Rendering
 
-Example framework agnostic configuration:
+Example framework agnostic pseudo configuration:
 
 ```js
 import { createCache } from 'mystical';
