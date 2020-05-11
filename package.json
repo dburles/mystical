@@ -18,10 +18,11 @@
     "prepare:clean": "rm -rf lib test",
     "prepare:cjs": "babel src -d .",
     "prepare:prettier": "prettier --write lib test",
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:cjs",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:cjs && npm run test:size",
     "test:eslint": "eslint .",
     "test:prettier": "prettier -c .",
     "test:cjs": "coverage-node -r hard-rejection/register test",
+    "test:size": "size-limit",
     "dev": "chokidar src --initial -c 'npm run prepare && npm run test:cjs --silent'"
   },
   "files": [
@@ -37,6 +38,7 @@
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@size-limit/preset-small-lib": "^4.5.0",
     "@testing-library/react": "^10.0.2",
     "babel-eslint": "^10.1.0",
     "chokidar-cli": "^2.1.0",
@@ -56,6 +58,7 @@
     "prettier": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "size-limit": "^4.5.0",
     "snapshot-assertion": "^1.0.0",
     "test-director": "^4.0.0"
   },
