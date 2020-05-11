@@ -68,8 +68,8 @@ const App = () => {
 
 This `Button` component attempts to illustrate some of the important parts of the Mystical API:
 
-1. A `css` prop that transforms CSS property values from the theme, (like [theme-ui](https://theme-ui.com/))
-2. The concept of _modifiers_, the combination of a `modifiers` object with a `useModifiers` hook. This makes prop based variations of components simple and declarative.
+1. A [css prop](#css-prop) that transforms CSS property values from the theme, (like [theme-ui](https://theme-ui.com/))
+2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
 /** @jsx jsx **/
