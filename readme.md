@@ -44,7 +44,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Install
 
-`npm i dburles/mystical-alpha#semver:^1.0.0`
+`npm i mystical`
 
 ## Getting Started
 
