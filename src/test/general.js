@@ -5,115 +5,11 @@
 // import { fireEvent, render, screen } from '@testing-library/react';
 import ReactDOMServer from 'react-dom/server';
 import snapshot from 'snapshot-assertion';
-import { MysticalProvider, createCache, jsx, useModifiers } from '../lib';
+import { MysticalProvider, createCache, jsx } from '../lib';
 import theme from './lib/theme';
 import { snapshotPath } from './lib/utils';
 
 export default (tests) => {
-  tests.add("if this breaks, you've probably messed up", async () => {
-    const cache = createCache();
-
-    const modifiers = {
-      variant: {
-        primary: {
-          color: 'white',
-          backgroundColor: 'blues.600',
-          ':hover:not(:disabled)': {
-            backgroundColor: 'blues.500',
-          },
-          ':active:not(:disabled)': {
-            backgroundColor: 'blues.700',
-          },
-        },
-      },
-      size: {
-        small: {
-          fontSize: 0,
-          lineHeight: 'none',
-          padding: '2 3',
-        },
-        medium: {
-          fontSize: 1,
-          lineHeight: 'normal',
-          padding: '2 4',
-        },
-        large: {
-          fontSize: 2,
-          lineHeight: 'normal',
-          padding: '3 5',
-        },
-      },
-      shape: {
-        square: { borderRadius: 1 },
-        rounded: { borderRadius: 2 },
-        pill: { borderRadius: 5 },
-      },
-    };
-
-    const Button = ({
-      variant = 'primary',
-      size = 'small',
-      shape = 'rounded',
-      modifiers: customModifiers,
-      ...props
-    }) => {
-      const modifierStyle = useModifiers(
-        { variant, size, shape },
-        modifiers,
-        customModifiers
-      );
-
-      return (
-        <button
-          {...props}
-          css={[
-            {
-              display: 'flex',
-              fontFamily: 'serif',
-              ':after': {
-                content: '',
-              },
-            },
-            modifierStyle,
-          ]}
-        />
-      );
-    };
-
-    const App = () => {
-      return (
-        <MysticalProvider theme={theme} cache={cache}>
-          <Button
-            modifiers={{
-              shape: {
-                rounded: { borderRadius: 3 },
-              },
-              size: {
-                small: {
-                  fontSize: 1,
-                },
-              },
-            }}
-          >
-            Hello
-          </Button>
-        </MysticalProvider>
-      );
-    };
-
-    const html = ReactDOMServer.renderToString(<App />);
-
-    await snapshot(html, snapshotPath('theme.html'));
-
-    const { css, identifiers } = cache.getServerStyles();
-
-    await snapshot(css, snapshotPath('theme.css'));
-    await snapshot(
-      JSON.stringify(identifiers),
-      snapshotPath('theme-identifiers.json')
-    );
-  });
-
   tests.add('hash matches resolved theme values', async () => {
     const cache = createCache();
 
