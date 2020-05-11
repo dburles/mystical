@@ -1,3 +1,5 @@
+'use strict';
+
 const theme = {
   global: {
     html: { height: '100%' },
@@ -202,4 +204,4 @@ const theme = {
   },
 };
 
-export default theme;
+module.exports = theme;

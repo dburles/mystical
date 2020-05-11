@@ -1,14 +1,19 @@
-import { useCallback, useContext, useMemo, useRef } from 'react';
-import { MysticalCSSContext } from '../index';
-import { transformCSS } from '../transform';
-import { flatMap, hashObject, isServer, useLayoutEffect } from '../utils';
+'use strict';
+
+const React = require('react');
+const MysticalCSSContext = require('./MysticalCSSContext.js');
+const flatMap = require('./flatMap.js');
+const hashObject = require('./hashObject.js');
+const isServer = require('./isServer.js');
+const transformCSS = require('./transformCSS.js');
+const useLayoutEffect = require('./useLayoutEffect.js');
 
 const Global = ({ styles }) => {
   const json = JSON.stringify(styles); // This is used purely as a means of equality checking
-  const { cache, options } = useContext(MysticalCSSContext);
-  const elementRef = useRef();
+  const { cache, options } = React.useContext(MysticalCSSContext);
+  const elementRef = React.useRef();
 
-  const transformedCSSArray = useMemo(() => {
+  const transformedCSSArray = React.useMemo(() => {
     return flatMap(
       Object.keys(styles).map((selector) => {
         const properties = styles[selector];
@@ -18,11 +23,11 @@ const Global = ({ styles }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json, options]);
 
-  const hash = useMemo(() => {
+  const hash = React.useMemo(() => {
     return hashObject(transformedCSSArray);
   }, [transformedCSSArray]);
 
-  const insertGlobalStyles = useCallback(
+  const insertGlobalStyles = React.useCallback(
     () => {
       cache.addGlobalTransformedCSSArray(
         transformedCSSArray,
@@ -57,4 +62,4 @@ const Global = ({ styles }) => {
   return null;
 };
 
-export default Global;
+module.exports = Global;

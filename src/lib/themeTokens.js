@@ -1,4 +1,6 @@
-export const themeTokens = {
+'use strict';
+
+const themeTokens = {
   color: 'colors',
   backgroundColor: 'colors',
   borderColor: 'colors',
@@ -69,3 +71,5 @@ export const themeTokens = {
   fill: 'colors',
   stroke: 'colors',
 };
+
+module.exports = themeTokens;

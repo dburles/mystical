@@ -1,7 +1,9 @@
-import { TestDirector } from 'test-director';
-import css from './css';
-import general from './general';
-import shorthandProperties from './shorthand-properties';
+'use strict';
+
+const { TestDirector } = require('test-director');
+const css = require('./css.js');
+const general = require('./general.js');
+const shorthandProperties = require('./shorthandProperties.js');
 
 const tests = new TestDirector();
 

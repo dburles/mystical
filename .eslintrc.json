@@ -1,8 +1,5 @@
 {
   "extends": ["env"],
-  "parserOptions": {
-    "sourceType": "module"
-  },
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],

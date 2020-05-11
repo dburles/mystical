@@ -1,54 +1,28 @@
-import { prefix } from 'stylis';
-import { camelDash, flatMap, hashObject, isObject, validRule } from './utils';
+'use strict';
+
+const { prefix } = require('stylis');
+const flatMap = require('./flatMap.js');
+const hashObject = require('./hashObject.js');
+const isObject = require('./isObject.js');
+
+const camelDash = (string) => {
+  return string.replace(/([A-Z])/g, (g) => {
+    return `-${g[0].toLowerCase()}`;
+  });
+};
+
+const validRule = (value) => {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    Array.isArray(value) ||
+    // Objects are what we consider to be pseudo selectors
+    (value && isObject(value))
+  );
+};
 
 const generateClassNameFromTransformedCSS = (transformedCSS) => {
   return `.m${hashObject(transformedCSS)}`;
-};
-
-export const transformedCSSToClass = ({
-  selector,
-  rules,
-  pseudo,
-  breakpoint,
-  at,
-}) => {
-  let fullSelector = selector;
-
-  if (pseudo) {
-    fullSelector = selector + pseudo;
-  }
-
-  const selectorRule = `${fullSelector}{${rules.join(';')}}`;
-
-  if (breakpoint) {
-    return `@media(min-width:${breakpoint}){${selectorRule}}`;
-  }
-
-  if (at) {
-    return `${at}{${selectorRule}}`;
-  }
-
-  return selectorRule;
-};
-
-export const transformKeyframes = (css, hash) => {
-  let keyframes = `@keyframes m${hash} {`;
-
-  Object.keys(css).forEach((key) => {
-    const value = css[key];
-
-    keyframes += `${key}{`;
-
-    Object.keys(value).forEach((innerKey) => {
-      keyframes += `${innerKey}:${value[innerKey]};`;
-    });
-
-    keyframes += `}`;
-  });
-
-  keyframes += `}`;
-
-  return keyframes;
 };
 
 const generateVendorPrefixes = (key, value) => {
@@ -64,7 +38,7 @@ const filterValidRules = (css) => {
   };
 };
 
-export const transformCSS = (css, { transformer, breakpoints }, selector) => {
+const transformCSS = (css, { transformer, breakpoints }, selector) => {
   // Data structure
   // {
   //   selector: .mabcdefg
@@ -171,67 +145,4 @@ export const transformCSS = (css, { transformer, breakpoints }, selector) => {
   );
 };
 
-export const getClassNames = (
-  transformedCSSArray,
-  overrideClassNames,
-  cache
-) => {
-  transformedCSSArray.forEach(cache.addTransformedCSS);
-
-  if (overrideClassNames) {
-    const overrideClassNamesArray = overrideClassNames.trim().split(' ');
-
-    // User defined class names
-    const nonMysticalClassNamesArray = overrideClassNamesArray.filter(
-      (className) => {
-        return !cache.identifiers[className];
-      }
-    );
-
-    const overrideTransformedCSSArray = overrideClassNamesArray
-      .map((className) => {
-        return cache.identifiers[className];
-      })
-      .filter(Boolean);
-
-    // Should 1 override 2
-    const shouldOverride = (transformedCSS1, transformedCSS2) => {
-      return (
-        transformedCSS1.property === transformedCSS2.property &&
-        transformedCSS1.pseudo === transformedCSS2.pseudo &&
-        transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
-        transformedCSS1.at === transformedCSS2.at
-      );
-    };
-
-    const dedupedTransformedCSSArray = transformedCSSArray.filter(
-      (transformedCSS1) => {
-        return !overrideTransformedCSSArray.find((transformedCSS2) => {
-          return shouldOverride(transformedCSS1, transformedCSS2);
-        });
-      }
-    );
-
-    const dedupedClassNamesArray = dedupedTransformedCSSArray.map(
-      (transformedCSS) => {
-        return transformedCSS.selector.slice(1);
-      }
-    );
-
-    cache.commitTransformedCSSArray(dedupedTransformedCSSArray);
-
-    return [
-      ...overrideClassNamesArray,
-      ...nonMysticalClassNamesArray,
-      ...dedupedClassNamesArray,
-    ].join(' ');
-  } else {
-    cache.commitTransformedCSSArray(transformedCSSArray);
-
-    return transformedCSSArray
-      .map((transformedCSS) => {
-        return transformedCSS.selector.slice(1); // Removes the period from the beginning of the selector
-      })
-      .join(' ');
-  }
-};
+module.exports = transformCSS;

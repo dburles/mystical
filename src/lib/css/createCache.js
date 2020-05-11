@@ -1,7 +1,10 @@
-import { transformedCSSToClass } from './transform';
-import { isDevelopment, isServer } from './utils';
+'use strict';
 
-export const createCache = () => {
+const isDevelopment = require('./isDevelopment.js');
+const isServer = require('./isServer.js');
+const transformedCSSToClass = require('./transformedCSSToClass.js');
+
+const createCache = () => {
   const hydrateElement = isServer
     ? undefined
     : document.getElementById('__mystical__');
@@ -116,3 +119,5 @@ export const createCache = () => {
     identifiers,
   };
 };
+
+module.exports = createCache;

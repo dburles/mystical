@@ -1,9 +1,11 @@
-import { get } from './css';
-import { shorthandProperties } from './shorthand-properties';
-import { themeTokens } from './tokens';
-import { negativeTransform } from './utils';
+'use strict';
 
-export const createTransformer = ({ mystical, theme }) => {
+const get = require('./css/get.js');
+const negativeTransform = require('./negativeTransform.js');
+const shorthandProperties = require('./shorthandProperties.js');
+const themeTokens = require('./themeTokens.js');
+
+const createTransformer = ({ mystical, theme }) => {
   return (key, value) => {
     const themeKey = themeTokens[key];
 
@@ -26,3 +28,5 @@ export const createTransformer = ({ mystical, theme }) => {
     return [[key, value]];
   };
 };
+
+module.exports = createTransformer;

@@ -1,15 +1,18 @@
+'use strict';
+
 /* eslint-disable react/prop-types */
 /* eslint-disable jsdoc/check-tag-names */
 /** @jsx jsx */
-// import assert from 'assert';
-// import { fireEvent, render, screen } from '@testing-library/react';
-import ReactDOMServer from 'react-dom/server';
-import snapshot from 'snapshot-assertion';
-import { MysticalProvider, createCache, jsx } from '../lib';
-import theme from './lib/theme';
-import { snapshotPath } from './lib/utils';
 
-export default (tests) => {
+const ReactDOMServer = require('react-dom/server');
+const snapshot = require('snapshot-assertion');
+const MysticalProvider = require('../lib/MysticalProvider.js');
+const createCache = require('../lib/css/createCache.js');
+const jsx = require('../lib/css/jsx.js');
+const snapshotPath = require('./lib/snapshotPath.js');
+const theme = require('./lib/theme.js');
+
+module.exports = (tests) => {
   tests.add('hash matches resolved theme values', async () => {
     const cache = createCache();
 

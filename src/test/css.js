@@ -1,21 +1,20 @@
+'use strict';
+
 /* eslint-disable react/prop-types */
 /* eslint-disable jsdoc/check-tag-names */
 /** @jsx jsx */
-// import assert from 'assert';
-// import { fireEvent, render, screen } from '@testing-library/react';
-import ReactDOMServer from 'react-dom/server';
-import snapshot from 'snapshot-assertion';
-import {
-  Global,
-  MysticalCSSProvider,
-  createCache,
-  jsx,
-  useKeyframes,
-  useModifiers,
-} from '../lib/css';
-import { snapshotPath } from './lib/utils';
 
-export default (tests) => {
+const ReactDOMServer = require('react-dom/server');
+const snapshot = require('snapshot-assertion');
+const Global = require('../lib/css/Global.js');
+const MysticalCSSProvider = require('../lib/css/MysticalCSSProvider.js');
+const createCache = require('../lib/css/createCache.js');
+const jsx = require('../lib/css/jsx.js');
+const useKeyframes = require('../lib/css/useKeyframes.js');
+const useModifiers = require('../lib/css/useModifiers.js');
+const snapshotPath = require('./lib/snapshotPath.js');
+
+module.exports = (tests) => {
   tests.add('general css test', async () => {
     const cache = createCache();
 

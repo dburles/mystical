@@ -1,6 +1,8 @@
-import { get } from './css';
-import { themeTokens } from './tokens';
-import { positiveOrNegative } from './utils';
+'use strict';
+
+const get = require('./css/get.js');
+const positiveOrNegative = require('./positiveOrNegative.js');
+const themeTokens = require('./themeTokens.js');
 
 const defaultValueTransformer = (themeScales, value) => {
   return get(themeScales, value, value);
@@ -34,7 +36,7 @@ const transform = (
   };
 };
 
-export const shorthandProperties = {
+const shorthandProperties = {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#Margin_and_Padding_Properties
   margin: transform(
     'margin',
@@ -76,3 +78,5 @@ export const shorthandProperties = {
     'borderLeftStyle',
   ]),
 };
+
+module.exports = shorthandProperties;

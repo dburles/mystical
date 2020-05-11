@@ -1,9 +1,11 @@
+'use strict';
 /* eslint-disable */
+
 // murmur2 implementation from https://github.com/emotion-js
 // Inspired by https://github.com/garycourt/murmurhash-js
 // Ported from https://github.com/aappleby/smhasher/blob/61a0530f28277f2e850bfc39600ce61d02b518de/src/MurmurHash2.cpp#L37-L86
 
-export default function murmur2(str) {
+const murmur2 = (str) => {
   // 'm' and 'r' are mixing constants generated offline.
   // They're not really 'magic', they just happen to work well.
 
@@ -62,3 +64,5 @@ export default function murmur2(str) {
 
   return ((h ^ (h >>> 15)) >>> 0).toString(36);
 }
+
+module.exports = murmur2;
