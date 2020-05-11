@@ -257,7 +257,7 @@ const theme = {
 const Component = () => <div css={{ margin: '3 5' }}>...</div>;
 ```
 
-...The following styles are generated:
+...the following styles are generated:
 
 ```
 .m1gs4698{margin-top:16px}
