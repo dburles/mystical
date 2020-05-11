@@ -26,6 +26,7 @@ Build themeable, robust and maintainable React component libraries and applicati
     - [Dot Properties](#dot-properties)
     - [Shorthand Properties](#shorthand-properties)
     - [Media Queries](#media-queries)
+    - [Merging Styles](#merging-styles)
   - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
@@ -277,6 +278,16 @@ const Component = () => {
   // and 25% above the next breakpoint
   return <div css={{ width: ['100%', '50%', '25%'] }}>...</div>;
 };
+```
+
+##### Merging Styles
+
+The css prop also accepts an array of style objects which are merged in order:
+
+```js
+const Component = () => (
+  <div css={[{ fontSize: 1 }, { fontSize: 2, color: 'white' }]}>...</div>
+);
 ```
 
 #### MysticalProvider
