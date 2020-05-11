@@ -188,7 +188,7 @@ Your theme object should be structured following the convention outlined in the 
 
 #### CSS Prop
 
-This is the primary method of applying styles to components and elements. Aside from regular styles it supports [nested @ rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) and [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) but _not_ nesting.
+This is the primary method of applying styles to components and elements. Aside from regular styles it supports [nested @ rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) and [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) but _not_ nesting. Vendor prefixes are added automatically.
 
 ```js
 // Example theme:
