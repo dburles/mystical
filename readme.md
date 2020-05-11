@@ -11,15 +11,23 @@ Build robust and maintainable React component libraries and applications with ea
 - Atomic classes: Rather than serialising entire CSS objects (like emotion, styled-components, etc), instead, property:value pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
 - Array values for media query breakpoints, e.g. `margin: [0, 3]`.
-- `useModifiers` hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside. See [useModifiers](#usemodifiers).
+- [useModifiers](#usemodifiers) hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside.
 
 ## Table of Contents
 
 - [Installation](#install)
 - [Getting Started](#getting-started)
+  - [Context](#context)
+  - [Example Component](#example-component)
 - [Babel Configuration](#babel-configuration)
 - [API](#api)
+  - [Theme Object](#theme-object)
   - [CSS Prop](#css-prop)
+    - [Theme Lookup](#theme-lookup)
+    - [Dot Properties](#dot-properties)
+    - [Shorthand Properties](#shorthand-properties)
+    - [Media Queries](#media-queries)
+  - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
   - [useTheme](#usetheme)
@@ -40,7 +48,9 @@ Build robust and maintainable React component libraries and applications with ea
 
 ## Getting Started
 
-Wrap your app in mystical context using `MysticalProvider`:
+##### Context
+
+Wrap your app with [MysticalProvider](#mysticalprovider):
 
 ```js
 import { MysticalProvider } from 'mystical';
@@ -50,21 +60,12 @@ const theme = {
   // System UI theme values, See: https://system-ui.com/theme
 };
 
-// Optional options
-const options = {
-  // Defaults:
-  disableCascade: false, // Disables cascading styles (experimental)
-  usePrefersColorScheme: true, // Sets color mode based on system preferences
-};
-
 const App = () => {
-  return (
-    <MysticalProvider theme={theme} options={options}>
-      ...
-    </MysticalProvider>
-  );
+  return <MysticalProvider theme={theme}>...</MysticalProvider>;
 };
 ```
+
+##### Example Component
 
 This `Button` component attempts to illustrate some of the important parts of the Mystical API:
 
@@ -182,6 +183,10 @@ With this configuration, no imports are required for the `css` prop to function.
 
 ## API
 
+#### Theme Object
+
+Your theme object should be structured following the convention outlined in the [System UI theme specification](https://system-ui.com/theme) in order for CSS values to be [automatically translated](#theme-lookup).
+
 #### CSS Prop
 
 This is the primary method of applying styles to components and elements. Aside from regular styles it supports [nested @ rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) and [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) but _not_ nesting.
@@ -208,10 +213,16 @@ const theme = {
 
 // `padding` is keyed to the `space` property of the theme and looks up the third index in the array.
 // `backgroundColor` is keyed to the `colors` property of the theme.
-const Component = () => <div css={{ padding: 3, backgroundColor: 'primary' }}>...</div>;
+const Component = () => (
+  <div css={{ padding: 3, backgroundColor: 'primary' }}>...</div>
+);
 ```
 
+##### Theme Lookup
+
 Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup map](https://github.com/dburles/mystical-alpha/blob/master/src/lib/tokens.js), and will default to the literal value if there's no match.
+
+##### Dot Properties
 
 Arrays and Object theme values can be retrieved by using dot properties:
 
@@ -224,6 +235,8 @@ const theme = {
 
 const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
 ```
+
+##### Shorthand Properties
 
 CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. Given the following example:
 
@@ -253,6 +266,43 @@ const Component = () => <div css={{ margin: '3 5' }}>...</div>;
 .mfpafnb{margin-bottom:16px}
 .m1g6jlu2{margin-left:64px}
 ```
+
+##### Media Queries
+
+Instead of explicitly writing media queries, simply pass an array. Breakpoints can also be skipped, e.g. `['100%', , '25%']`.
+
+```js
+const Component = () => {
+  // applies width 100% to all viewport widths,
+  // width 50% above the first breakpoint,
+  // and 25% above the next breakpoint
+  return <div css={{ width: ['100%', '50%', '25%'] }}>...</div>;
+};
+```
+
+#### MysticalProvider
+
+Your application must be wrapped with the `MysticalProvider` component:
+
+```js
+const App = () => {
+  return <MysticalProvider>...</MysticalProvider>;
+};
+```
+
+It accepts the following _optional_ props:
+
+- theme – The theme object
+- options
+
+```js
+const options = {
+  // Defaults:
+  disableCascade: false, // Disables cascading styles (experimental)
+  usePrefersColorScheme: true, // Sets color mode based on system preferences
+};
+```
+- cache – A cache object, used for [server side rendering](#server-side-rendering).
 
 #### Global
 
