@@ -225,7 +225,7 @@ const theme = {
 const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
 ```
 
-[Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. Given the following example:
+CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. Given the following example:
 
 ```js
 const theme = {
