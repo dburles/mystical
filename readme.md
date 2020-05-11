@@ -301,6 +301,7 @@ const options = {
   usePrefersColorScheme: true, // Sets color mode based on system preferences
 };
 ```
+
 - cache – A cache object, used for [server side rendering](#server-side-rendering).
 
 #### Global
@@ -426,7 +427,15 @@ const classNames = useCSS({ color: 'purple', margin: 0 });
 
 #### cloneElement
 
-Todo
+When passing the [`css` prop](#css-prop) to a [`cloneElement`](https://reactjs.org/docs/react-api.html#cloneelement), you must use Mystical's cloneElement function instead of React's for proper handling of the new styles.
+
+```js
+import { cloneElement } from 'mystical';
+
+const clonedElement = cloneElement(element, {
+  css: [{ color: 'purple', margin: 0 }],
+});
+```
 
 #### createCache
 
