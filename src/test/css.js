@@ -10,7 +10,6 @@ import {
   MysticalCSSProvider,
   createCache,
   jsx,
-  merge,
   useKeyframes,
   useModifiers,
 } from '../lib/css';
@@ -19,7 +18,15 @@ import { snapshotPath } from './lib/utils';
 export default (tests) => {
   tests.add('general css test', async () => {
     const cache = createCache();
+
     const modifiers = {
+      default: {
+        display: 'flex',
+        lineHeight: '1.5',
+        ':after': {
+          content: '',
+        },
+      },
       variant: {
         primary: {
           color: 'white',
@@ -54,7 +61,6 @@ export default (tests) => {
     };
 
     const Button = ({
-      css,
       variant = 'primary',
       size = 'small',
       shape = 'rounded',
@@ -66,22 +72,7 @@ export default (tests) => {
         modifiers,
         customModifiers
       );
-      return (
-        <button
-          {...props}
-          css={merge(
-            {
-              display: 'flex',
-              lineHeight: '1.5',
-              ':after': {
-                content: '',
-              },
-            },
-            modifierStyle,
-            css
-          )}
-        />
-      );
+      return <button {...props} css={modifierStyle} />;
     };
 
     const App = () => {

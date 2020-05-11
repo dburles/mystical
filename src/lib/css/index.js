@@ -18,19 +18,22 @@ export const useModifiers = (values, modifiers, modifiersOverride = {}) => {
   if (values) {
     const allModifiers = deepmerge(modifiers, modifiersOverride);
 
-    const modifierStyle = Object.keys(values).reduce((acc, curr) => {
-      const style = get(allModifiers, curr);
-      if (!style && isDevelopment) {
-        throw new Error(
-          `useModifiers: '${curr}' not found in modifiers object!`
-        );
-      }
-      acc = merge(acc, style[values[curr]]);
-      return acc;
-    }, {});
-
-    return modifierStyle;
+    return merge(
+      allModifiers.default,
+      merge(
+        ...Object.keys(values).map((value) => {
+          const style = get(allModifiers, value);
+          if (!style && isDevelopment) {
+            throw new Error(
+              `useModifiers: '${value}' not found in modifiers object!`
+            );
+          }
+          return style[values[value]];
+        })
+      )
+    );
   }
+
   return {};
 };
 

@@ -232,6 +232,11 @@ A declarative API for handling prop based variations to component styles. This e
 
 ```js
 const modifiers = {
+  // `default` is a special key for applying and overwriting default styles across each element (experimental).
+  default: {
+    title: { fontFamily: 'heading' },
+    subtitle: { fontFamily: 'body' },
+  },
   size: {
     small: {
       title: { fontSize: 3 },
