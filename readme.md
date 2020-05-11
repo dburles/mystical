@@ -427,7 +427,7 @@ const classNames = useCSS({ color: 'purple', margin: 0 });
 
 #### cloneElement
 
-When passing the [`css` prop](#css-prop) to a [`cloneElement`](https://reactjs.org/docs/react-api.html#cloneelement), you must use Mystical's cloneElement function instead of React's for proper handling of the new styles.
+When passing the [`css` prop](#css-prop) to a [`cloneElement`](https://reactjs.org/docs/react-api.html#cloneelement), you must use Mystical's `cloneElement` function instead of React's for proper handling of the new styles.
 
 ```js
 import { cloneElement } from 'mystical';
