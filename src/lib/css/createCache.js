@@ -52,12 +52,23 @@ const createCache = () => {
     if (isServer) {
       serverStyles += rule;
     } else {
-      if (isDevelopment) {
+      const insertTag = () => {
         const atomStyleElement = document.createElement('style');
         document.head.appendChild(atomStyleElement);
         atomStyleElement.innerHTML = rule;
+      };
+
+      if (isDevelopment) {
+        insertTag();
       } else {
-        styleElement.sheet.insertRule(rule, styleElement.sheet.cssRules.length);
+        try {
+          styleElement.sheet.insertRule(
+            rule,
+            styleElement.sheet.cssRules.length
+          );
+        } catch (error) {
+          insertTag();
+        }
       }
     }
     identifiers[hash].commit = true;
