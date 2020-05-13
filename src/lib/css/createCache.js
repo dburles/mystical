@@ -107,13 +107,22 @@ const createCache = () => {
     if (canCommit(hash)) {
       transformedCSSArray.forEach((transformedCSS) => {
         const rule = transformedCSSToClass(transformedCSS);
+
+        const insertTextNode = () => {
+          element.appendChild(document.createTextNode(rule));
+        };
+
         if (isServer) {
           serverStyles += rule;
         } else {
           if (isDevelopment) {
-            element.appendChild(document.createTextNode(rule));
+            insertTextNode();
           } else {
-            element.sheet.insertRule(rule, element.sheet.cssRules.length);
+            try {
+              element.sheet.insertRule(rule, element.sheet.cssRules.length);
+            } catch (error) {
+              insertTextNode();
+            }
           }
         }
       });
