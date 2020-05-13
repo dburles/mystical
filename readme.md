@@ -220,7 +220,7 @@ const Component = () => (
 
 ##### Theme Lookup
 
-Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup map](https://github.com/dburles/mystical-alpha/blob/master/src/lib/tokens.js), and will default to the literal value if there's no match.
+Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup map](https://github.com/dburles/mystical/blob/master/src/lib/themeTokens.js), and will default to the literal value if there's no match.
 
 ##### Dot Properties
 
