@@ -511,6 +511,7 @@ const cache = createCache();
 const { identifiers, css } = cache.getServerStyles();
 
 // Add the style tag to your server rendered markup:
+// prettier-ignore
 const serverHTML = `
   <html>
     <title>Example</title>
