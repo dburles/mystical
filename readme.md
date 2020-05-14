@@ -515,7 +515,7 @@ const serverHTML = `
   <html>
     <title>Example</title>
     <head>
-      <style id="__mystical__" data-identifiers="${identifiers}">${css}</style>
+      <style id="__mystical__" data-identifiers="${identifiers.join(',')}">${css}</style>
     </head>
     <body>
       ...
