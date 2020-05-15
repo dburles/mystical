@@ -43,13 +43,19 @@ const shorthandProperties = {
     ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],
     // We require a custom value transform function here so that
     // negative margin values are transformed correctly.
-    (themeScales, value) => {
-      return positiveOrNegative(
-        themeScales,
+    (themeScales, currentValue) => {
+      let value = currentValue;
+
+      if (currentValue.startsWith('-')) {
         // Multiple values are always strings. If we find a negative number,
         // make it a Number so that this function won't simply pass it through.
-        value.startsWith('-') ? Number(value) : value
-      );
+        const number = Number(currentValue);
+        if (!isNaN(number)) {
+          value = number;
+        }
+      }
+
+      return positiveOrNegative(themeScales, value);
     }
   ),
   padding: transform('padding', [

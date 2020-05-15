@@ -42,6 +42,7 @@ module.exports = (tests) => {
           <div css={{ marginLeft: -0 }}>B</div>
           <div css={{ marginLeft: -10 }}>not in theme</div>
           <div css={{ top: -5 }}>C</div>
+          <div css={{ margin: '-25px 0 0 -25px' }}>D</div>
         </MysticalProvider>
       );
     };
