@@ -1,5 +1,7 @@
 'use strict';
 
+const camelDash = require('./camelDash');
+
 const transformKeyframes = (css, hash) => {
   let keyframes = `@keyframes m${hash} {`;
 
@@ -9,7 +11,7 @@ const transformKeyframes = (css, hash) => {
     keyframes += `${key}{`;
 
     Object.keys(value).forEach((innerKey) => {
-      keyframes += `${innerKey}:${value[innerKey]};`;
+      keyframes += `${camelDash(innerKey)}:${value[innerKey]};`;
     });
 
     keyframes += `}`;

@@ -1,15 +1,10 @@
 'use strict';
 
 const { prefix } = require('stylis');
+const camelDash = require('./camelDash.js');
 const flatMap = require('./flatMap.js');
 const hashObject = require('./hashObject.js');
 const isObject = require('./isObject.js');
-
-const camelDash = (string) => {
-  return string.replace(/([A-Z])/g, (g) => {
-    return `-${g[0].toLowerCase()}`;
-  });
-};
 
 const validRule = (value) => {
   return (
