@@ -12,7 +12,6 @@ const isDevelopment = require('./css/isDevelopment.js');
 const useLayoutEffect = require('./css/useLayoutEffect.js');
 
 const defaultTheme = {
-  global: {},
   breakpoints: defaultBreakpoints,
   space: [
     '0px',
@@ -99,6 +98,7 @@ const MysticalProvider = ({
     };
 
     return {
+      ...defaultTheme,
       ...userTheme,
       global: {
         ...global,
