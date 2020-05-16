@@ -1,12 +1,11 @@
 'use strict';
 
-const { prefix } = require('stylis');
-const camelDash = require('./camelDash.js');
 const flatMap = require('./flatMap.js');
+const { generateRulePairs } = require('./generateRulePairs.js');
 const hashObject = require('./hashObject.js');
 const isObject = require('./isObject.js');
 
-const validRule = (value) => {
+const validValue = (value) => {
   return (
     typeof value === 'string' ||
     typeof value === 'number' ||
@@ -20,16 +19,9 @@ const generateClassNameFromTransformedCSS = (transformedCSS) => {
   return `.m${hashObject(transformedCSS)}`;
 };
 
-const generateVendorPrefixes = (key, value) => {
-  const dashedKey = camelDash(key);
-  const atom = `${dashedKey}:${value === '' ? "''" : value};`;
-  return prefix(atom, dashedKey.length).split(';').slice(0, -1);
-};
-
-const filterValidRules = (css) => {
+const filterValidValues = (css) => {
   return (key) => {
-    // Ignore the rule if it's falsey
-    return validRule(css[key]);
+    return validValue(css[key]);
   };
 };
 
@@ -60,7 +52,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
       const transformedObject = {
         selector,
         property: transformedKey,
-        rules: generateVendorPrefixes(transformedKey, transformedValue),
+        rules: generateRulePairs(transformedKey, transformedValue),
         pseudo,
         breakpoint,
         at,
@@ -79,7 +71,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
     return (
       array
         .map((value, i) => {
-          if (validRule(value)) {
+          if (validValue(value)) {
             return makeTransformedObject({
               atom: [key, value],
               pseudo,
@@ -96,7 +88,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
 
   return flatMap(
     Object.keys(css)
-      .filter(filterValidRules(css))
+      .filter(filterValidValues(css))
       .map((key) => {
         const value = css[key];
 
@@ -107,7 +99,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
         if (isNestedAtRule || isPseudoSelector) {
           return flatMap(
             Object.keys(value)
-              .filter(filterValidRules(value))
+              .filter(filterValidValues(value))
               .map((innerKey) => {
                 const innerValue = value[innerKey];
                 // Responsive array values
