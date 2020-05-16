@@ -6,12 +6,13 @@ const MysticalContext = require('./MysticalContext.js');
 const createTransformer = require('./createTransformer.js');
 const Global = require('./css/Global.js');
 const MysticalCSSProvider = require('./css/MysticalCSSProvider.js');
+const defaultBreakpoints = require('./css/defaultBreakpoints.js');
 const defaultCache = require('./css/defaultCache.js');
 const isDevelopment = require('./css/isDevelopment.js');
 const useLayoutEffect = require('./css/useLayoutEffect.js');
 
 const defaultTheme = {
-  breakpoints: ['640px', '768px', '1024px', '1280px'],
+  breakpoints: defaultBreakpoints,
   space: [
     '0px',
     '4px',
@@ -157,6 +158,8 @@ const MysticalProvider = ({
 
   const cssProviderOptions = React.useMemo(() => {
     return {
+      // Pass locally defined breakpoints through to @mystical/css
+      breakpoints: providerValue.theme.breakpoints,
       transformer: createTransformer(providerValue),
     };
   }, [providerValue]);
