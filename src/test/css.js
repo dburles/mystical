@@ -11,7 +11,7 @@ const MysticalCSSProvider = require('../lib/css/MysticalCSSProvider.js');
 const createCache = require('../lib/css/createCache.js');
 const jsx = require('../lib/css/jsx.js');
 const useKeyframes = require('../lib/css/useKeyframes.js');
-const useModifiers = require('../lib/css/useModifiers.js');
+const useModifiers = require('../lib/useModifiers.js');
 const snapshotPath = require('./lib/snapshotPath.js');
 
 module.exports = (tests) => {
