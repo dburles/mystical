@@ -16,16 +16,8 @@ const hash = (value, length) => {
   return (((((((length << 2) ^ charat(value, 0)) << 2) ^ charat(value, 1)) << 2) ^ charat(value, 2)) << 2) ^ charat(value, 3)
 }
 
-const strlen = (value) => {
-  return value.length;
-};
-
 const replace = (value, pattern, replacement) => {
   return value.replace(pattern, replacement);
-};
-
-const indexof = (value, search) => {
-  return value.indexOf(search);
 };
 
 // prettier-ignore
@@ -87,7 +79,7 @@ const prefix = (value, length) => {
     case 5445: case 5701: case 4933: case 4677:
     case 5533: case 5789: case 5021: case 4765:
       // stretch, max-content, min-content, fill-available
-      if (strlen(value) - 1 - length > 6)
+      if (value.length - 1 - length > 6)
         {switch (charat(value, length + 1)) {
           // (m)ax-content, (m)in-content
           case 109:
@@ -107,7 +99,7 @@ const prefix = (value, length) => {
         {break}
     // display: (flex|inline-flex|inline-box)
     case 6444:
-      switch (charat(value, strlen(value) - 3 - (~indexof(value, '!important') && 10))) {
+      switch (charat(value, value.length - 3 - (~value.indexOf('!important') && 10))) {
         // stic(k)y, inline-b(o)x
         case 107: case 111:
           return replace(value, value, WEBKIT + value) + value

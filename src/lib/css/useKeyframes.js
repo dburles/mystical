@@ -2,10 +2,33 @@
 
 const React = require('react');
 const MysticalCSSContext = require('./MysticalCSSContext.js');
+const generateRulePairs = require('./generateRulePairs.js');
 const isServer = require('./isServer.js');
 const murmur2 = require('./murmur2.js');
-const transformKeyframes = require('./transformKeyframes.js');
 const useLayoutEffect = require('./useLayoutEffect.js');
+
+const transformKeyframes = (css, hash) => {
+  let keyframes = `@keyframes m${hash} {`;
+
+  Object.keys(css).forEach((key) => {
+    const value = css[key];
+
+    keyframes += `${key}{`;
+
+    Object.keys(value).forEach((innerKey) => {
+      const rules = generateRulePairs(innerKey, value[innerKey]);
+      rules.forEach((rule) => {
+        return (keyframes += rule + ';');
+      });
+    });
+
+    keyframes += `}`;
+  });
+
+  keyframes += `}`;
+
+  return keyframes;
+};
 
 const useKeyframes = (css) => {
   const { cache } = React.useContext(MysticalCSSContext);
