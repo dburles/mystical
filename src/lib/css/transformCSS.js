@@ -1,10 +1,10 @@
 'use strict';
 
-const { prefix } = require('stylis');
 const camelDash = require('./camelDash.js');
 const flatMap = require('./flatMap.js');
 const hashObject = require('./hashObject.js');
 const isObject = require('./isObject.js');
+const prefix = require('./prefix.js');
 
 const validRule = (value) => {
   return (
