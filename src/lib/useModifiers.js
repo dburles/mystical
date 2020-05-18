@@ -1,31 +1,42 @@
 'use strict';
 
-const deepmerge = require('deepmerge');
+const React = require('react');
 const get = require('./css/get.js');
 const isDevelopment = require('./css/isDevelopment.js');
 const merge = require('./css/merge.js');
 
 const useModifiers = (values, modifiers, modifiersOverride = {}) => {
-  if (values) {
-    const allModifiers = deepmerge(modifiers, modifiersOverride);
+  const stringifiedValues = JSON.stringify(values);
+  const stringifiedModifiers = React.useMemo(() => {
+    return JSON.stringify(modifiers);
+  }, [modifiers]);
+  const stringifiedModifiersOverride = React.useMemo(() => {
+    return JSON.stringify(modifiersOverride);
+  }, [modifiersOverride]);
 
-    return merge(
-      allModifiers.default,
-      merge(
-        ...Object.keys(values).map((value) => {
-          const style = get(allModifiers, value);
-          if (!style && isDevelopment) {
-            throw new Error(
-              `useModifiers: '${value}' not found in modifiers object!`
-            );
-          }
-          return style[values[value]];
-        })
-      )
-    );
-  }
+  return React.useMemo(() => {
+    if (values) {
+      const allModifiers = merge(modifiers, modifiersOverride);
 
-  return {};
+      return merge(
+        allModifiers.default,
+        merge(
+          ...Object.keys(values).map((value) => {
+            const style = get(allModifiers, value);
+            if (!style && isDevelopment) {
+              throw new Error(
+                `useModifiers: '${value}' not found in modifiers object!`
+              );
+            }
+            return style[values[value]];
+          })
+        )
+      );
+    }
+
+    return {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stringifiedValues, stringifiedModifiers, stringifiedModifiersOverride]);
 };
 
 module.exports = useModifiers;
