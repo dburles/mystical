@@ -39,6 +39,7 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [createCache](#createcache)
 - [Defaults](#defaults)
 - [Server Side Rendering](#server-side-rendering)
+  - [Next.js](#next.js)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -525,7 +526,9 @@ const serverHTML = `
 `;
 ```
 
-Todo: Add nextjs integration example.
+#### Next.js
+
+Mystical integrates nicely with Next.js, though it requires some configuration. Just add a custom `_app.js` and `_document.js` as [illustrated in this example](https://gist.github.com/dburles/122997990e41504e7733eb91db68f62e).
 
 ### Contributors
 
