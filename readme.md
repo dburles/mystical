@@ -39,7 +39,7 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [createCache](#createcache)
 - [Defaults](#defaults)
 - [Server Side Rendering](#server-side-rendering)
-  - [Next.js](#next.js)
+  - [Next.js](#nextjs)
 - [Contributors](#contributors)
 - [License](#license)
 
