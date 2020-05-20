@@ -86,6 +86,12 @@ module.exports = (tests) => {
             }}
           />
           <Button
+            css={{
+              // Descendant combinator
+              div: {
+                margin: 0,
+              },
+            }}
             modifiers={{
               shape: {
                 rounded: { borderRadius: '3px' },

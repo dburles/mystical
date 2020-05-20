@@ -4,7 +4,7 @@ const transformedCSSToClass = ({ selector, rules, pseudo, breakpoint, at }) => {
   let fullSelector = selector;
 
   if (pseudo) {
-    fullSelector = selector + pseudo;
+    fullSelector = `${selector}${pseudo.startsWith(':') ? '' : ' '}${pseudo}`;
   }
 
   const selectorRule = `${fullSelector}{${rules.join(';')}}`;
