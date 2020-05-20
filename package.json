@@ -1,7 +1,7 @@
 {
   "name": "mystical",
   "description": "Atomised CSS constraint based styling",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "David Burles",
   "license": "MIT",
   "repository": "github:dburles/mystical",
