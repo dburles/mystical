@@ -39,7 +39,10 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('shorthand-properties-margin.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-margin.json')
+    );
   });
 
   tests.add('shorthand properties: padding', async () => {
@@ -63,7 +66,10 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('shorthand-properties-padding.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-padding.json')
+    );
   });
 
   tests.add('shorthand properties: borderWidth', async () => {
@@ -87,7 +93,10 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('shorthand-properties-border-width.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-border-width.json')
+    );
   });
 
   tests.add('shorthand properties: borderRadius', async () => {
@@ -111,7 +120,10 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('shorthand-properties-border-radius.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-border-radius.json')
+    );
   });
 
   tests.add('shorthand properties: borderStyle', async () => {
@@ -133,6 +145,9 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('shorthand-properties-border-style.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-border-style.json')
+    );
   });
 };

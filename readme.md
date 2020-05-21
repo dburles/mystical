@@ -508,7 +508,7 @@ const cache = createCache();
 // getServerStyles returns an object containing two properties:
 //
 // - `identifiers` – A list of unique hash values to hydrate the client.
-// - `css` – The generated styles to insert into the `style` element on the server.
+// - `css` – An object containing the generated styles to insert into `style` elements on the server.
 const { identifiers, css } = cache.getServerStyles();
 
 // Add the style tag to your server rendered markup:
@@ -517,7 +517,8 @@ const serverHTML = `
   <html>
     <title>Example</title>
     <head>
-      <style id="__mystical__" data-identifiers="${identifiers.join(',')}">${css}</style>
+      <script id="__mystical__" data-identifiers="${identifiers}"></script>
+      ${css.map(({ rules }) => `<style>${rules}</style>`).join('')}
     </head>
     <body>
       ...
@@ -528,7 +529,7 @@ const serverHTML = `
 
 #### Next.js
 
-Mystical integrates nicely with Next.js, though it requires some configuration. Just add a custom `_app.js` and `_document.js` as [illustrated in this example](https://gist.github.com/dburles/122997990e41504e7733eb91db68f62e).
+Mystical integrates nicely with Next.js, though it requires some configuration. Just add a custom `_app.js` and `_document.js` as [illustrated in this example](https://gist.github.com/dburles/66e53feec0510cfbdfce539ff773d74e).
 
 ### Contributors
 

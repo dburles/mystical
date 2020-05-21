@@ -29,7 +29,7 @@ module.exports = (tests) => {
     const { css } = cache.getServerStyles();
 
     // Should generate one atom.
-    await snapshot(css, snapshotPath('hash-match.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('hash-match.json'));
   });
 
   tests.add('negative number values', async () => {
@@ -50,7 +50,7 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('negative-numbers.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('negative-numbers.json'));
   });
 
   tests.add('falsey values, theme', async () => {
@@ -87,6 +87,6 @@ module.exports = (tests) => {
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(css, snapshotPath('falsey-values.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('falsey-values.json'));
   });
 };
