@@ -4,21 +4,38 @@ const isDevelopment = require('./isDevelopment.js');
 const isServer = require('./isServer.js');
 const transformedCSSToClass = require('./transformedCSSToClass.js');
 
+const createStyleElement = () => {
+  return isServer ? undefined : document.createElement('style');
+};
+
+const appendTextNode = (element, rule) => {
+  element.appendChild(document.createTextNode(rule));
+};
+
+const insertRule = (element, rule) => {
+  element.sheet.insertRule(rule, element.sheet.cssRules.length);
+};
+
 const createCache = () => {
   const hydrateElement = isServer
     ? undefined
     : document.getElementById('__mystical__');
-  const styleElement =
-    isServer || isDevelopment ? undefined : document.createElement('style');
+  const baseStyleElement = createStyleElement();
+  const atRuleStyleElement = createStyleElement();
 
-  if (styleElement) {
-    document.head.appendChild(styleElement);
+  if (baseStyleElement && atRuleStyleElement) {
+    document.head.appendChild(baseStyleElement);
+    // We insert this *after* the base styles to avoid specificity issues.
+    document.head.appendChild(atRuleStyleElement);
   }
 
   // Key is the identifier, value is the transformedCSS or
   // an object containing only the commit value.
   const identifiers = {};
-  let serverStyles = '';
+  const serverStyles = {
+    base: '',
+    atRules: '',
+  };
 
   const hydrate = () => {
     const serverRenderedRules =
@@ -39,8 +56,10 @@ const createCache = () => {
 
   const getServerStyles = () => {
     return {
-      css: serverStyles,
-      identifiers: Object.keys(identifiers),
+      css: Object.keys(serverStyles).map((key) => {
+        return { id: key, rules: serverStyles[key] };
+      }),
+      identifiers: Object.keys(identifiers).join(','),
     };
   };
 
@@ -48,26 +67,19 @@ const createCache = () => {
     return identifiers[hash].commit === false;
   };
 
-  const commitRule = (hash, rule) => {
+  const commitRule = (hash, rule, isAtRule) => {
     if (isServer) {
-      serverStyles += rule;
+      serverStyles[isAtRule ? 'atRules' : 'base'] += rule;
     } else {
-      const insertTag = () => {
-        const atomStyleElement = document.createElement('style');
-        document.head.appendChild(atomStyleElement);
-        atomStyleElement.innerHTML = rule;
-      };
+      const element = isAtRule ? atRuleStyleElement : baseStyleElement;
 
       if (isDevelopment) {
-        insertTag();
+        appendTextNode(element, rule);
       } else {
         try {
-          styleElement.sheet.insertRule(
-            rule,
-            styleElement.sheet.cssRules.length
-          );
+          insertRule(element, rule);
         } catch (error) {
-          insertTag();
+          appendTextNode(element, rule);
         }
       }
     }
@@ -86,7 +98,7 @@ const createCache = () => {
       const hash = transformedCSS.selector.slice(1);
       if (canCommit(hash)) {
         const rule = transformedCSSToClass(transformedCSS);
-        commitRule(hash, rule);
+        commitRule(hash, rule, transformedCSS.at || transformedCSS.breakpoint);
       }
     });
   };
@@ -96,7 +108,7 @@ const createCache = () => {
       identifiers[hash] = { commit: false };
     }
     if (canCommit(hash)) {
-      commitRule(hash, rule);
+      commitRule(hash, rule, true);
     }
   };
 
@@ -108,20 +120,16 @@ const createCache = () => {
       transformedCSSArray.forEach((transformedCSS) => {
         const rule = transformedCSSToClass(transformedCSS);
 
-        const insertTextNode = () => {
-          element.appendChild(document.createTextNode(rule));
-        };
-
         if (isServer) {
-          serverStyles += rule;
+          serverStyles.base += rule;
         } else {
           if (isDevelopment) {
-            insertTextNode();
+            appendTextNode(element, rule);
           } else {
             try {
-              element.sheet.insertRule(rule, element.sheet.cssRules.length);
+              insertRule(element, rule);
             } catch (error) {
-              insertTextNode();
+              appendTextNode(element, rule);
             }
           }
         }

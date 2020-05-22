@@ -112,11 +112,8 @@ module.exports = (tests) => {
     const html = ReactDOMServer.renderToString(<App />);
     await snapshot(html, snapshotPath('css-primary.html'));
     const { css, identifiers } = cache.getServerStyles();
-    await snapshot(css, snapshotPath('css-primary.css'));
-    await snapshot(
-      JSON.stringify(identifiers),
-      snapshotPath('css-primary-identifiers.json')
-    );
+    await snapshot(JSON.stringify(css), snapshotPath('css-primary.json'));
+    await snapshot(identifiers, snapshotPath('css-primary-identifiers.txt'));
   });
 
   tests.add('falsey values', async () => {
@@ -147,7 +144,7 @@ module.exports = (tests) => {
 
     ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
-    await snapshot(css, snapshotPath('css-falsey-values.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('css-falsey-values.json'));
   });
 
   tests.add('keyframes', async () => {
@@ -175,7 +172,7 @@ module.exports = (tests) => {
 
     const html = ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
-    await snapshot(css, snapshotPath('css-keyframes.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('css-keyframes.json'));
     await snapshot(html, snapshotPath('css-keyframes.html'));
   });
 
@@ -201,7 +198,7 @@ module.exports = (tests) => {
 
     const html = ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
-    await snapshot(css, snapshotPath('css-media-queries.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('css-media-queries.json'));
     await snapshot(html, snapshotPath('css-media-queries.html'));
   });
 
@@ -241,7 +238,10 @@ module.exports = (tests) => {
     const html = ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
     await snapshot(html, snapshotPath('css-style-overrides.html'));
-    await snapshot(css, snapshotPath('css-style-overrides.css'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('css-style-overrides.json')
+    );
   });
 
   tests.add('css array merge', async () => {
@@ -277,6 +277,6 @@ module.exports = (tests) => {
     const html = ReactDOMServer.renderToString(<App />);
     const { css } = cache.getServerStyles();
     await snapshot(html, snapshotPath('css-array-merge.html'));
-    await snapshot(css, snapshotPath('css-array-merge.css'));
+    await snapshot(JSON.stringify(css), snapshotPath('css-array-merge.json'));
   });
 };
