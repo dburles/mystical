@@ -47,11 +47,11 @@ const MysticalCSSProvider = ({
   }, [cache, options]);
 
   if (isServer) {
-    cache.initialize(options);
+    cache.initialise(options);
   }
 
   useLayoutEffect(() => {
-    cache.initialize(options);
+    cache.initialise(options);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

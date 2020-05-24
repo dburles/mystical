@@ -32,6 +32,7 @@ const createCache = () => {
   const baseStyleElement = createStyleElement('base');
   const atRuleStyleElement = createStyleElement('at-rules');
 
+  let initialised = false;
   let pseudoOrder = [];
   let dynamicElements = {}; // Client only
   let hasCommitInitialRules = false;
@@ -223,7 +224,10 @@ const createCache = () => {
     }
   };
 
-  const initialize = (options) => {
+  const initialise = (options) => {
+    if (initialised) {
+      return;
+    }
     // eslint-disable-next-line prefer-destructuring
     pseudoOrder = options.pseudoOrder;
 
@@ -252,6 +256,8 @@ const createCache = () => {
     });
 
     commitTransformedCSSRules();
+
+    initialised = true;
   };
 
   return {
@@ -260,7 +266,7 @@ const createCache = () => {
     preCommitTransformedCSSArray,
     addKeyframes,
     getServerStyles,
-    initialize,
+    initialise,
     identifiers,
   };
 };
