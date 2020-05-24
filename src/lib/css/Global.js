@@ -47,6 +47,7 @@ const Global = ({ styles }) => {
     if (!cache.identifiers[hash]) {
       elementRef.current = document.createElement('style');
       const globalStyleElement = elementRef.current;
+      globalStyleElement.setAttribute('data-mystical', 'global');
       document.head.appendChild(globalStyleElement);
 
       insertGlobalStyles();

@@ -5,9 +5,26 @@ const React = require('react');
 const MysticalCSSContext = require('./MysticalCSSContext.js');
 const defaultBreakpoints = require('./defaultBreakpoints.js');
 const defaultCache = require('./defaultCache.js');
+const isServer = require('./isServer.js');
+const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
   breakpoints: defaultBreakpoints,
+  pseudoOrder: [
+    'responsive',
+    'group-hover',
+    'group-focus',
+    'focus-within',
+    'first',
+    'last',
+    'odd',
+    'even',
+    'hover',
+    'focus',
+    'active',
+    'visited',
+    'disabled',
+  ],
 };
 
 const MysticalCSSProvider = ({
@@ -28,6 +45,15 @@ const MysticalCSSProvider = ({
       options,
     };
   }, [cache, options]);
+
+  if (isServer) {
+    cache.initialize(options);
+  }
+
+  useLayoutEffect(() => {
+    cache.initialize(options);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <MysticalCSSContext.Provider value={providerValue}>

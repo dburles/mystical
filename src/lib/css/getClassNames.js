@@ -43,7 +43,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       }
     );
 
-    cache.commitTransformedCSSArray(dedupedTransformedCSSArray);
+    cache.preCommitTransformedCSSArray(dedupedTransformedCSSArray);
 
     return [
       ...overrideClassNamesArray,
@@ -51,7 +51,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    cache.commitTransformedCSSArray(transformedCSSArray);
+    cache.preCommitTransformedCSSArray(transformedCSSArray);
 
     return transformedCSSArray
       .map((transformedCSS) => {

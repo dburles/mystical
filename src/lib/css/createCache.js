@@ -4,8 +4,17 @@ const isDevelopment = require('./isDevelopment.js');
 const isServer = require('./isServer.js');
 const transformedCSSToClass = require('./transformedCSSToClass.js');
 
-const createStyleElement = () => {
-  return isServer ? undefined : document.createElement('style');
+const identity = (x) => {
+  return x;
+};
+
+const createStyleElement = (name) => {
+  if (!isServer) {
+    const element = document.createElement('style');
+    element.setAttribute('data-mystical', name);
+    document.head.appendChild(element);
+    return element;
+  }
 };
 
 const appendTextNode = (element, rule) => {
@@ -20,21 +29,18 @@ const createCache = () => {
   const hydrateElement = isServer
     ? undefined
     : document.getElementById('__mystical__');
-  const baseStyleElement = createStyleElement();
-  const atRuleStyleElement = createStyleElement();
+  const baseStyleElement = createStyleElement('base');
+  const atRuleStyleElement = createStyleElement('at-rules');
 
-  if (baseStyleElement && atRuleStyleElement) {
-    document.head.appendChild(baseStyleElement);
-    // We insert this *after* the base styles to avoid specificity issues.
-    document.head.appendChild(atRuleStyleElement);
-  }
+  let pseudoOrder = [];
+  let dynamicElements = {}; // Client only
+  let hasCommitInitialRules = false;
 
-  // Key is the identifier, value is the transformedCSS or
-  // an object containing only the commit value.
-  const identifiers = {};
+  const identifiers = {}; // Key is the identifier, value is the transformedCSS or an object containing only the commit value.
   const serverStyles = {
     base: '',
     atRules: '',
+    // Also populated with dynamic styles via the initalize method.
   };
 
   const hydrate = () => {
@@ -56,9 +62,14 @@ const createCache = () => {
 
   const getServerStyles = () => {
     return {
-      css: Object.keys(serverStyles).map((key) => {
-        return { id: key, rules: serverStyles[key] };
-      }),
+      css: Object.keys(serverStyles)
+        .filter((key) => {
+          // Remove unused types
+          return !!serverStyles[key];
+        })
+        .map((key) => {
+          return { id: key, rules: serverStyles[key] };
+        }),
       identifiers: Object.keys(identifiers).join(','),
     };
   };
@@ -67,23 +78,88 @@ const createCache = () => {
     return identifiers[hash].commit === false;
   };
 
-  const commitRule = (hash, rule, isAtRule) => {
-    if (isServer) {
-      serverStyles[isAtRule ? 'atRules' : 'base'] += rule;
-    } else {
-      const element = isAtRule ? atRuleStyleElement : baseStyleElement;
+  const elementTargets = (
+    transformedCSS,
+    {
+      mediaQuery = identity,
+      mediaQueryPseudo = identity,
+      pseudo = identity,
+      atRules = identity,
+      base = identity,
+    } = {}
+  ) => {
+    let psuedoClassSelector;
 
-      if (isDevelopment) {
-        appendTextNode(element, rule);
-      } else {
-        try {
-          insertRule(element, rule);
-        } catch (error) {
-          appendTextNode(element, rule);
-        }
+    if (transformedCSS.pseudo) {
+      // Find pseudo class selectors that we need to group
+      const matches = /^:+([\w-]+)/.exec(transformedCSS.pseudo);
+      const match = matches && matches[1];
+      if (match && pseudoOrder.includes(match)) {
+        psuedoClassSelector = match;
       }
     }
-    identifiers[hash].commit = true;
+    if (transformedCSS.breakpoint) {
+      if (psuedoClassSelector) {
+        return mediaQueryPseudo(
+          psuedoClassSelector + '-' + transformedCSS.breakpoint
+        );
+      }
+      return mediaQuery(transformedCSS.breakpoint);
+    }
+    if (psuedoClassSelector) {
+      return pseudo(psuedoClassSelector);
+    }
+    if (transformedCSS.at) {
+      return atRules('atRules');
+    }
+    return base('base');
+  };
+
+  const commitRule = (element, rule) => {
+    if (isDevelopment) {
+      appendTextNode(element, rule);
+    } else {
+      try {
+        insertRule(element, rule);
+      } catch (error) {
+        appendTextNode(element, rule);
+      }
+    }
+  };
+
+  const commitTransformedCSS = (transformedCSS) => {
+    const rule = transformedCSSToClass(transformedCSS);
+
+    if (isServer) {
+      const target = elementTargets(transformedCSS);
+      serverStyles[target] += rule;
+    } else {
+      const dynamicElement = (name) => {
+        return dynamicElements[name];
+      };
+
+      const element = elementTargets(transformedCSS, {
+        mediaQuery: dynamicElement,
+        mediaQueryPseudo: dynamicElement,
+        pseudo: dynamicElement,
+        atRules() {
+          return atRuleStyleElement;
+        },
+        base() {
+          return baseStyleElement;
+        },
+      });
+
+      commitRule(element, rule);
+    }
+  };
+
+  let transformedCSSPendingCommit = [];
+
+  const commitTransformedCSSRules = () => {
+    transformedCSSPendingCommit.forEach(commitTransformedCSS);
+    hasCommitInitialRules = true;
+    transformedCSSPendingCommit = [];
   };
 
   const addTransformedCSS = (transformedCSS) => {
@@ -93,12 +169,16 @@ const createCache = () => {
     }
   };
 
-  const commitTransformedCSSArray = (transformedCSSArray) => {
+  const preCommitTransformedCSSArray = (transformedCSSArray) => {
     transformedCSSArray.forEach((transformedCSS) => {
       const hash = transformedCSS.selector.slice(1);
       if (canCommit(hash)) {
-        const rule = transformedCSSToClass(transformedCSS);
-        commitRule(hash, rule, transformedCSS.at || transformedCSS.breakpoint);
+        if (hasCommitInitialRules) {
+          commitTransformedCSS(transformedCSS);
+        } else {
+          transformedCSSPendingCommit.push(transformedCSS);
+        }
+        identifiers[hash].commit = true;
       }
     });
   };
@@ -108,7 +188,12 @@ const createCache = () => {
       identifiers[hash] = { commit: false };
     }
     if (canCommit(hash)) {
-      commitRule(hash, rule, true);
+      if (isServer) {
+        serverStyles.base += rule;
+      } else {
+        commitRule(baseStyleElement, rule);
+      }
+      identifiers[hash].commit = true;
     }
   };
 
@@ -138,12 +223,44 @@ const createCache = () => {
     }
   };
 
+  const initialize = (options) => {
+    // eslint-disable-next-line prefer-destructuring
+    pseudoOrder = options.pseudoOrder;
+
+    options.pseudoOrder.forEach((selector) => {
+      if (isServer) {
+        serverStyles[selector] = '';
+      } else {
+        dynamicElements[selector] = createStyleElement(selector);
+      }
+      options.breakpoints.forEach((breakpoint) => {
+        const name = selector + '-' + breakpoint;
+        if (isServer) {
+          serverStyles[name] = '';
+        } else {
+          dynamicElements[name] = createStyleElement(name);
+        }
+      });
+    });
+
+    options.breakpoints.forEach((breakpoint) => {
+      if (isServer) {
+        serverStyles[breakpoint] = '';
+      } else {
+        dynamicElements[breakpoint] = createStyleElement(breakpoint);
+      }
+    });
+
+    commitTransformedCSSRules();
+  };
+
   return {
     addTransformedCSS,
-    commitTransformedCSSArray,
     addGlobalTransformedCSSArray,
+    preCommitTransformedCSSArray,
     addKeyframes,
     getServerStyles,
+    initialize,
     identifiers,
   };
 };

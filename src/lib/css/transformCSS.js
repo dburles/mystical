@@ -3,6 +3,7 @@
 const flatMap = require('./flatMap.js');
 const generateRulePairs = require('./generateRulePairs.js');
 const hashObject = require('./hashObject.js');
+const isDevelopment = require('./isDevelopment.js');
 const isObject = require('./isObject.js');
 
 const validValue = (value) => {
@@ -88,44 +89,53 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
   return flatMap(
     Object.keys(css)
       .filter(filterValidValues(css))
-      .map((key) => {
-        const value = css[key];
+      .map((identifier) => {
+        return identifier.split(',').map((rawKey) => {
+          const key = rawKey.trim();
+          const value = css[identifier];
 
-        const isNestedAtRule = key.startsWith('@');
-        // XXX: Do something smarter here?
-        const isPseudoSelector = !isNestedAtRule && isObject(value);
+          if (isDevelopment && key.startsWith('@media')) {
+            throw new Error(
+              'The @media CSS at-rule is not supported! Please use array syntax instead.'
+            );
+          }
 
-        if (isNestedAtRule || isPseudoSelector) {
-          return flatMap(
-            Object.keys(value)
-              .filter(filterValidValues(value))
-              .map((innerKey) => {
-                const innerValue = value[innerKey];
-                // Responsive array values
-                if (isPseudoSelector && Array.isArray(innerValue)) {
-                  return transformResponsiveValues(innerValue, {
-                    key: innerKey,
-                    pseudo: key,
+          const isNestedAtRule = key.startsWith('@');
+          // XXX: Do something smarter here?
+          const isPseudoSelector = !isNestedAtRule && isObject(value);
+
+          if (isNestedAtRule || isPseudoSelector) {
+            return flatMap(
+              Object.keys(value)
+                .filter(filterValidValues(value))
+                .map((innerKey) => {
+                  const innerValue = value[innerKey];
+                  // Responsive array values
+                  if (isPseudoSelector && Array.isArray(innerValue)) {
+                    return transformResponsiveValues(innerValue, {
+                      key: innerKey,
+                      pseudo: key,
+                    });
+                  }
+
+                  return makeTransformedObject({
+                    atom: [innerKey, innerValue],
+                    ...(isNestedAtRule && { at: key }),
+                    ...(isPseudoSelector && { pseudo: key }),
                   });
-                }
+                })
+            );
+          }
 
-                return makeTransformedObject({
-                  atom: [innerKey, innerValue],
-                  ...(isNestedAtRule && { at: key }),
-                  ...(isPseudoSelector && { pseudo: key }),
-                });
-              })
-          );
-        }
+          // Responsive array values
+          if (Array.isArray(value)) {
+            return transformResponsiveValues(value, { key });
+          }
 
-        // Responsive array values
-        if (Array.isArray(value)) {
-          return transformResponsiveValues(value, { key });
-        }
-
-        // Regular values
-        return makeTransformedObject({
-          atom: [key, value],
+          // Regular values
+          return makeTransformedObject({
+            atom: [key, value],
+          });
         });
       })
   );
