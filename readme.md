@@ -5,11 +5,12 @@ Build themeable, robust and maintainable React component libraries and applicati
 ## Overview
 
 - Mystical is a small (~ 6 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
-- Purpose built and written almost entirely from scratch (except for vendor prefixing).
+- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter.
+- Written almost entirely from scratch (except for vendor prefixing).
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
-- Array values for media query breakpoints, e.g. `margin: [0, 3]`.
+- Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
 - A [useModifiers](#usemodifiers) hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside.
 
 ## Table of Contents
@@ -311,6 +312,21 @@ const options = {
   // Defaults:
   disableCascade: false, // Disables cascading styles (experimental)
   usePrefersColorScheme: true, // Sets color mode based on system preferences
+  pseudoOrder: [ // The order of insertion for pseudo class selectors
+    'responsive',
+    'group-hover',
+    'group-focus',
+    'focus-within',
+    'first',
+    'last',
+    'odd',
+    'even',
+    'hover',
+    'focus',
+    'active',
+    'visited',
+    'disabled',
+  ],
 };
 ```
 
