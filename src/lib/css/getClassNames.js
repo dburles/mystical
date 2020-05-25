@@ -21,6 +21,14 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
 
     // Should 1 override 2
     const shouldOverride = (transformedCSS1, transformedCSS2) => {
+      // Always override responsive values
+      if (!transformedCSS2.breakpoint && transformedCSS1.breakpoint) {
+        return (
+          transformedCSS1.property === transformedCSS2.property &&
+          transformedCSS1.pseudo === transformedCSS2.pseudo &&
+          transformedCSS1.at === transformedCSS2.at
+        );
+      }
       return (
         transformedCSS1.property === transformedCSS2.property &&
         transformedCSS1.pseudo === transformedCSS2.pseudo &&
@@ -43,7 +51,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       }
     );
 
-    cache.commitTransformedCSSArray(dedupedTransformedCSSArray);
+    cache.preCommitTransformedCSSArray(dedupedTransformedCSSArray);
 
     return [
       ...overrideClassNamesArray,
@@ -51,7 +59,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    cache.commitTransformedCSSArray(transformedCSSArray);
+    cache.preCommitTransformedCSSArray(transformedCSSArray);
 
     return transformedCSSArray
       .map((transformedCSS) => {

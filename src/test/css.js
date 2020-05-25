@@ -83,6 +83,9 @@ module.exports = (tests) => {
                 backgroundColor: 'white',
                 margin: 0,
               },
+              'h1,h2,h3,h4,h5,h6': {
+                color: 'red',
+              },
             }}
           />
           <Button
@@ -90,6 +93,9 @@ module.exports = (tests) => {
               // Descendant combinator
               div: {
                 margin: 0,
+              },
+              ':hover, :active': {
+                backgroundColor: 'green',
               },
             }}
             modifiers={{
@@ -176,32 +182,6 @@ module.exports = (tests) => {
     await snapshot(html, snapshotPath('css-keyframes.html'));
   });
 
-  tests.add('media queries', async () => {
-    const cache = createCache();
-
-    const App = () => {
-      return (
-        <MysticalCSSProvider cache={cache}>
-          <div
-            css={{
-              '@media (prefers-color-scheme: dark)': {
-                backgroundColor: 'purple',
-                color: 'white',
-              },
-            }}
-          >
-            A
-          </div>
-        </MysticalCSSProvider>
-      );
-    };
-
-    const html = ReactDOMServer.renderToString(<App />);
-    const { css } = cache.getServerStyles();
-    await snapshot(JSON.stringify(css), snapshotPath('css-media-queries.json'));
-    await snapshot(html, snapshotPath('css-media-queries.html'));
-  });
-
   tests.add('style overrides', async () => {
     const cache = createCache();
 
@@ -243,6 +223,72 @@ module.exports = (tests) => {
       snapshotPath('css-style-overrides.json')
     );
   });
+
+  tests.add(
+    'style overrides - non responsive values should override responsive values',
+    async () => {
+      const cache = createCache();
+
+      const Button = (props) => {
+        return (
+          <button
+            {...props}
+            css={{ backgroundColor: ['blue', 'orange', 'purple'] }}
+          >
+            button
+          </button>
+        );
+      };
+
+      const App = () => {
+        return (
+          <MysticalCSSProvider cache={cache}>
+            <Button css={{ backgroundColor: 'red' }}>button</Button>
+          </MysticalCSSProvider>
+        );
+      };
+
+      const html = ReactDOMServer.renderToStaticMarkup(<App />);
+
+      await snapshot(
+        html,
+        snapshotPath('css-style-overrides-responsive-1.html')
+      );
+    }
+  );
+
+  tests.add(
+    'style overrides - responsive values should override responsive values',
+    async () => {
+      const cache = createCache();
+
+      const Button = (props) => {
+        return (
+          <button
+            {...props}
+            css={{ backgroundColor: ['blue', 'orange', 'purple'] }}
+          >
+            button
+          </button>
+        );
+      };
+
+      const App = () => {
+        return (
+          <MysticalCSSProvider cache={cache}>
+            <Button css={{ backgroundColor: ['red', 'green'] }}>button</Button>
+          </MysticalCSSProvider>
+        );
+      };
+
+      const html = ReactDOMServer.renderToStaticMarkup(<App />);
+
+      await snapshot(
+        html,
+        snapshotPath('css-style-overrides-responsive-2.html')
+      );
+    }
+  );
 
   tests.add('css array merge', async () => {
     const cache = createCache();
