@@ -21,6 +21,14 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
 
     // Should 1 override 2
     const shouldOverride = (transformedCSS1, transformedCSS2) => {
+      // Always override responsive values
+      if (!transformedCSS2.breakpoint && transformedCSS1.breakpoint) {
+        return (
+          transformedCSS1.property === transformedCSS2.property &&
+          transformedCSS1.pseudo === transformedCSS2.pseudo &&
+          transformedCSS1.at === transformedCSS2.at
+        );
+      }
       return (
         transformedCSS1.property === transformedCSS2.property &&
         transformedCSS1.pseudo === transformedCSS2.pseudo &&
