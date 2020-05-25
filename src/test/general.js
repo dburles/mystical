@@ -89,4 +89,33 @@ module.exports = (tests) => {
 
     await snapshot(JSON.stringify(css), snapshotPath('falsey-values.json'));
   });
+
+  tests.add('style overrides - one-to-four properties', async () => {
+    const cache = createCache();
+
+    const Button = (props) => {
+      return (
+        <button {...props} css={{ margin: '3 5' }}>
+          button
+        </button>
+      );
+    };
+
+    const App = () => {
+      return (
+        <MysticalProvider cache={cache}>
+          <Button css={{ marginTop: 0 }}>button</Button>
+        </MysticalProvider>
+      );
+    };
+
+    const html = ReactDOMServer.renderToStaticMarkup(<App />);
+    const { css } = cache.getServerStyles();
+
+    await snapshot(html, snapshotPath('css-style-overrides-one-to-four.html'));
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('css-style-overrides-one-to-four.css')
+    );
+  });
 };
