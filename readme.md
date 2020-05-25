@@ -6,7 +6,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 - Mystical is a small (~ 6 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
 - Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter.
-- Written almost entirely from scratch (except for vendor prefixing).
+- Minimal dependencies. Mystical is built almost entirely from scratch (except for vendor prefixing).
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
