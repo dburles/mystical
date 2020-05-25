@@ -161,8 +161,9 @@ const MysticalProvider = ({
       // Pass locally defined breakpoints through to @mystical/css
       breakpoints: providerValue.theme.breakpoints,
       transformer: createTransformer(providerValue),
+      ...(options.pseudoOrder && { pseudoOrder: options.pseudoOrder }),
     };
-  }, [providerValue]);
+  }, [options.pseudoOrder, providerValue]);
 
   return (
     <MysticalCSSProvider options={cssProviderOptions} cache={cache}>
