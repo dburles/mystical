@@ -37,7 +37,7 @@ const createCache = () => {
   let dynamicElements = {}; // Client only
   let hasCommitInitialRules = false;
 
-  const identifiers = {}; // Key is the identifier, value is the transformedCSS or an object containing only the commit value.
+  const identifiers = {};
   const serverStyles = {
     base: '',
     atRules: '',
@@ -52,7 +52,8 @@ const createCache = () => {
 
     serverRenderedRules.forEach((identifier) => {
       if (identifier && !identifiers[identifier]) {
-        identifiers[identifier] = { commit: true };
+        // Denote as server rendered:
+        identifiers[identifier] = { hydrated: true };
       }
     });
   };
@@ -166,6 +167,10 @@ const createCache = () => {
   const addTransformedCSS = (transformedCSS) => {
     const hash = transformedCSS.selector.slice(1);
     if (!identifiers[hash]) {
+      identifiers[hash] = transformedCSS;
+    } else if (identifiers[hash].hydrated) {
+      // If denoted as hydrated, add to cache but inform the client not to commit to the DOM.
+      transformedCSS.commit = true;
       identifiers[hash] = transformedCSS;
     }
   };
