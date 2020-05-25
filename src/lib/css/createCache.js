@@ -195,7 +195,7 @@ const createCache = () => {
     }
     if (canCommit(hash)) {
       if (isServer) {
-        serverStyles.base += rule;
+        serverStyles.atRules += rule;
       } else {
         commitRule(atRuleStyleElement, rule);
       }
