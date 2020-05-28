@@ -1,1 +1,1 @@
-[{"id":"base","rules":"*, *::before,*::after{box-sizing:border-box}html{height:100%}body{display:block}body{height:100%}#root{display:block}#root{height:100%}.m1k9qpsr{margin-left:16px}"}]
+[{"id":"base","rules":"*, *::before,*::after{box-sizing:border-box}body{border-top-width:0}body{border-right-width:0}body{border-bottom-width:0}body{border-left-width:0}.m1k9qpsr{margin-left:16px}"}]
