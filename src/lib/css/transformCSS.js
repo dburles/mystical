@@ -5,6 +5,7 @@ const generateRulePairs = require('./generateRulePairs.js');
 const hashObject = require('./hashObject.js');
 const isDevelopment = require('./isDevelopment.js');
 const isObject = require('./isObject.js');
+const unsupportedShorthandProperties = require('./unsupportedShorthandProperties.js');
 
 const validValue = (value) => {
   return (
@@ -94,10 +95,18 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
           const key = rawKey.trim();
           const value = css[identifier];
 
-          if (isDevelopment && key.startsWith('@media')) {
-            throw new Error(
-              'The @media CSS at-rule is not supported! Please use array syntax instead.'
-            );
+          if (isDevelopment) {
+            if (key.startsWith('@media')) {
+              throw new Error(
+                'The @media CSS at-rule is not supported! Please use array syntax instead.'
+              );
+            }
+            if (unsupportedShorthandProperties.has(key)) {
+              throw new Error(
+                `Shorthand property '${key}' was used. Only 1-to-4 shorthand properties are supported.\n` +
+                  'See: https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties'
+              );
+            }
           }
 
           const isNestedAtRule = key.startsWith('@');
