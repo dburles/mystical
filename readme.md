@@ -4,8 +4,8 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Overview
 
-- Mystical is a small (~ 6 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
-- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except for 1-to-4 properties) are disallowed.
+- Mystical is a small (< 7 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
+- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except [1-to-4 properties](#shorthand-properties)) are disallowed.
 - Minimal dependencies. Mystical is built almost entirely from scratch.
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
@@ -229,7 +229,9 @@ const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
 
 ##### Shorthand Properties
 
-CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. Given the following example:
+CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. That is: `margin`, `padding`, `borderWidth`, `borderRadius`, and `borderStyle`.
+
+Given the following example:
 
 ```js
 const theme = {
