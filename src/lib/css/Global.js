@@ -5,6 +5,7 @@ const MysticalCSSContext = require('./MysticalCSSContext.js');
 const flatMap = require('./flatMap.js');
 const hashObject = require('./hashObject.js');
 const isServer = require('./isServer.js');
+const merge = require('./merge.js');
 const transformCSS = require('./transformCSS.js');
 const useLayoutEffect = require('./useLayoutEffect.js');
 
@@ -14,9 +15,10 @@ const Global = ({ styles }) => {
   const elementRef = React.useRef();
 
   const transformedCSSArray = React.useMemo(() => {
+    const mergedStyles = Array.isArray(styles) ? merge(...styles) : styles;
     return flatMap(
-      Object.keys(styles).map((selector) => {
-        const properties = styles[selector];
+      Object.keys(mergedStyles).map((selector) => {
+        const properties = mergedStyles[selector];
         return transformCSS(properties, options, selector);
       })
     );

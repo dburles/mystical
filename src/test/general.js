@@ -103,7 +103,7 @@ module.exports = (tests) => {
 
     const App = () => {
       return (
-        <MysticalProvider cache={cache}>
+        <MysticalProvider theme={theme} cache={cache}>
           <Button css={{ marginTop: 0 }}>button</Button>
         </MysticalProvider>
       );

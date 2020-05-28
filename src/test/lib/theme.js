@@ -2,27 +2,11 @@
 
 const theme = {
   global: {
-    html: { height: '100%' },
     body: {
-      display: 'block',
-      height: '100%',
-    },
-    '#root': {
-      display: 'block',
-      height: '100%',
+      borderWidth: 0,
     },
   },
-  space: [
-    '0px',
-    '4px',
-    '8px',
-    '16px',
-    '32px',
-    '64px',
-    '128px',
-    '256px',
-    '512px',
-  ],
+  space: ['0', '4px', '8px', '16px', '32px', '64px', '128px', '256px', '512px'],
   breakpoints: ['640px', '768px', '1024px', '1280px'],
   colors: {
     white: '#fff',
@@ -176,7 +160,7 @@ const theme = {
     '6xl': '1152px',
     full: '100%',
   },
-  borderWidths: ['0px', '1px', '2px', '4px', '8px'],
+  borderWidths: ['0', '1px', '2px', '4px', '8px'],
   borderStyles: {
     normal: 'solid',
   },

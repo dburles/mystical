@@ -6,37 +6,9 @@ const MysticalContext = require('./MysticalContext.js');
 const createTransformer = require('./createTransformer.js');
 const Global = require('./css/Global.js');
 const MysticalCSSProvider = require('./css/MysticalCSSProvider.js');
-const defaultBreakpoints = require('./css/defaultBreakpoints.js');
 const defaultCache = require('./css/defaultCache.js');
 const isDevelopment = require('./css/isDevelopment.js');
 const useLayoutEffect = require('./css/useLayoutEffect.js');
-
-const defaultTheme = {
-  breakpoints: defaultBreakpoints,
-  space: [
-    '0px',
-    '4px',
-    '8px',
-    '16px',
-    '32px',
-    '64px',
-    '128px',
-    '256px',
-    '512px',
-  ],
-  fontSizes: [
-    '10px',
-    '12px',
-    '14px',
-    '16px',
-    '20px',
-    '24px',
-    '32px',
-    '48px',
-    '64px',
-    '72px',
-  ],
-};
 
 const defaultOptions = {
   disableCascade: false,
@@ -46,7 +18,7 @@ const defaultOptions = {
 const defaultColorMode = 'default';
 
 const MysticalProvider = ({
-  theme: userTheme = defaultTheme,
+  theme = {},
   options: userOptions = defaultOptions,
   cache: userCache,
   children,
@@ -80,7 +52,7 @@ const MysticalProvider = ({
     };
   }, [userOptions]);
 
-  const theme = React.useMemo(() => {
+  const defaultGlobalStyles = React.useMemo(() => {
     const global = {};
 
     if (options.disableCascade) {
@@ -97,15 +69,8 @@ const MysticalProvider = ({
       boxSizing: 'border-box',
     };
 
-    return {
-      ...defaultTheme,
-      ...userTheme,
-      global: {
-        ...global,
-        ...userTheme.global,
-      },
-    };
-  }, [options.disableCascade, userTheme]);
+    return global;
+  }, [options.disableCascade]);
 
   const providerValue = React.useMemo(() => {
     return {
@@ -159,7 +124,7 @@ const MysticalProvider = ({
   const cssProviderOptions = React.useMemo(() => {
     return {
       // Pass locally defined breakpoints through to @mystical/css
-      breakpoints: providerValue.theme.breakpoints,
+      breakpoints: providerValue.theme.breakpoints || [],
       transformer: createTransformer(providerValue),
       ...(options.pseudoOrder && { pseudoOrder: options.pseudoOrder }),
     };
@@ -168,7 +133,7 @@ const MysticalProvider = ({
   return (
     <MysticalCSSProvider options={cssProviderOptions} cache={cache}>
       <MysticalContext.Provider value={providerValue}>
-        <Global styles={theme.global} />
+        <Global styles={[defaultGlobalStyles, theme.global]} />
         {children}
       </MysticalContext.Provider>
     </MysticalCSSProvider>

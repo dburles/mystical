@@ -3,14 +3,13 @@
 const PropTypes = require('prop-types');
 const React = require('react');
 const MysticalCSSContext = require('./MysticalCSSContext.js');
-const defaultBreakpoints = require('./defaultBreakpoints.js');
 const defaultCache = require('./defaultCache.js');
 const isServer = require('./isServer.js');
 const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
-  breakpoints: defaultBreakpoints,
   pseudoOrder: ['link', 'visited', 'hover', 'focus', 'active'],
+  breakpoints: [],
 };
 
 const MysticalCSSProvider = ({
