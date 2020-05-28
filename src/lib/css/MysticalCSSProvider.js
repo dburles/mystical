@@ -10,21 +10,7 @@ const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
   breakpoints: defaultBreakpoints,
-  pseudoOrder: [
-    'responsive',
-    'group-hover',
-    'group-focus',
-    'focus-within',
-    'first',
-    'last',
-    'odd',
-    'even',
-    'hover',
-    'focus',
-    'active',
-    'visited',
-    'disabled',
-  ],
+  pseudoOrder: ['link', 'visited', 'hover', 'focus', 'active'],
 };
 
 const MysticalCSSProvider = ({

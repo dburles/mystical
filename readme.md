@@ -312,22 +312,8 @@ const options = {
   // Defaults:
   disableCascade: false, // Disables cascading styles (experimental)
   usePrefersColorScheme: true, // Sets color mode based on system preferences
-  pseudoOrder: [
-    // The order of insertion for pseudo class selectors
-    'responsive',
-    'group-hover',
-    'group-focus',
-    'focus-within',
-    'first',
-    'last',
-    'odd',
-    'even',
-    'hover',
-    'focus',
-    'active',
-    'visited',
-    'disabled',
-  ],
+  // Custom order of insertion for pseudo class selectors
+  pseudoOrder: ['link', 'visited', 'hover', 'focus', 'active'],
 };
 ```
 

@@ -236,6 +236,14 @@ const createCache = () => {
     // eslint-disable-next-line prefer-destructuring
     pseudoOrder = options.pseudoOrder;
 
+    options.breakpoints.forEach((breakpoint) => {
+      if (isServer) {
+        serverStyles[breakpoint] = '';
+      } else {
+        dynamicElements[breakpoint] = createStyleElement(breakpoint);
+      }
+    });
+
     options.pseudoOrder.forEach((selector) => {
       if (isServer) {
         serverStyles[selector] = '';
@@ -250,14 +258,6 @@ const createCache = () => {
           dynamicElements[name] = createStyleElement(name);
         }
       });
-    });
-
-    options.breakpoints.forEach((breakpoint) => {
-      if (isServer) {
-        serverStyles[breakpoint] = '';
-      } else {
-        dynamicElements[breakpoint] = createStyleElement(breakpoint);
-      }
     });
 
     commitTransformedCSSRules();
