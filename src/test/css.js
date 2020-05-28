@@ -157,7 +157,7 @@ module.exports = (tests) => {
     const cache = createCache();
 
     const Component = () => {
-      const animation = useKeyframes({
+      const animationName = useKeyframes({
         '0%': {
           opacity: 0,
         },
@@ -165,7 +165,7 @@ module.exports = (tests) => {
           opacity: 1,
         },
       });
-      return <div css={{ animation: `${animation} 1s` }}>A</div>;
+      return <div css={{ animationName }}>A</div>;
     };
 
     const App = () => {
