@@ -5,7 +5,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 ## Overview
 
 - Mystical is a small (~ 6 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
-- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter.
+- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except for 1-to-4 properties) are disallowed.
 - Minimal dependencies. Mystical is built almost entirely from scratch.
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
@@ -38,7 +38,6 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [useCSS](#usecss)
   - [cloneElement](#cloneelement)
   - [createCache](#createcache)
-- [Defaults](#defaults)
 - [Server Side Rendering](#server-side-rendering)
   - [Next.js](#nextjs)
 - [Contributors](#contributors)
@@ -199,17 +198,7 @@ const theme = {
   colors: {
     primary: '#1282A2',
   },
-  space: [
-    '0px',
-    '4px',
-    '8px',
-    '16px',
-    '32px',
-    '64px',
-    '128px',
-    '256px',
-    '512px',
-  ],
+  space: ['0', '4px', '8px', '16px', '32px', '64px', '128px', '256px', '512px'],
   // etc
 };
 
@@ -351,11 +340,20 @@ Generates keyframe styles and a unique identifier.
 import { useKeyframes } from 'mystical';
 
 const Component = () => {
-  const animation = useKeyframes({
+  const animationName = useKeyframes({
     // ...
   });
 
-  return <div css={{ animation: `${animation} ...` }}>...</div>;
+  return (
+    <div
+      css={{
+        animationName,
+        // etc
+      }}
+    >
+      ...
+    </div>
+  );
 };
 ```
 
@@ -457,39 +455,6 @@ const clonedElement = cloneElement(element, {
 Creates and returns a new `cache` object. Used on the server.
 
 See [Server Side Rendering](#server-side-rendering).
-
-### Defaults
-
-Your theme object will be merged with the following defaults:
-
-```js
-const theme = {
-  breakpoints: ['640px', '768px', '1024px', '1280px'],
-  space: [
-    '0px',
-    '4px',
-    '8px',
-    '16px',
-    '32px',
-    '64px',
-    '128px',
-    '256px',
-    '512px',
-  ],
-  fontSizes: [
-    '10px',
-    '12px',
-    '14px',
-    '16px',
-    '20px',
-    '24px',
-    '32px',
-    '48px',
-    '64px',
-    '72px',
-  ],
-};
-```
 
 ### Server Side Rendering
 
