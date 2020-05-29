@@ -83,6 +83,12 @@ const shorthandProperties = {
     'borderBottomStyle',
     'borderLeftStyle',
   ]),
+  borderColor: transform('borderColor', [
+    'borderTopColor',
+    'borderRightColor',
+    'borderBottomColor',
+    'borderLeftColor',
+  ]),
 };
 
 module.exports = shorthandProperties;

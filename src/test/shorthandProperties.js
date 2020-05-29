@@ -150,4 +150,29 @@ module.exports = (tests) => {
       snapshotPath('shorthand-properties-border-style.json')
     );
   });
+
+  tests.add('shorthand properties: borderColor', async () => {
+    const cache = createCache();
+
+    const App = () => {
+      return (
+        <MysticalProvider theme={theme} cache={cache}>
+          <div css={{ borderColor: 'primary' }}>A</div>
+          <div css={{ borderColor: 'primary secondary' }}>B</div>
+          <div css={{ borderColor: 'red secondary primary' }}>C</div>
+          <div css={{ borderColor: 'green orange red primary' }}>D</div>
+          <div css={{ borderColor: 'green orange red primary nothing' }}>E</div>
+          <div css={{ borderColor: 'none' }}>F</div>
+        </MysticalProvider>
+      );
+    };
+
+    ReactDOMServer.renderToString(<App />);
+    const { css } = cache.getServerStyles();
+
+    await snapshot(
+      JSON.stringify(css),
+      snapshotPath('shorthand-properties-border-color.json')
+    );
+  });
 };

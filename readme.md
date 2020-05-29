@@ -229,23 +229,13 @@ const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
 
 ##### Shorthand Properties
 
-CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. That is: `margin`, `padding`, `borderWidth`, `borderRadius`, and `borderStyle`.
+CSS [Shorthand properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties) that relate to edges of a box are also translated from the theme. That is: `margin`, `padding`, `borderWidth`, `borderRadius`, `borderColor` and `borderStyle`.
 
 Given the following example:
 
 ```js
 const theme = {
-  space: [
-    '0px',
-    '4px',
-    '8px',
-    '16px',
-    '32px',
-    '64px',
-    '128px',
-    '256px',
-    '512px',
-  ],
+  space: ['0', '4px', '8px', '16px', '32px', '64px', '128px', '256px', '512px'],
 };
 
 const Component = () => <div css={{ margin: '3 5' }}>...</div>;

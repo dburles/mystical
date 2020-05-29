@@ -5,7 +5,6 @@ const unsupportedShorthandProperties = new Set([
   'background',
   'border',
   'borderBottom',
-  'borderColor',
   'borderLeft',
   'borderRight',
   'borderTop',
