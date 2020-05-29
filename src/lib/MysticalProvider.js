@@ -23,6 +23,7 @@ const MysticalProvider = ({
   cache: userCache,
   children,
 }) => {
+  const themeJSON = JSON.stringify(theme); // This is used purely as a means of equality checking
   const cache = userCache || defaultCache;
   // Signals an intent to change the color mode
   const [colorModeIntent, setColorModeIntent] = React.useState(
@@ -85,16 +86,17 @@ const MysticalProvider = ({
 
   const prevThemeRef = React.useRef();
   React.useEffect(() => {
-    if (
-      prevThemeRef.current &&
-      prevThemeRef.current !== theme &&
-      isDevelopment
-    ) {
-      // Maybe we'll support dynamic theme changes here in future, for now bail out:
-      throw new Error('Changing themes dynamically is not supported!');
+    if (prevThemeRef.current && prevThemeRef.current !== themeJSON) {
+      if (isDevelopment) {
+        console.info(
+          'Mystical: theme changed, reloading window...\n' +
+            'If this was unexpected, ensure that your theme does not change between renders.'
+        );
+      }
+      window.location.reload();
     }
-    prevThemeRef.current = theme;
-  }, [theme]);
+    prevThemeRef.current = themeJSON;
+  }, [themeJSON]);
 
   useLayoutEffect(() => {
     if (options.usePrefersColorScheme && theme.colors?.modes?.dark) {
