@@ -94,6 +94,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
         return identifier.split(',').map((rawKey) => {
           const key = rawKey.trim();
           const value = css[identifier];
+          console.log(key);
 
           if (isDevelopment) {
             if (key.startsWith('@media')) {
