@@ -1,7 +1,15 @@
 'use strict';
 
 const transformCSS = require('./transformCSS');
-const transformedCSSToClass = require('./transformedCSSToClass');
+
+const isEqualAtom = (transformedCSS1, transformedCSS2) => {
+  return (
+    transformedCSS1.property === transformedCSS2.property &&
+    transformedCSS1.pseudo === transformedCSS2.pseudo &&
+    transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
+    transformedCSS1.at === transformedCSS2.at
+  );
+};
 
 const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
   transformedCSSArray.forEach(cache.addTransformedCSS);
@@ -32,12 +40,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
           transformedCSS1.at === transformedCSS2.at
         );
       }
-      return (
-        transformedCSS1.property === transformedCSS2.property &&
-        transformedCSS1.pseudo === transformedCSS2.pseudo &&
-        transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
-        transformedCSS1.at === transformedCSS2.at
-      );
+      return isEqualAtom(transformedCSS1, transformedCSS2);
     };
 
     const dedupedTransformedCSSArray = transformedCSSArray.filter(
@@ -62,14 +65,14 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    const expandedProperties = new Set();
-    const expandedPropertiesOverride = new Set();
+    const expandedProperties = {};
+    const expandedPropertiesOverride = {};
 
     transformedCSSArray.forEach((transformedCSS) => {
       if (transformedCSS.expanded) {
-        expandedProperties.add(transformedCSS.property);
-      } else if (expandedProperties.has(transformedCSS.property)) {
-        expandedPropertiesOverride.add(transformedCSS.property);
+        expandedProperties[transformedCSS.property] = transformedCSS;
+      } else if (expandedProperties[transformedCSS.property]) {
+        expandedPropertiesOverride[transformedCSS.property] = transformedCSS;
       }
     });
 
@@ -79,10 +82,13 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       (transformedCSS) => {
         if (
           transformedCSS.expanded &&
-          expandedProperties.has(transformedCSS.property) &&
-          expandedPropertiesOverride.has(transformedCSS.property)
+          expandedProperties[transformedCSS.property] &&
+          expandedPropertiesOverride[transformedCSS.property]
         ) {
-          return false;
+          return !isEqualAtom(
+            expandedProperties[transformedCSS.property],
+            expandedPropertiesOverride[transformedCSS.property]
+          );
         }
         return true;
       }
