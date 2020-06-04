@@ -30,7 +30,7 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
   // Data structure
   // {
   //   selector: .mabcdefg
-  //   property: display // the main identifier for this particular property
+  //   property: display // The main identifier for this particular property
   //   rules: [
   //     'display:flex',
   //     'display:-webkit-box',
@@ -40,7 +40,8 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
   //   pseudo
   //   breakpoint
   //   at // Nested @ rules
-  //   commit // Denotes whether this rule been commit to the browser
+  //   commit // Boolean. Has this rule been commit to the DOM
+  //   expanded // Boolean. Was this property expanded from a 1-to-4 shorthand property?
   // }
   const makeTransformedObject = ({ atom, pseudo, breakpoint, at }) => {
     const [key, value] = atom;
@@ -49,23 +50,34 @@ const transformCSS = (css, { transformer, breakpoints }, selector) => {
         ? transformer(key, value)
         : [[key, value]];
 
-    return transformed.map(([transformedKey, transformedValue]) => {
-      const transformedObject = {
-        selector,
-        property: transformedKey,
-        rules: generateRulePairs(transformedKey, transformedValue),
-        pseudo,
-        breakpoint,
-        at,
-        commit: false,
-      };
-      if (!selector) {
-        transformedObject.selector = generateClassNameFromTransformedCSS(
-          transformedObject
-        );
+    return transformed.map(
+      ([transformedKey, transformedValue, isExpandedShorthandProperty]) => {
+        const transformedObject = {
+          selector,
+          property: transformedKey,
+          rules: generateRulePairs(transformedKey, transformedValue),
+          commit: false,
+        };
+        if (pseudo) {
+          transformedObject.pseudo = pseudo;
+        }
+        if (breakpoint) {
+          transformedObject.breakpoint = breakpoint;
+        }
+        if (at) {
+          transformedObject.at = at;
+        }
+        if (isExpandedShorthandProperty) {
+          transformedObject.expanded = true;
+        }
+        if (!selector) {
+          transformedObject.selector = generateClassNameFromTransformedCSS(
+            transformedObject
+          );
+        }
+        return transformedObject;
       }
-      return transformedObject;
-    });
+    );
   };
 
   const transformResponsiveValues = (array, { key, pseudo }) => {

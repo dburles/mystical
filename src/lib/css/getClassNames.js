@@ -1,5 +1,8 @@
 'use strict';
 
+const transformCSS = require('./transformCSS');
+const transformedCSSToClass = require('./transformedCSSToClass');
+
 const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
   transformedCSSArray.forEach(cache.addTransformedCSS);
 
@@ -59,9 +62,35 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    cache.preCommitTransformedCSSArray(transformedCSSArray);
+    const expandedProperties = new Set();
+    const expandedPropertiesOverride = new Set();
 
-    return transformedCSSArray
+    transformedCSSArray.forEach((transformedCSS) => {
+      if (transformedCSS.expanded) {
+        expandedProperties.add(transformedCSS.property);
+      } else if (expandedProperties.has(transformedCSS.property)) {
+        expandedPropertiesOverride.add(transformedCSS.property);
+      }
+    });
+
+    // Ensures that expanded atoms from 1-to-4 properties
+    // are replaced by their directly specified counterparts.
+    const dedupedTransformedCSSArray = transformedCSSArray.filter(
+      (transformedCSS) => {
+        if (
+          transformedCSS.expanded &&
+          expandedProperties.has(transformedCSS.property) &&
+          expandedPropertiesOverride.has(transformedCSS.property)
+        ) {
+          return false;
+        }
+        return true;
+      }
+    );
+
+    cache.preCommitTransformedCSSArray(dedupedTransformedCSSArray);
+
+    return dedupedTransformedCSSArray
       .map((transformedCSS) => {
         return transformedCSS.selector.slice(1); // Removes the period from the beginning of the selector
       })
