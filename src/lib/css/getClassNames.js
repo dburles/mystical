@@ -1,7 +1,5 @@
 'use strict';
 
-const transformCSS = require('./transformCSS');
-
 const isEqualAtom = (transformedCSS1, transformedCSS2) => {
   return (
     transformedCSS1.property === transformedCSS2.property &&
