@@ -66,10 +66,19 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
     const expandedProperties = {};
     const expandedPropertiesOverride = {};
 
+    // Gather expanded atoms
     transformedCSSArray.forEach((transformedCSS) => {
       if (transformedCSS.expanded) {
         expandedProperties[transformedCSS.property] = transformedCSS;
-      } else if (expandedProperties[transformedCSS.property]) {
+      }
+    });
+
+    // Gather atoms that need to override expanded properties
+    transformedCSSArray.forEach((transformedCSS) => {
+      if (
+        !transformedCSS.expanded &&
+        expandedProperties[transformedCSS.property]
+      ) {
         expandedPropertiesOverride[transformedCSS.property] = transformedCSS;
       }
     });
