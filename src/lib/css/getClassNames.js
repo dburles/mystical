@@ -1,5 +1,16 @@
 'use strict';
 
+const transformCSS = require('./transformCSS');
+
+const isEqualAtom = (transformedCSS1, transformedCSS2) => {
+  return (
+    transformedCSS1.property === transformedCSS2.property &&
+    transformedCSS1.pseudo === transformedCSS2.pseudo &&
+    transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
+    transformedCSS1.at === transformedCSS2.at
+  );
+};
+
 const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
   transformedCSSArray.forEach(cache.addTransformedCSS);
 
@@ -29,12 +40,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
           transformedCSS1.at === transformedCSS2.at
         );
       }
-      return (
-        transformedCSS1.property === transformedCSS2.property &&
-        transformedCSS1.pseudo === transformedCSS2.pseudo &&
-        transformedCSS1.breakpoint === transformedCSS2.breakpoint &&
-        transformedCSS1.at === transformedCSS2.at
-      );
+      return isEqualAtom(transformedCSS1, transformedCSS2);
     };
 
     const dedupedTransformedCSSArray = transformedCSSArray.filter(
@@ -59,9 +65,38 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
       ...dedupedClassNamesArray,
     ].join(' ');
   } else {
-    cache.preCommitTransformedCSSArray(transformedCSSArray);
+    const expandedProperties = {};
+    const expandedPropertiesOverride = {};
 
-    return transformedCSSArray
+    transformedCSSArray.forEach((transformedCSS) => {
+      if (transformedCSS.expanded) {
+        expandedProperties[transformedCSS.property] = transformedCSS;
+      } else if (expandedProperties[transformedCSS.property]) {
+        expandedPropertiesOverride[transformedCSS.property] = transformedCSS;
+      }
+    });
+
+    // Ensures that expanded atoms from 1-to-4 properties
+    // are replaced by their directly specified counterparts.
+    const dedupedTransformedCSSArray = transformedCSSArray.filter(
+      (transformedCSS) => {
+        if (
+          transformedCSS.expanded &&
+          expandedProperties[transformedCSS.property] &&
+          expandedPropertiesOverride[transformedCSS.property]
+        ) {
+          return !isEqualAtom(
+            expandedProperties[transformedCSS.property],
+            expandedPropertiesOverride[transformedCSS.property]
+          );
+        }
+        return true;
+      }
+    );
+
+    cache.preCommitTransformedCSSArray(dedupedTransformedCSSArray);
+
+    return dedupedTransformedCSSArray
       .map((transformedCSS) => {
         return transformedCSS.selector.slice(1); // Removes the period from the beginning of the selector
       })

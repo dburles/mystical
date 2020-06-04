@@ -118,4 +118,32 @@ module.exports = (tests) => {
       snapshotPath('style-overrides-one-to-four.css')
     );
   });
+
+  tests.add(
+    'specific properties should override inline 1-to-4 property values',
+    async () => {
+      const cache = createCache();
+
+      const Button = (props) => {
+        return <button {...props} css={{ margin: 0, marginLeft: '10px' }} />;
+      };
+
+      const App = () => {
+        return (
+          <MysticalProvider theme={theme} cache={cache}>
+            <Button>button</Button>
+          </MysticalProvider>
+        );
+      };
+
+      const html = ReactDOMServer.renderToStaticMarkup(<App />);
+      const { css } = cache.getServerStyles();
+
+      await snapshot(html, snapshotPath('inline-overrides-one-to-four.html'));
+      await snapshot(
+        JSON.stringify(css),
+        snapshotPath('inline-overrides-one-to-four.json')
+      );
+    }
+  );
 };

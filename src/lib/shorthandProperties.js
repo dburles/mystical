@@ -21,6 +21,7 @@ const transform = (
         return [
           keys[index],
           valueTransformer(theme[themeTokens[property]], parts[pos]),
+          true, // denotes that this is a new property expanded from a shorthand property
         ];
       });
     };

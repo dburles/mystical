@@ -4,7 +4,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Overview
 
-- Mystical is a small (< 7 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
+- Mystical is a small (< 8 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
 - Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except [1-to-4 properties](#shorthand-properties)) are disallowed.
 - Minimal dependencies. Mystical is built almost entirely from scratch.
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
