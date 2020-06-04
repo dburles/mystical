@@ -112,10 +112,10 @@ module.exports = (tests) => {
     const html = ReactDOMServer.renderToStaticMarkup(<App />);
     const { css } = cache.getServerStyles();
 
-    await snapshot(html, snapshotPath('css-style-overrides-one-to-four.html'));
+    await snapshot(html, snapshotPath('style-overrides-one-to-four.html'));
     await snapshot(
       JSON.stringify(css),
-      snapshotPath('css-style-overrides-one-to-four.css')
+      snapshotPath('style-overrides-one-to-four.css')
     );
   });
 };
