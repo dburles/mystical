@@ -204,6 +204,7 @@ module.exports = (tests) => {
       return (
         <MysticalCSSProvider cache={cache}>
           <Button
+            className="these should remain  intact"
             css={{
               display: 'flex',
               backgroundColor: 'blue',

@@ -13,16 +13,9 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
   transformedCSSArray.forEach(cache.addTransformedCSS);
 
   if (overrideClassNames) {
-    const overrideClassNamesArray = overrideClassNames.trim().split(' ');
+    const classNamesArray = overrideClassNames.trim().split(/\s+/);
 
-    // User defined class names
-    const nonMysticalClassNamesArray = overrideClassNamesArray.filter(
-      (className) => {
-        return !cache.identifiers[className];
-      }
-    );
-
-    const overrideTransformedCSSArray = overrideClassNamesArray
+    const overrideTransformedCSSArray = classNamesArray
       .map((className) => {
         return cache.identifiers[className];
       })
@@ -57,11 +50,7 @@ const getClassNames = (transformedCSSArray, overrideClassNames, cache) => {
 
     cache.preCommitTransformedCSSArray(dedupedTransformedCSSArray);
 
-    return [
-      ...overrideClassNamesArray,
-      ...nonMysticalClassNamesArray,
-      ...dedupedClassNamesArray,
-    ].join(' ');
+    return [...classNamesArray, ...dedupedClassNamesArray].join(' ');
   } else {
     const expandedProperties = {};
     const expandedPropertiesOverride = {};
