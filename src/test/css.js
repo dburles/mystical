@@ -185,10 +185,11 @@ module.exports = (tests) => {
   tests.add('style overrides', async () => {
     const cache = createCache();
 
-    const Button = (props) => {
+    const Button = ({ className, ...props }) => {
       return (
         <button
           {...props}
+          className={'these should remain  intact ' + className}
           css={{
             display: 'inline-flex',
             backgroundColor: 'red',
@@ -204,7 +205,6 @@ module.exports = (tests) => {
       return (
         <MysticalCSSProvider cache={cache}>
           <Button
-            className="these should remain  intact"
             css={{
               display: 'flex',
               backgroundColor: 'blue',
