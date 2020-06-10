@@ -5,7 +5,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 ## Overview
 
 - Mystical is a small (< 8 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
-- Specificity free! Style deduping and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except [1-to-4 properties](#shorthand-properties)) are disallowed.
+- Specificity free! Style merging and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except [1-to-4 properties](#shorthand-properties)) are disallowed.
 - Minimal dependencies. Mystical is built almost entirely from scratch.
 - Style with a just a [`css` prop](#css-prop), begone `styled`!
 - Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
@@ -28,6 +28,7 @@ Build themeable, robust and maintainable React component libraries and applicati
     - [Shorthand Properties](#shorthand-properties)
     - [Media Queries](#media-queries)
     - [Merging Styles](#merging-styles)
+    - [Component Style Merging](#component-style-merging)
   - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
@@ -271,6 +272,36 @@ The css prop also accepts an array of style objects which are merged in order:
 const Component = () => (
   <div css={[{ fontSize: 1 }, { fontSize: 2, color: 'white' }]}>...</div>
 );
+```
+
+##### Component Style Merging
+
+Mystical will automatically merge and deduplicate styles defined within the CSS prop of a component. For example:
+
+```js
+const Button = (props) => {
+  // Ensure the `className` prop makes it through.
+  return <button {...props} css={{ backgroundColor: 'red' }} />;
+};
+
+const Component = () => {
+  return <Button css={{ backgroundColor: 'blue' }}>Blue Button!</Button>;
+};
+```
+
+In this example, the background color of this instance of the `Button` component will contain only a single atomic `className` for the blue `backgroundColor`. In most cases this deduplication happens automatically, however if you wish to use a custom `className` on the `button` element, you must remember to pass through the Mystical classnames so that they're correctly merged:
+
+```js
+const Button = ({ className, ...props }) => {
+  return (
+    <button
+      {...props}
+      // Pass through the Mystical generated classnames:
+      className={'my-button ' + className}
+      css={{ backgroundColor: 'red' }}
+    />
+  );
+};
 ```
 
 #### MysticalProvider
