@@ -1,6 +1,6 @@
 'use strict';
 
-const get = require('./css/get.js');
+const get = require('./get.js');
 const positiveOrNegative = require('./positiveOrNegative.js');
 const themeTokens = require('./themeTokens.js');
 
@@ -16,14 +16,14 @@ const transform = (
   return (theme, value) => {
     const parts = value.split(/\s+/).slice(0, keys.length);
     const generateRules = (positions) => {
-      return positions.map((pos, index) => {
+      return positions.reduce((acc, pos, index) => {
         // `pos` represents the value to pick out for the current `index` in the keys array
-        return [
-          keys[index],
-          valueTransformer(theme[themeTokens[property]], parts[pos]),
-          true, // denotes that this is a new property expanded from a shorthand property
-        ];
-      });
+        acc[keys[index]] = valueTransformer(
+          theme[themeTokens[property]],
+          parts[pos]
+        );
+        return acc;
+      }, {});
     };
 
     const map = {

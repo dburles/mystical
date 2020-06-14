@@ -1,7 +1,7 @@
 {
   "name": "mystical",
-  "description": "Atomised CSS constraint based styling",
-  "version": "4.2.3",
+  "description": "CSS prop constraint based styling",
+  "version": "5.0.0",
   "author": "David Burles",
   "license": "MIT",
   "repository": "github:dburles/mystical",
@@ -74,7 +74,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
+    "@emotion/react": "^11.0.0-next.12",
     "deepmerge": "^4.2.2",
+    "facepaint": "^1.2.1",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

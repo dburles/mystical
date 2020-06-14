@@ -1,17 +1,13 @@
 'use strict';
 
+const { ThemeProvider } = require('@emotion/react');
 const PropTypes = require('prop-types');
 const React = require('react');
-const MysticalContext = require('./MysticalContext.js');
-const createTransformer = require('./createTransformer.js');
-const Global = require('./css/Global.js');
-const MysticalCSSProvider = require('./css/MysticalCSSProvider.js');
-const defaultCache = require('./css/defaultCache.js');
-const isDevelopment = require('./css/isDevelopment.js');
-const useLayoutEffect = require('./css/useLayoutEffect.js');
+const Global = require('./Global.js');
+const isDevelopment = require('./isDevelopment.js');
+const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
-  disableCascade: false,
   usePrefersColorScheme: true,
 };
 
@@ -20,11 +16,11 @@ const defaultColorMode = 'default';
 const MysticalProvider = ({
   theme = {},
   options: userOptions = defaultOptions,
-  cache: userCache,
   children,
 }) => {
-  const themeJSON = JSON.stringify(theme); // This is used purely as a means of equality checking
-  const cache = userCache || defaultCache;
+  // This is used purely as a means of equality checking
+  const stringifiedTheme = JSON.stringify(theme);
+
   // Signals an intent to change the color mode
   const [colorModeIntent, setColorModeIntent] = React.useState(
     defaultColorMode
@@ -44,7 +40,7 @@ const MysticalProvider = ({
     if (colorMode !== colorModeIntent) {
       setColorModeState(colorModeIntent);
     }
-  }, [cache, colorMode, colorModeIntent]);
+  }, [colorMode, colorModeIntent]);
 
   const options = React.useMemo(() => {
     return {
@@ -56,22 +52,12 @@ const MysticalProvider = ({
   const defaultGlobalStyles = React.useMemo(() => {
     const global = {};
 
-    if (options.disableCascade) {
-      // it's important to have this first so other global styles are more specific
-      global[
-        'a,abbr,address,area,article,aside,audio,b,bdi,bdo,blockquote,body,br,button,caption,cite,col,colgroup,data,datalist,dd,del,details,dfn,dialog,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,i,img,input,ins,kbd,label,legend,li,main,map,mark,menu,meter,nav,ol,optgroup,option,output,p,picture,pre,progress,q,rb,rp,rt,rtc,ruby,s,section,select,small,source,span,strong,sub,summary,sup,table,tbody,td,textarea,tfoot,th,thead,time,tr,track,u,ul,var,video,wbr'
-      ] = {
-        all: 'initial',
-        boxSizing: 'border-box',
-      };
-    }
-
     global['*, *::before,*::after'] = {
       boxSizing: 'border-box',
     };
 
     return global;
-  }, [options.disableCascade]);
+  }, []);
 
   const providerValue = React.useMemo(() => {
     return {
@@ -79,14 +65,13 @@ const MysticalProvider = ({
       mystical: {
         colorMode,
         setColorMode,
-        cache,
       },
     };
-  }, [cache, colorMode, setColorMode, theme]);
+  }, [colorMode, setColorMode, theme]);
 
   const prevThemeRef = React.useRef();
   React.useEffect(() => {
-    if (prevThemeRef.current && prevThemeRef.current !== themeJSON) {
+    if (prevThemeRef.current && prevThemeRef.current !== stringifiedTheme) {
       if (isDevelopment) {
         console.info(
           'Mystical: theme changed, reloading window...\n' +
@@ -95,8 +80,8 @@ const MysticalProvider = ({
       }
       window.location.reload();
     }
-    prevThemeRef.current = themeJSON;
-  }, [themeJSON]);
+    prevThemeRef.current = stringifiedTheme;
+  }, [stringifiedTheme]);
 
   useLayoutEffect(() => {
     if (options.usePrefersColorScheme && theme.colors?.modes?.dark) {
@@ -123,29 +108,17 @@ const MysticalProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const cssProviderOptions = React.useMemo(() => {
-    return {
-      // Pass locally defined breakpoints through to @mystical/css
-      breakpoints: providerValue.theme.breakpoints || [],
-      transformer: createTransformer(providerValue),
-      ...(options.pseudoOrder && { pseudoOrder: options.pseudoOrder }),
-    };
-  }, [options.pseudoOrder, providerValue]);
-
   return (
-    <MysticalCSSProvider options={cssProviderOptions} cache={cache}>
-      <MysticalContext.Provider value={providerValue}>
-        <Global styles={[defaultGlobalStyles, theme.global]} />
-        {children}
-      </MysticalContext.Provider>
-    </MysticalCSSProvider>
+    <ThemeProvider theme={providerValue}>
+      <Global styles={[defaultGlobalStyles, theme.global]} />
+      {children}
+    </ThemeProvider>
   );
 };
 
 MysticalProvider.propTypes = {
   theme: PropTypes.object.isRequired,
   options: PropTypes.object,
-  cache: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
 

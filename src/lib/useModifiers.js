@@ -1,9 +1,9 @@
 'use strict';
 
 const React = require('react');
-const get = require('./css/get.js');
-const isDevelopment = require('./css/isDevelopment.js');
-const merge = require('./css/merge.js');
+const get = require('./get.js');
+const isDevelopment = require('./isDevelopment.js');
+const merge = require('./merge.js');
 
 const useModifiers = (values, modifiers, modifiersOverride = {}) => {
   const stringifiedValues = JSON.stringify(values);
