@@ -1,17 +1,16 @@
 'use strict';
 
-const { jsx: emotion } = require('@emotion/react');
 const React = require('react');
-const transformStyles = require('./transformStyles');
+const MysticalCSSProp = require('./MysticalCSSProp.js');
 
 const jsx = (type, props, ...children) => {
   const { css, ...rest } = props || {};
 
-  if (!css) {
-    return React.createElement(type, rest, ...children);
-  }
+  const element = React.createElement(type, rest, ...children);
 
-  return emotion(type, { css: transformStyles(css), ...rest }, ...children);
+  return css
+    ? React.createElement(MysticalCSSProp, { styles: css }, element)
+    : element;
 };
 
 module.exports = jsx;

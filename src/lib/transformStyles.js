@@ -1,6 +1,6 @@
 'use strict';
 
-const facepaint = require('facepaint').default;
+const facepaint = require('facepaint');
 const get = require('./get.js');
 const isObject = require('./isObject.js');
 const negativeTransform = require('./negativeTransform.js');
