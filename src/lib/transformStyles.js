@@ -1,8 +1,9 @@
 'use strict';
 
-const facepaint = require('facepaint');
+const facepaint = require('./facepaint.js');
 const get = require('./get.js');
 const isObject = require('./isObject.js');
+const merge = require('./merge.js');
 const negativeTransform = require('./negativeTransform.js');
 const shorthandProperties = require('./shorthandProperties.js');
 const themeTokens = require('./themeTokens.js');
@@ -38,23 +39,21 @@ const transformStyles = (initialStyles) => {
       })
     );
 
-    (Array.isArray(initialStyles) ? initialStyles : [initialStyles]).forEach(
-      (styleGroup) => {
-        mq(styleGroup).forEach((styles) => {
-          Object.keys(styles).forEach((key) => {
-            const value = styles[key];
-            if (isObject(value)) {
-              transformedStyles[key] = transformStyles(value)(context);
-            } else {
-              transformedStyles = {
-                ...transformedStyles,
-                ...transformStyle(key, value, context),
-              };
-            }
-          });
-        });
-      }
-    );
+    mq(
+      Array.isArray(initialStyles) ? merge(...initialStyles) : initialStyles
+    ).forEach((styles) => {
+      Object.keys(styles).forEach((key) => {
+        const value = styles[key];
+        if (isObject(value)) {
+          transformedStyles[key] = transformStyles(value)(context);
+        } else {
+          transformedStyles = {
+            ...transformedStyles,
+            ...transformStyle(key, value, context),
+          };
+        }
+      });
+    });
 
     return transformedStyles;
   };
