@@ -3,7 +3,7 @@
 const facepaint = (breakpoints, { literal, overlap } = {}) => {
   const mq = literal ? breakpoints : ['&'].concat(breakpoints);
 
-  function flatten(obj) {
+  const flatten = (obj) => {
     if (typeof obj !== 'object' || obj == null) {
       return [];
     }
@@ -64,7 +64,7 @@ const facepaint = (breakpoints, { literal, overlap } = {}) => {
     });
     Object.assign(props, objects);
     return props;
-  }
+  };
 
   return (...values) => {
     return values.map(flatten);
