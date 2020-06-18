@@ -9,7 +9,7 @@ const jsx = (type, props, ...children) => {
   const element = React.createElement(type, rest, ...children);
 
   return css
-    ? React.createElement(MysticalCSSProp, { css, key: rest.key }, element)
+    ? React.createElement(MysticalCSSProp, { styles: css }, element)
     : element;
 };
 

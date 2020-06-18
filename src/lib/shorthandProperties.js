@@ -1,6 +1,6 @@
 'use strict';
 
-const get = require('./css/get.js');
+const get = require('./get.js');
 const positiveOrNegative = require('./positiveOrNegative.js');
 const themeTokens = require('./themeTokens.js');
 
@@ -8,32 +8,16 @@ const defaultValueTransformer = (themeScales, value) => {
   return get(themeScales, value, value);
 };
 
-const transform = (
-  property,
-  keys,
-  valueTransformer = defaultValueTransformer
-) => {
+const transform = (property, valueTransformer = defaultValueTransformer) => {
   return (theme, value) => {
-    const parts = value.split(/\s+/).slice(0, keys.length);
-    const generateRules = (positions) => {
-      return positions.map((pos, index) => {
-        // `pos` represents the value to pick out for the current `index` in the keys array
-        return [
-          keys[index],
-          valueTransformer(theme[themeTokens[property]], parts[pos]),
-          true, // denotes that this is a new property expanded from a shorthand property
-        ];
-      });
-    };
+    const parts = value.split(/\s+/);
+    const transformedParts = parts
+      .map((part) => {
+        return valueTransformer(theme[themeTokens[property]], part);
+      })
+      .join(' ');
 
-    const map = {
-      1: [0, 0, 0, 0],
-      2: [0, 1, 0, 1],
-      3: [0, 1, 2, 1],
-      4: [0, 1, 2, 3],
-    };
-
-    return generateRules(map[parts.length]);
+    return { [property]: transformedParts };
   };
 };
 
@@ -41,7 +25,6 @@ const shorthandProperties = {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#Margin_and_Padding_Properties
   margin: transform(
     'margin',
-    ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],
     // We require a custom value transform function here so that
     // negative margin values are transformed correctly.
     (themeScales, currentValue) => {
@@ -59,37 +42,12 @@ const shorthandProperties = {
       return positiveOrNegative(themeScales, value);
     }
   ),
-  padding: transform('padding', [
-    'paddingTop',
-    'paddingRight',
-    'paddingBottom',
-    'paddingLeft',
-  ]),
+  padding: transform('padding'),
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#Border_Properties
-  borderWidth: transform('borderWidth', [
-    'borderTopWidth',
-    'borderRightWidth',
-    'borderBottomWidth',
-    'borderLeftWidth',
-  ]),
-  borderRadius: transform('borderRadius', [
-    'borderTopLeftRadius',
-    'borderTopRightRadius',
-    'borderBottomRightRadius',
-    'borderBottomLeftRadius',
-  ]),
-  borderStyle: transform('borderStyle', [
-    'borderTopStyle',
-    'borderRightStyle',
-    'borderBottomStyle',
-    'borderLeftStyle',
-  ]),
-  borderColor: transform('borderColor', [
-    'borderTopColor',
-    'borderRightColor',
-    'borderBottomColor',
-    'borderLeftColor',
-  ]),
+  borderWidth: transform('borderWidth'),
+  borderRadius: transform('borderRadius'),
+  borderStyle: transform('borderStyle'),
+  borderColor: transform('borderColor'),
 };
 
 module.exports = shorthandProperties;

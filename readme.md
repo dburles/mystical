@@ -4,14 +4,10 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Overview
 
-- Mystical is a small (< 8 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, similar to and inspired by [theme-ui](https://theme-ui.com/) but with a more concise API.
-- Specificity free! Style merging and strict (configurable) psuedo class ordering to avoid specificity issues. The order in which you define your styles doesn't matter. To aid this, CSS shorthand properties (except [1-to-4 properties](#shorthand-properties)) are disallowed.
-- Minimal dependencies. Mystical is built almost entirely from scratch.
-- Style with a just a [`css` prop](#css-prop), begone `styled`!
-- Atomic classes: Rather than serialising entire CSS objects (like [emotion](https://emotion.sh/) and [styled-components](https://styled-components.com/)), instead, `property: value` pairs become reusable classes. This means that your application styles scale well with [SSR or static site generation](#server-side-rendering), a lot less data will be sent across the wire. Sticking with common theme values especially helps.
-- Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish the ability to switch it manually.
+- Mystical is a small (< 12 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
+- A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook.
+- Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish to switch in the browser.
 - Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
-- A [useModifiers](#usemodifiers) hook: A declarative API for handling prop based variations to component styles. It makes it simple to style individual elements within a single component from the outside.
 
 ## Table of Contents
 
@@ -27,8 +23,6 @@ Build themeable, robust and maintainable React component libraries and applicati
     - [Dot Properties](#dot-properties)
     - [Shorthand Properties](#shorthand-properties)
     - [Media Queries](#media-queries)
-    - [Merging Styles](#merging-styles)
-    - [Component Style Merging](#component-style-merging)
   - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
   - [useKeyframes](#usekeyframes)
@@ -36,11 +30,7 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [useMystical](#usemystical)
   - [useModifiers](#usemodifiers)
   - [useColorMode](#usecolormode)
-  - [useCSS](#usecss)
   - [cloneElement](#cloneelement)
-  - [createCache](#createcache)
-- [Server Side Rendering](#server-side-rendering)
-  - [Next.js](#nextjs)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -191,7 +181,7 @@ Your theme object should be structured following the convention outlined in the 
 
 #### CSS Prop
 
-This is the primary method of applying styles to components and elements. Aside from regular styles it supports [nested @ rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) and [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) but _not_ nesting. Vendor prefixes are added automatically.
+This is the primary method of applying styles to components and elements.
 
 ```js
 // Example theme:
@@ -242,14 +232,7 @@ const theme = {
 const Component = () => <div css={{ margin: '3 5' }}>...</div>;
 ```
 
-...the following styles are generated:
-
-```
-.m1gs4698{margin-top:16px}
-.mtxvrlm{margin-right:64px}
-.mfpafnb{margin-bottom:16px}
-.m1g6jlu2{margin-left:64px}
-```
+...the following style is generated: `margin: 16px 64px`
 
 ##### Media Queries
 
@@ -266,42 +249,12 @@ const Component = () => {
 
 ##### Merging Styles
 
-The css prop also accepts an array of style objects which are merged in order:
+The css prop also accepts an array of style objects which are deeply merged in order:
 
 ```js
 const Component = () => (
   <div css={[{ fontSize: 1 }, { fontSize: 2, color: 'white' }]}>...</div>
 );
-```
-
-##### Component Style Merging
-
-Mystical will automatically merge and deduplicate styles defined within the CSS prop of a component. For example:
-
-```js
-const Button = (props) => {
-  // Ensure the `className` prop makes it through.
-  return <button {...props} css={{ backgroundColor: 'red' }} />;
-};
-
-const Component = () => {
-  return <Button css={{ backgroundColor: 'blue' }}>Blue Button!</Button>;
-};
-```
-
-In this example, the background color of this instance of the `Button` component will contain only a single atomic `className` for the blue `backgroundColor`. In most cases this deduplication happens automatically, however if you wish to use a custom `className` on the `button` element, you must remember to pass through the Mystical classnames so that they're correctly merged:
-
-```js
-const Button = ({ className, ...props }) => {
-  return (
-    <button
-      {...props}
-      // Pass through the Mystical generated classnames:
-      className={'my-button ' + className}
-      css={{ backgroundColor: 'red' }}
-    />
-  );
-};
 ```
 
 #### MysticalProvider
@@ -314,22 +267,17 @@ const App = () => {
 };
 ```
 
-It accepts the following _optional_ props:
+It accepts the following props:
 
 - theme – The theme object
-- options
+- options (optional)
 
 ```js
 const options = {
   // Defaults:
-  disableCascade: false, // Disables cascading styles (experimental)
   usePrefersColorScheme: true, // Sets color mode based on system preferences
-  // Custom order of insertion for pseudo class selectors
-  pseudoOrder: ['link', 'visited', 'hover', 'focus', 'active'],
 };
 ```
-
-- cache – A cache object, used for [server side rendering](#server-side-rendering).
 
 #### Global
 
@@ -451,16 +399,6 @@ import { useColorMode } from 'mystical';
 const [colorMode, setColorMode] = useColorMode();
 ```
 
-#### useCSS
-
-Use this if you wish to have access to the generated class names.
-
-```js
-import { useCSS } from 'mystical';
-
-const classNames = useCSS({ color: 'purple', margin: 0 });
-```
-
 #### cloneElement
 
 When passing the [`css` prop](#css-prop) to a [`cloneElement`](https://reactjs.org/docs/react-api.html#cloneelement), you must use Mystical's `cloneElement` function instead of React's for proper handling of the new styles.
@@ -472,55 +410,6 @@ const clonedElement = cloneElement(element, {
   css: [{ color: 'purple', margin: 0 }],
 });
 ```
-
-#### createCache
-
-Creates and returns a new `cache` object. Used on the server.
-
-See [Server Side Rendering](#server-side-rendering).
-
-### Server Side Rendering
-
-Example framework agnostic pseudo configuration:
-
-```js
-import { createCache } from 'mystical';
-
-const App = ({ cache }) => {
-  // Pass the cache into the MysticalProvider:
-  return <MysticalProvider cache={cache}>...</MysticalProvider>;
-};
-
-// IMPORTANT: Create a new `cache` object per request:
-const cache = createCache();
-
-// Retrieve the generated styles and identifiers
-//
-// getServerStyles returns an object containing two properties:
-//
-// - `identifiers` – A list of unique hash values to hydrate the client.
-// - `css` – An object containing the generated styles to insert into `style` elements on the server.
-const { identifiers, css } = cache.getServerStyles();
-
-// Add the style tag to your server rendered markup:
-// prettier-ignore
-const serverHTML = `
-  <html>
-    <title>Example</title>
-    <head>
-      <script id="__mystical__" data-identifiers="${identifiers}"></script>
-      ${css.map(({ rules }) => `<style>${rules}</style>`).join('')}
-    </head>
-    <body>
-      ...
-    </body>
-  </html>
-`;
-```
-
-#### Next.js
-
-Mystical integrates nicely with Next.js, though it requires some configuration. Just add a custom `_app.js` and `_document.js` as [illustrated in this example](https://gist.github.com/dburles/66e53feec0510cfbdfce539ff773d74e).
 
 ### Contributors
 
