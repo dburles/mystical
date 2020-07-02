@@ -1,7 +1,7 @@
 [
   {
     "path": "lib/index.js",
-    "limit": "12 KB",
+    "limit": "11 KB",
     "ignore": ["prop-types"]
   }
 ]

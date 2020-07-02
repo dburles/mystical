@@ -4,7 +4,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Overview
 
-- Mystical is a small (< 12 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
+- Mystical is a small (< 11 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
 - A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish to switch in the browser.
 - Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
