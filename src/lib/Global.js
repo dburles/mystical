@@ -13,10 +13,7 @@ const Global = ({ styles: initialStyles }) => {
 };
 
 Global.propTypes = {
-  styles: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
-  ]).isRequired,
+  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
 };
 
 module.exports = Global;
