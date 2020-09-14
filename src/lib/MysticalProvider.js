@@ -129,13 +129,14 @@ const MysticalProvider = ({
         styles={{
           ':root': customProperties(colors, 'colors'),
           '[data-color-mode="default"]': customProperties(colors, 'colors'),
-          ...Object.keys(modes).reduce((acc, key) => {
-            acc[`[data-color-mode="${key}"]`] = customProperties(
-              theme.colors.modes[key],
-              'colors'
-            );
-            return acc;
-          }, {}),
+          ...(modes &&
+            Object.keys(modes).reduce((acc, key) => {
+              acc[`[data-color-mode="${key}"]`] = customProperties(
+                theme.colors.modes[key],
+                'colors'
+              );
+              return acc;
+            }, {})),
         }}
       />
       {children}
