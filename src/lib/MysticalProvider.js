@@ -4,14 +4,21 @@ const { ThemeProvider } = require('@emotion/react');
 const PropTypes = require('prop-types');
 const React = require('react');
 const Global = require('./Global.js');
+const customProperties = require('./customProperties.js');
 const isDevelopment = require('./isDevelopment.js');
+const isServer = require('./isServer.js');
 const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
   usePrefersColorScheme: true,
 };
 
-const defaultColorMode = 'default';
+const defaultColorMode = () => {
+  return (
+    (!isServer && window.localStorage.getItem('mystical-color-mode')) ||
+    'default'
+  );
+};
 
 const MysticalProvider = ({
   theme = {},
@@ -23,10 +30,10 @@ const MysticalProvider = ({
 
   // Signals an intent to change the color mode
   const [colorModeIntent, setColorModeIntent] = React.useState(
-    defaultColorMode
+    defaultColorMode()
   );
 
-  const [colorMode, setColorModeState] = React.useState(defaultColorMode);
+  const [colorMode, setColorModeState] = React.useState(defaultColorMode());
   const setColorMode = React.useCallback(
     (mode) => {
       if (mode !== colorMode) {
@@ -38,6 +45,8 @@ const MysticalProvider = ({
 
   useLayoutEffect(() => {
     if (colorMode !== colorModeIntent) {
+      window.localStorage.setItem('mystical-color-mode', colorModeIntent);
+      document.body.setAttribute('data-color-mode', colorModeIntent);
       setColorModeState(colorModeIntent);
     }
   }, [colorMode, colorModeIntent]);
@@ -84,12 +93,15 @@ const MysticalProvider = ({
   }, [stringifiedTheme]);
 
   useLayoutEffect(() => {
-    if (options.usePrefersColorScheme && theme.colors?.modes?.dark) {
+    if (
+      options.usePrefersColorScheme &&
+      theme.colors?.modes?.dark &&
+      // only set mode based on system preferences the first time
+      !window.localStorage.getItem('mystical-color-mode')
+    ) {
       const colorModeHandler = ({ matches }) => {
         if (matches) {
           setColorModeIntent('dark');
-        } else {
-          setColorModeIntent('default');
         }
       };
 
@@ -108,9 +120,24 @@ const MysticalProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { modes, ...colors } = theme.colors;
+
   return (
     <ThemeProvider theme={providerValue}>
       <Global styles={[defaultGlobalStyles, theme.global]} />
+      <Global
+        styles={{
+          ':root': customProperties(colors, 'colors'),
+          '[data-color-mode="default"]': customProperties(colors, 'colors'),
+          ...Object.keys(modes).reduce((acc, key) => {
+            acc[`[data-color-mode="${key}"]`] = customProperties(
+              theme.colors.modes[key],
+              'colors'
+            );
+            return acc;
+          }, {}),
+        }}
+      />
       {children}
     </ThemeProvider>
   );

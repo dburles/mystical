@@ -8,22 +8,21 @@ const negativeTransform = require('./negativeTransform.js');
 const shorthandProperties = require('./shorthandProperties.js');
 const themeTokens = require('./themeTokens.js');
 
-const transformStyle = (key, value, { mystical, theme }) => {
+const transformStyle = (key, value, { theme }) => {
   const themeKey = themeTokens[key];
 
   if (shorthandProperties[key]) {
     return shorthandProperties[key](theme, String(value));
   } else if (themeKey) {
-    let currentKey = theme[themeKey];
-    if (mystical.colorMode !== 'default' && themeKey === 'colors') {
-      const modes = theme[themeKey]['modes'][mystical.colorMode];
-      // Only pick from colors that exist in this mode
-      if (modes && get(modes, value)) {
-        currentKey = modes;
+    let currentThemeProperties = theme[themeKey];
+    if (themeKey === 'colors') {
+      if (get(theme[themeKey], 'colors', value)) {
+        return { [key]: `var(--colors-${value.replace(/\./g, '-')})` };
       }
+      return { [key]: value };
     }
     const transformNegatives = negativeTransform(key);
-    return { [key]: transformNegatives(currentKey, value, value) };
+    return { [key]: transformNegatives(currentThemeProperties, value, value) };
   }
 
   return { [key]: value };
