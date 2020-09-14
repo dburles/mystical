@@ -16,7 +16,7 @@ const transformStyle = (key, value, { theme }) => {
   } else if (themeKey) {
     let currentThemeProperties = theme[themeKey];
     if (themeKey === 'colors') {
-      if (get(theme[themeKey], 'colors', value)) {
+      if (get(theme.colors, value)) {
         return { [key]: `var(--colors-${value.replace(/\./g, '-')})` };
       }
       return { [key]: value };
