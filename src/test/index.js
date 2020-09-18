@@ -1,4 +1,10 @@
 'use strict';
 
-// eslint-disable-next-line no-console
-console.log('todo');
+const { TestDirector } = require('test-director');
+const transformStyles = require('../lib/transformStyles.test.js');
+
+const tests = new TestDirector();
+
+transformStyles(tests);
+
+tests.run();

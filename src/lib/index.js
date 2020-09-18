@@ -9,4 +9,4 @@ exports.jsx = require('./jsx.js');
 exports.Global = require('./Global.js');
 exports.cloneElement = require('./cloneElement.js');
 exports.useKeyframes = require('./useKeyframes.js');
-exports.InitialiseColourMode = require('./InitialiseColourMode.js');
+exports.InitializeColorMode = require('./InitializeColorMode.js');

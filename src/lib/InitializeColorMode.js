@@ -2,7 +2,7 @@
 
 const React = require('react');
 
-const InitialiseColourMode = () => {
+const InitializeColorMode = () => {
   return (
     <script
       key="mystical-no-flash"
@@ -17,4 +17,4 @@ const InitialiseColourMode = () => {
   );
 };
 
-module.exports = InitialiseColourMode;
+module.exports = InitializeColorMode;

@@ -1,12 +1,12 @@
 'use strict';
 
 const facepaint = require('./facepaint.js');
-const get = require('./get.js');
 const isObject = require('./isObject.js');
 const merge = require('./merge.js');
 const negativeTransform = require('./negativeTransform.js');
 const shorthandProperties = require('./shorthandProperties.js');
 const themeTokens = require('./themeTokens.js');
+const transformColors = require('./transformColors.js');
 
 const transformStyle = (key, value, { theme }) => {
   const themeKey = themeTokens[key];
@@ -16,15 +16,11 @@ const transformStyle = (key, value, { theme }) => {
   } else if (themeKey) {
     let currentThemeProperties = theme[themeKey];
     if (themeKey === 'colors') {
-      if (get(theme.colors, value)) {
-        return { [key]: `var(--colors-${value.replace(/\./g, '-')})` };
-      }
-      return { [key]: value };
+      return transformColors(theme.colors, key, value);
     }
     const transformNegatives = negativeTransform(key);
     return { [key]: transformNegatives(currentThemeProperties, value, value) };
   }
-
   return { [key]: value };
 };
 

@@ -3,6 +3,7 @@
 const get = require('./get.js');
 const positiveOrNegative = require('./positiveOrNegative.js');
 const themeTokens = require('./themeTokens.js');
+const transformColors = require('./transformColors.js');
 
 const defaultValueTransformer = (themeScales, value) => {
   return get(themeScales, value, value);
@@ -47,7 +48,10 @@ const shorthandProperties = {
   borderWidth: transform('borderWidth'),
   borderRadius: transform('borderRadius'),
   borderStyle: transform('borderStyle'),
-  borderColor: transform('borderColor'),
+  borderColor: transform('borderColor', (themeScales, currentValue) => {
+    return transformColors(themeScales, 'borderColor', currentValue)
+      .borderColor;
+  }),
 };
 
 module.exports = shorthandProperties;
