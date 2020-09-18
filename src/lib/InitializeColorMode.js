@@ -7,10 +7,10 @@ const InitializeColorMode = () => {
     <script
       key="mystical-no-flash"
       dangerouslySetInnerHTML={{
-        __html: `(function() { try {
+        __html: `
+        (function() { try {
           var mode = localStorage.getItem('mystical-color-mode');
-          if (!mode) return;
-          document.body.setAttribute('data-color-mode', mode);
+          document.body.setAttribute('data-color-mode', mode || 'default');
         } catch (e) {} })();`,
       }}
     />
