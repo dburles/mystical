@@ -1,8 +1,8 @@
 'use strict';
 
-const { isBrowser } = require('@emotion/react');
 const React = require('react');
+const isServer = require('./isServer');
 
-const useLayoutEffect = isBrowser ? React.useLayoutEffect : React.useEffect;
+const useLayoutEffect = isServer ? React.useEffect : React.useLayoutEffect;
 
 module.exports = useLayoutEffect;
