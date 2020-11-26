@@ -28,6 +28,12 @@ const customModifiers = {
 
 module.exports = (tests) => {
   tests.add('mergeModifiers', async () => {
+    const modifierStyles = mergeModifiers({ size: 'small' }, modifiers);
+
+    assert.strictEqual(modifierStyles.title.fontSize, 3);
+  });
+
+  tests.add('mergeModifiers: customModifiers', async () => {
     const modifierStyles = mergeModifiers(
       { size: 'small' },
       modifiers,
