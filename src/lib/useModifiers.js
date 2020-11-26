@@ -1,9 +1,7 @@
 'use strict';
 
 const React = require('react');
-const get = require('./get.js');
-const isDevelopment = require('./isDevelopment.js');
-const merge = require('./merge.js');
+const mergeModifiers = require('./mergeModifiers.js');
 
 const useModifiers = (values, modifiers, modifiersOverride = {}) => {
   const stringifiedValues = JSON.stringify(values);
@@ -16,22 +14,7 @@ const useModifiers = (values, modifiers, modifiersOverride = {}) => {
 
   return React.useMemo(() => {
     if (values) {
-      const allModifiers = merge(modifiers, modifiersOverride);
-
-      return merge(
-        allModifiers.default,
-        merge(
-          ...Object.keys(values).map((value) => {
-            const style = get(allModifiers, value);
-            if (!style && isDevelopment) {
-              throw new Error(
-                `useModifiers: '${value}' not found in modifiers object!`
-              );
-            }
-            return style[values[value]];
-          })
-        )
-      );
+      return mergeModifiers(values, modifiers, modifiersOverride);
     }
 
     return {};
