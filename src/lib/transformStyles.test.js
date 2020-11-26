@@ -1,6 +1,5 @@
 'use strict';
 
-const { strictEqual } = require('assert');
 const snapshot = require('snapshot-assertion');
 const snapshotPath = require('../test/lib/snapshotPath.js');
 const theme = require('../test/lib/theme');
@@ -16,11 +15,6 @@ module.exports = (tests) => {
     await snapshot(
       JSON.stringify(styles),
       snapshotPath('transformStyles-colors.json')
-    );
-
-    strictEqual(
-      JSON.stringify(styles),
-      '{"borderColor":"var(--colors-orange-500)","color":"var(--colors-orange-500)"}'
     );
   });
 };
