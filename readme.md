@@ -25,7 +25,7 @@ Build themeable, robust and maintainable React component libraries and applicati
     - [Media Queries](#media-queries)
   - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
-  - [useKeyframes](#usekeyframes)
+  - [keyframes](#keyframes)
   - [useTheme](#usetheme)
   - [useMystical](#usemystical)
   - [useModifiers](#usemodifiers)
@@ -303,18 +303,18 @@ const App = () => {
 };
 ```
 
-#### useKeyframes
+#### keyframes
 
-Generates keyframe styles and a unique identifier.
+Generates keyframe styles. This function is directly exported from [@emotion/react](https://www.npmjs.com/package/@emotion/react). See https://emotion.sh/docs/keyframes.
 
 ```js
-import { useKeyframes } from 'mystical';
+import { keyframes } from 'mystical';
+
+const animationName = keyframes({
+  // ...
+});
 
 const Component = () => {
-  const animationName = useKeyframes({
-    // ...
-  });
-
   return (
     <div
       css={{
