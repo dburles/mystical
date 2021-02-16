@@ -4,11 +4,11 @@ const get = require('./get.js');
 const isDevelopment = require('./isDevelopment.js');
 const merge = require('./merge.js');
 
-const mergeModifiers = (values, modifiers, modifiersOverride) => {
-  const allModifiers = merge(modifiers, modifiersOverride);
+const mergeModifiers = (values, initialModifiers, modifiersOverride) => {
+  const { default: defaults, ...modifiers } = initialModifiers;
 
   return merge(
-    modifiers.default,
+    defaults,
     merge(
       ...Object.keys(values).map((value) => {
         const style = get(modifiers, value);
@@ -18,9 +18,9 @@ const mergeModifiers = (values, modifiers, modifiersOverride) => {
           );
         }
         return style[values[value]];
-      }),
-      allModifiers
-    )
+      })
+    ),
+    modifiersOverride
   );
 };
 
