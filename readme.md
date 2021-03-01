@@ -305,10 +305,10 @@ const App = () => {
 
 #### keyframes
 
-Generates keyframe styles. This function is directly exported from [@emotion/react](https://www.npmjs.com/package/@emotion/react). See https://emotion.sh/docs/keyframes.
+Install [@emotion/react](https://www.npmjs.com/package/@emotion/react) (`npm i @emotion/react`). See https://emotion.sh/docs/keyframes.
 
 ```js
-import { keyframes } from 'mystical';
+import { keyframes } from '@emotion/react';
 
 const animationName = keyframes({
   // ...
