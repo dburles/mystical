@@ -2,13 +2,6 @@
   "extends": ["env"],
   "rules": {
     "arrow-body-style": ["error", "always"],
-    "curly": ["error", "all"],
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      {
-        "ignores": ["modules"]
-      }
-    ]
-  },
-  "ignorePatterns": ["node_modules/", "dist"]
+    "curly": ["error", "all"]
+  }
 }

@@ -5,10 +5,17 @@
     [
       "@babel/env",
       {
+        "modules": false,
         "shippedProposals": true,
         "loose": true
       }
     ],
     "@babel/react"
+  ],
+  "overrides": [
+    {
+      "test": "**/*.js",
+      "sourceType": "script"
+    }
   ]
 }

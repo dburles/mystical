@@ -23,24 +23,34 @@
     "not ie < 11",
     "not op_mini all"
   ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./public/index.mjs",
+      "require": "./public/index.js"
+    },
+    "./public/": "./public/",
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.d.ts",
+    "public"
+  ],
+  "main": "public",
+  "types": "index.d.ts",
   "scripts": {
-    "prepare": "npm run prepare:clean && npm run prepare:cjs && npm run prepare:prettier",
-    "prepare:clean": "rm -rf lib test",
-    "prepare:cjs": "babel src -d .",
-    "prepare:prettier": "prettier --write lib test",
+    "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:prettier",
+    "prepare:clean": "rm -rf public test",
+    "prepare:js": "babel src -d . --keep-file-extension",
+    "prepare:prettier": "prettier --write public test",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:cjs && npm run test:size",
-    "test:eslint": "eslint .",
+    "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
     "test:cjs": "coverage-node -r hard-rejection/register test",
     "test:size": "size-limit",
     "dev": "chokidar src --initial -c 'npm run prepare && npm run test:cjs --silent'"
   },
-  "files": [
-    "index.d.ts",
-    "lib"
-  ],
-  "main": "lib/index.js",
-  "types": "index.d.ts",
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",

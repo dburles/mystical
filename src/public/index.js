@@ -11,4 +11,3 @@ exports.cloneElement = require('./cloneElement.js');
 exports.InitializeColorMode = require('./InitializeColorMode.js');
 exports.defaultColorMode = require('./defaultColorMode.js');
 exports.darkColorMode = require('./darkColorMode');
-exports.keyframes = require('@emotion/react').keyframes;
