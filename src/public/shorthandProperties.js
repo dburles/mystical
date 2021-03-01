@@ -11,7 +11,7 @@ const defaultValueTransformer = (themeScales, value) => {
 
 const transform = (property, valueTransformer = defaultValueTransformer) => {
   return (theme, value) => {
-    const parts = value.split(/\s+/);
+    const parts = value.split(/\s+/u);
     const transformedParts = parts
       .map((part) => {
         return valueTransformer(theme[themeTokens[property]], part);

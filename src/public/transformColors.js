@@ -4,7 +4,7 @@ const get = require('./get');
 
 const transformColors = (colors, key, value) => {
   if (get(colors, value)) {
-    return { [key]: `var(--colors-${value.replace(/\./g, '-')})` };
+    return { [key]: `var(--colors-${value.replace(/\./gu, '-')})` };
   }
   return { [key]: value };
 };
