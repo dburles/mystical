@@ -2,6 +2,7 @@
   "extends": ["env"],
   "rules": {
     "arrow-body-style": ["error", "always"],
-    "curly": ["error", "all"]
+    "curly": ["error", "all"],
+    "react/react-in-jsx-scope": 0
   }
 }
