@@ -1,8 +1,8 @@
 'use strict';
 
-const get = require('./get.js');
-const isDevelopment = require('./isDevelopment.js');
-const merge = require('./merge.js');
+const get = require('./get');
+const isDevelopment = require('./isDevelopment');
+const merge = require('./merge');
 
 const mergeModifiers = (values, initialModifiers, modifiersOverride) => {
   const { default: defaults, ...modifiers } = initialModifiers;

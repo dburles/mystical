@@ -1,6 +1,6 @@
 'use strict';
 
-const get = require('../private/get.js');
+const get = require('../private/get');
 
 const positiveOrNegative = (scale, value) => {
   if (typeof value !== 'number' || value >= 0) {

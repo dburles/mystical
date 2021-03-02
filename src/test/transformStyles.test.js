@@ -2,7 +2,7 @@
 
 const snapshot = require('snapshot-assertion');
 const transformStyles = require('../private/transformStyles');
-const snapshotPath = require('./lib/snapshotPath.js');
+const snapshotPath = require('./lib/snapshotPath');
 const theme = require('./lib/theme');
 
 module.exports = (tests) => {

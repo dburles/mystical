@@ -1,6 +1,6 @@
 'use strict';
 
-const jsx = require('./jsx.js');
+const jsx = require('./jsx');
 
 const cloneElement = (element, props, ...children) => {
   return jsx(

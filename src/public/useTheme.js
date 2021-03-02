@@ -1,7 +1,7 @@
 'use strict';
 
-const get = require('../private/get.js');
-const useMystical = require('./useMystical.js');
+const get = require('../private/get');
+const useMystical = require('./useMystical');
 
 const useTheme = (key, value) => {
   const { theme } = useMystical();

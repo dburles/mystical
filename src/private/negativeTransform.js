@@ -1,7 +1,7 @@
 'use strict';
 
-const get = require('./get.js');
-const positiveOrNegative = require('./positiveOrNegative.js');
+const get = require('./get');
+const positiveOrNegative = require('./positiveOrNegative');
 
 const negativeTransform = (property) => {
   return get(

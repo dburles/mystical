@@ -1,13 +1,13 @@
 'use strict';
 
-exports.MysticalProvider = require('./MysticalProvider.js');
-exports.useMystical = require('./useMystical.js');
-exports.useTheme = require('./useTheme.js');
-exports.useColorMode = require('./useColorMode.js');
-exports.useModifiers = require('./useModifiers.js');
-exports.jsx = require('./jsx.js');
-exports.Global = require('./Global.js');
-exports.cloneElement = require('./cloneElement.js');
-exports.InitializeColorMode = require('./InitializeColorMode.js');
-exports.defaultColorMode = require('./defaultColorMode.js');
+exports.MysticalProvider = require('./MysticalProvider');
+exports.useMystical = require('./useMystical');
+exports.useTheme = require('./useTheme');
+exports.useColorMode = require('./useColorMode');
+exports.useModifiers = require('./useModifiers');
+exports.jsx = require('./jsx');
+exports.Global = require('./Global');
+exports.cloneElement = require('./cloneElement');
+exports.InitializeColorMode = require('./InitializeColorMode');
+exports.defaultColorMode = require('./defaultColorMode');
 exports.darkColorMode = require('./darkColorMode');

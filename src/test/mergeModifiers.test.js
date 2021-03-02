@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const mergeModifiers = require('../private/mergeModifiers.js');
+const mergeModifiers = require('../private/mergeModifiers');
 
 const modifiers = {
   default: {

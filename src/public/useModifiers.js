@@ -1,7 +1,7 @@
 'use strict';
 
 const React = require('react');
-const mergeModifiers = require('../private/mergeModifiers.js');
+const mergeModifiers = require('../private/mergeModifiers');
 
 const useModifiers = (values, modifiers, modifiersOverride = {}) => {
   const stringifiedValues = JSON.stringify(values);

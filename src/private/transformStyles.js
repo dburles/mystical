@@ -1,12 +1,12 @@
 'use strict';
 
-const facepaint = require('./facepaint.js');
-const isObject = require('./isObject.js');
-const merge = require('./merge.js');
-const negativeTransform = require('./negativeTransform.js');
-const shorthandProperties = require('./shorthandProperties.js');
-const themeTokens = require('./themeTokens.js');
-const transformColors = require('./transformColors.js');
+const facepaint = require('./facepaint');
+const isObject = require('./isObject');
+const merge = require('./merge');
+const negativeTransform = require('./negativeTransform');
+const shorthandProperties = require('./shorthandProperties');
+const themeTokens = require('./themeTokens');
+const transformColors = require('./transformColors');
 
 const transformStyle = (key, value, { theme }) => {
   const themeKey = themeTokens[key];
