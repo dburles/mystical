@@ -1,6 +1,6 @@
 'use strict';
 
-const get = require('./get');
+const get = require('../private/get');
 
 const transformColors = (colors, key, value) => {
   if (get(colors, value)) {

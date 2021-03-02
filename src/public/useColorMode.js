@@ -1,6 +1,6 @@
 'use strict';
 
-const isDevelopment = require('./isDevelopment.js');
+const isDevelopment = require('../private/isDevelopment.js');
 const useMystical = require('./useMystical.js');
 
 const useColorMode = () => {

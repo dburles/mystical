@@ -1,9 +1,9 @@
 'use strict';
 
 const snapshot = require('snapshot-assertion');
-const snapshotPath = require('../test/lib/snapshotPath.js');
-const theme = require('../test/lib/theme');
-const transformStyles = require('./transformStyles');
+const transformStyles = require('../private/transformStyles');
+const snapshotPath = require('./lib/snapshotPath.js');
+const theme = require('./lib/theme');
 
 module.exports = (tests) => {
   tests.add('colors', async () => {

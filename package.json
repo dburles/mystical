@@ -35,15 +35,16 @@
   },
   "files": [
     "index.d.ts",
-    "public"
+    "public",
+    "private"
   ],
   "main": "public",
   "types": "index.d.ts",
   "scripts": {
     "prepare": "npm run prepare:clean && npm run prepare:js && npm run prepare:prettier",
-    "prepare:clean": "rm -rf public test",
+    "prepare:clean": "rm -rf public private test",
     "prepare:js": "babel src -d . --keep-file-extension",
-    "prepare:prettier": "prettier --write public test",
+    "prepare:prettier": "prettier --write public private test",
     "test": "npm run test:eslint && npm run test:prettier && npm run test:cjs && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",

@@ -3,7 +3,7 @@
 const { Global: EmotionGlobal } = require('@emotion/react');
 const PropTypes = require('prop-types');
 const React = require('react');
-const transformStyles = require('./transformStyles');
+const transformStyles = require('../private/transformStyles');
 const useMystical = require('./useMystical');
 
 const Global = ({ styles: initialStyles }) => {

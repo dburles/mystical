@@ -3,11 +3,11 @@
 const { ThemeProvider } = require('@emotion/react');
 const PropTypes = require('prop-types');
 const React = require('react');
+const customProperties = require('../private/customProperties.js');
+const isDevelopment = require('../private/isDevelopment.js');
+const isServer = require('../private/isServer.js');
+const useLayoutEffect = require('../private/useLayoutEffect.js');
 const Global = require('./Global.js');
-const customProperties = require('./customProperties.js');
-const isDevelopment = require('./isDevelopment.js');
-const isServer = require('./isServer.js');
-const useLayoutEffect = require('./useLayoutEffect.js');
 
 const defaultOptions = {
   usePrefersColorScheme: true,

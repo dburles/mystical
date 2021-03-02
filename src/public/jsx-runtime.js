@@ -4,7 +4,7 @@ const {
   jsx: emotionJsx,
   jsxs: emotionJsxs,
 } = require('@emotion/react/jsx-runtime');
-const createJsxFn = require('./createJsxFn');
+const createJsxFn = require('../private/createJsxFn');
 
 const jsx = createJsxFn(emotionJsx);
 
