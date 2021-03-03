@@ -50,7 +50,8 @@
     "test:prettier": "prettier -c .",
     "test:api": "coverage-node -r hard-rejection/register test",
     "test:size": "size-limit",
-    "dev": "chokidar src --initial -c 'npm run prepare && npm run test:api --silent'"
+    "dev": "chokidar src --initial -c 'npm run prepare && npm run test:api --silent'",
+    "prepublishOnly": "npm test"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
