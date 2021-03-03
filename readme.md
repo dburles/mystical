@@ -65,8 +65,7 @@ This `Button` component attempts to illustrate some of the important parts of th
 2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
-/** @jsx jsx **/
-import { jsx, useModifiers } from 'mystical';
+import { useModifiers } from 'mystical';
 
 const modifiers = {
   variant: {
@@ -140,15 +139,30 @@ const Button = ({
 
 ### Babel Configuration
 
+#### Automatic (Recommended)
+
 Configure [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) to use the `automatic` runtime and point the `importSource` to mystical.
 
 Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) configuration:
 
-```
+```js
 {
   runtime: 'automatic',
   importSource: 'mystical/public',
   development: process.env.NODE_ENV === 'development',
+}
+```
+
+#### Classic
+
+If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `jsx` function:
+
+```js
+/** @jsx jsx **/
+import { jsx } from 'mystical';
+
+const MyComponent = () => {
+  // ...
 }
 ```
 
