@@ -140,38 +140,17 @@ const Button = ({
 
 ### Babel Configuration
 
-No explicit babel configuration is required when customising the jsx runtime with [@babel/plugin-transform-react-jsx](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#customizing-with-the-classic-runtime). Just add the comment below at the beginning of files that use the `css` prop, and don't forget to import `jsx` from `mystical`.
+Configure [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) to use the `automatic` runtime and point the `importSource` to mystical.
 
-```js
-/** @jsx jsx **/
-import { jsx } from 'mystical';
+Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) configuration:
+
 ```
-
-Alternatively, it's possible to do this automatically by installing [@emotion/babel-plugin-jsx-pragmatic](https://www.npmjs.com/package/@emotion/babel-plugin-jsx-pragmatic) and applying the following Babel configuration:
-
-```json
 {
-  "plugins": [
-    [
-      "@emotion/babel-plugin-jsx-pragmatic",
-      {
-        "module": "mystical",
-        "import": "jsx",
-        "export": "jsx"
-      }
-    ],
-    [
-      "@babel/plugin-transform-react-jsx",
-      {
-        "pragma": "jsx",
-        "pragmaFrag": "React.Fragment"
-      }
-    ]
-  ]
+  runtime: 'automatic',
+  importSource: 'mystical/public',
+  development: process.env.NODE_ENV === 'development',
 }
 ```
-
-With this configuration, no imports are required for the [`css` prop](#css-prop) to function. Also, you'll only need to import from `react`, if you wish to use fragments (`React.Fragment`) or of course any other parts of the React API.
 
 ## API
 
@@ -189,7 +168,7 @@ const theme = {
   colors: {
     primary: '#1282A2',
   },
-  space: ['0', '4px', '8px', '16px', '32px', '64px', '128px', '256px', '512px'],
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   // etc
 };
 
@@ -226,7 +205,7 @@ Given the following example:
 
 ```js
 const theme = {
-  space: ['0', '4px', '8px', '16px', '32px', '64px', '128px', '256px', '512px'],
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
 };
 
 const Component = () => <div css={{ margin: '3 5' }}>...</div>;
