@@ -5,7 +5,6 @@ export { default as useColorMode } from './useColorMode.js';
 export { default as useModifiers } from './useModifiers.js';
 export { default as jsx } from './jsx.js';
 export { default as Global } from './Global.js';
-export { default as cloneElement } from './cloneElement.js';
 export { default as InitializeColorMode } from './InitializeColorMode.js';
 export { default as defaultColorMode } from './defaultColorMode.js';
 export { default as darkColorMode } from './darkColorMode.js';

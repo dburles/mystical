@@ -7,7 +7,6 @@ exports.useColorMode = require('./useColorMode');
 exports.useModifiers = require('./useModifiers');
 exports.jsx = require('./jsx');
 exports.Global = require('./Global');
-exports.cloneElement = require('./cloneElement');
 exports.InitializeColorMode = require('./InitializeColorMode');
 exports.defaultColorMode = require('./defaultColorMode');
 exports.darkColorMode = require('./darkColorMode');

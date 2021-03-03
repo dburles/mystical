@@ -30,7 +30,6 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [useMystical](#usemystical)
   - [useModifiers](#usemodifiers)
   - [useColorMode](#usecolormode)
-  - [cloneElement](#cloneelement)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -163,7 +162,7 @@ import { jsx } from 'mystical';
 
 const MyComponent = () => {
   // ...
-}
+};
 ```
 
 ## API
@@ -390,18 +389,6 @@ Allows for altering the color mode on the fly.
 import { useColorMode } from 'mystical';
 
 const [colorMode, setColorMode] = useColorMode();
-```
-
-#### cloneElement
-
-When passing the [`css` prop](#css-prop) to a [`cloneElement`](https://reactjs.org/docs/react-api.html#cloneelement), you must use Mystical's `cloneElement` function instead of React's for proper handling of the new styles.
-
-```js
-import { cloneElement } from 'mystical';
-
-const clonedElement = cloneElement(element, {
-  css: [{ color: 'purple', margin: 0 }],
-});
 ```
 
 ### Contributors
