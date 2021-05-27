@@ -41,7 +41,7 @@ export default function (tests) {
     assert.strictEqual(modifierStyles.fontSize, 3);
   });
 
-  tests.add('mergeModifiers: basic with customModifiers,', async () => {
+  tests.add('mergeModifiers: basic with customModifiers', async () => {
     const modifierStyles = mergeModifiers({ size: 'small' }, modifiers, {
       fontSize: 4,
     });
@@ -62,7 +62,7 @@ export default function (tests) {
   });
 
   tests.add(
-    'mergeModifiers: multiple elements with customModifiers,',
+    'mergeModifiers: multiple elements with customModifiers',
     async () => {
       const modifierStyles = mergeModifiers({ size: 'small' }, modifiers2, {
         title: {
