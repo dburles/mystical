@@ -30,6 +30,8 @@
       "require": "./public/index.js"
     },
     "./public/*": "./public/*",
+    "./public/jsx-runtime": "./public/jsx-runtime.js",
+    "./public/jsx-dev-runtime": "./public/jsx-dev-runtime.js",
     "./package": "./package.json",
     "./package.json": "./package.json"
   },
