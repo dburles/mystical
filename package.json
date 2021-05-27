@@ -81,7 +81,7 @@
     "react-dom": "^17.0.2",
     "size-limit": "^4.11.0",
     "snapshot-assertion": "^3.0.0",
-    "test-director": "^6.0.0"
+    "test-director": "^5.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
