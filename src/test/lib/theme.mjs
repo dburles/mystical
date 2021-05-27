@@ -1,5 +1,3 @@
-'use strict';
-
 const theme = {
   space: [
     '0',
@@ -228,4 +226,4 @@ const theme = {
   },
 };
 
-module.exports = theme;
+export default theme;

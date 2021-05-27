@@ -48,7 +48,7 @@
     "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
-    "test:api": "coverage-node -r hard-rejection/register test",
+    "test:api": "coverage-node test/index.mjs",
     "test:size": "size-limit",
     "dev": "chokidar src --initial -c 'npm run prepare && npm run test:api --silent'",
     "prepublishOnly": "npm test"
@@ -75,13 +75,12 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "hard-rejection": "^2.1.0",
     "prettier": "^2.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "size-limit": "^4.11.0",
     "snapshot-assertion": "^3.0.0",
-    "test-director": "^5.0.0"
+    "test-director": "^6.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
