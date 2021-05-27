@@ -48,7 +48,7 @@
     "test": "npm run test:eslint && npm run test:prettier && npm run test:api && npm run test:size",
     "test:eslint": "eslint --ext mjs,js .",
     "test:prettier": "prettier -c .",
-    "test:api": "coverage-node test/index.mjs",
+    "test:api": "node test/index.mjs",
     "test:size": "size-limit",
     "dev": "chokidar src --initial -c 'npm run prepare && npm run test:api --silent'",
     "prepublishOnly": "npm test"
@@ -64,7 +64,6 @@
     "@size-limit/preset-small-lib": "^4.11.0",
     "@testing-library/react": "^11.2.7",
     "chokidar-cli": "^2.1.0",
-    "coverage-node": "^5.0.1",
     "eslint": "^7.27.0",
     "eslint-config-env": "^20.0.1",
     "eslint-config-prettier": "^8.3.0",
