@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const mergeModifiers = require('../private/mergeModifiers');
+import assert from 'assert';
+import mergeModifiers from '../private/mergeModifiers.js';
 
 const modifiers = {
   default: {
@@ -34,7 +32,7 @@ const modifiers2 = {
   },
 };
 
-module.exports = (tests) => {
+export default function (tests) {
   tests.add('mergeModifiers: basic', async () => {
     const modifierStyles = mergeModifiers({ size: 'small' }, modifiers);
 
@@ -43,7 +41,7 @@ module.exports = (tests) => {
     assert.strictEqual(modifierStyles.fontSize, 3);
   });
 
-  tests.add('mergeModifiers: basic with customModifiers,', async () => {
+  tests.add('mergeModifiers: basic with customModifiers', async () => {
     const modifierStyles = mergeModifiers({ size: 'small' }, modifiers, {
       fontSize: 4,
     });
@@ -64,7 +62,7 @@ module.exports = (tests) => {
   });
 
   tests.add(
-    'mergeModifiers: multiple elements with customModifiers,',
+    'mergeModifiers: multiple elements with customModifiers',
     async () => {
       const modifierStyles = mergeModifiers({ size: 'small' }, modifiers2, {
         title: {
@@ -75,4 +73,4 @@ module.exports = (tests) => {
       assert.strictEqual(modifierStyles.title.fontSize, 4);
     }
   );
-};
+}

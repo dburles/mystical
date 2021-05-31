@@ -44,7 +44,9 @@ Build themeable, robust and maintainable React component libraries and applicati
 Wrap your app with [MysticalProvider](#mysticalprovider):
 
 ```js
-import { MysticalProvider } from 'mystical';
+// While named imports are available, deep imports result in a small bundle size
+// regardless of the (often dubious) tree-shaking abilities of your bundler.
+import MysticalProvider from 'mystical/public/MysticalProvider.js';
 
 // Optional theme object
 const theme = {
@@ -64,7 +66,7 @@ This `Button` component attempts to illustrate some of the important parts of th
 2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
-import { useModifiers } from 'mystical';
+import useModifiers from 'mystical/public/useModifiers.js';
 
 const modifiers = {
   variant: {
@@ -158,7 +160,7 @@ If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and
 
 ```js
 /** @jsx jsx **/
-import { jsx } from 'mystical';
+import jsx from 'mystical/public/jsx.js';
 
 const MyComponent = () => {
   // ...
@@ -276,7 +278,7 @@ const options = {
 Global style component that automatically removes its styles when unmounted.
 
 ```js
-import { Global } from 'mystical';
+import Global from 'mystical/public/Global.js';
 
 const App = () => {
   return (
@@ -325,7 +327,7 @@ const Component = () => {
 A simple way to pick out values from the theme similar to using the [`css` prop](#css-prop).
 
 ```js
-import { useTheme } from 'mystical';
+import useTheme from 'mystical/public/useTheme.js';
 
 const purple = useTheme('colors', 'purple');
 ```
@@ -335,7 +337,7 @@ const purple = useTheme('colors', 'purple');
 Provides access to the complete [theme object](#theme-object).
 
 ```js
-import { useMystical } from 'mystical';
+import useMystical from 'mystical/public/useMystical.js';
 
 const { theme } = useMystical();
 ```
@@ -345,7 +347,7 @@ const { theme } = useMystical();
 A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
 
 ```js
-import { useModifiers } from 'mystical';
+import useModifiers from 'mystical/public/useModifiers.js';
 
 const modifiers = {
   // `default` is a special key for applying and overwriting default styles across each element (experimental).
@@ -386,7 +388,7 @@ const Component = ({ size = 'small', modifiers: customModifiers }) => {
 Allows for altering the color mode on the fly.
 
 ```js
-import { useColorMode } from 'mystical';
+import useColorMode from 'mystical/public/useColorMode.js';
 
 const [colorMode, setColorMode] = useColorMode();
 ```
