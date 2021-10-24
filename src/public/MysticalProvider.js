@@ -14,10 +14,14 @@ const defaultOptions = {
 };
 
 const defaultColorMode = () => {
-  return (
-    (!isServer && window.localStorage.getItem('mystical-color-mode')) ||
-    'default'
-  );
+  try {
+    return (
+      (!isServer && window.localStorage.getItem('mystical-color-mode')) ||
+      'default'
+    );
+  } catch (error) {
+    return 'default';
+  }
 };
 
 const MysticalProvider = ({
@@ -29,11 +33,10 @@ const MysticalProvider = ({
   const stringifiedTheme = JSON.stringify(theme);
 
   // Signals an intent to change the color mode
-  const [colorModeIntent, setColorModeIntent] = React.useState(
-    defaultColorMode()
-  );
+  const [colorModeIntent, setColorModeIntent] =
+    React.useState(defaultColorMode);
 
-  const [colorMode, setColorModeState] = React.useState(defaultColorMode());
+  const [colorMode, setColorModeState] = React.useState(defaultColorMode);
   const setColorMode = React.useCallback(
     (mode) => {
       if (mode !== colorMode) {
@@ -45,7 +48,11 @@ const MysticalProvider = ({
 
   useLayoutEffect(() => {
     if (colorMode !== colorModeIntent) {
-      window.localStorage.setItem('mystical-color-mode', colorModeIntent);
+      try {
+        window.localStorage.setItem('mystical-color-mode', colorModeIntent);
+      } catch (error) {
+        // do nothing
+      }
       document.body.setAttribute('data-color-mode', colorModeIntent);
       setColorModeState(colorModeIntent);
     }
@@ -93,11 +100,19 @@ const MysticalProvider = ({
   }, [stringifiedTheme]);
 
   useLayoutEffect(() => {
+    let hasSetColorMode = false;
+    try {
+      hasSetColorMode = Boolean(
+        window.localStorage.getItem('mystical-color-mode')
+      );
+    } catch (error) {
+      // do nothing
+    }
     if (
       options.usePrefersColorScheme &&
       theme.colors?.modes?.dark &&
       // only set mode based on system preferences the first time
-      !window.localStorage.getItem('mystical-color-mode')
+      !hasSetColorMode
     ) {
       const colorModeHandler = ({ matches }) => {
         if (matches) {
