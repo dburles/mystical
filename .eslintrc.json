@@ -3,7 +3,7 @@
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],
-    "react/react-in-jsx-scope": 0,
-    "jsdoc/require-jsdoc": 0
+    "jsdoc/require-jsdoc": "off",
+    "func-style": ["error", "declaration"]
   }
 }

@@ -1,7 +1,0 @@
-[
-  {
-    "path": "public/index.js",
-    "limit": "12 KB",
-    "ignore": ["prop-types"]
-  }
-]
