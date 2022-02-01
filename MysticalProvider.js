@@ -117,7 +117,9 @@ function MysticalProvider({
 
     if (
       options.usePrefersColorScheme &&
-      theme.colors?.modes?.dark &&
+      theme.colors &&
+      theme.colors.modes &&
+      theme.colors.modes.dark &&
       // only set mode based on system preferences the first time
       !hasSetColorMode
     ) {
