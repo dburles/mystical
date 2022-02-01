@@ -1,25 +1,18 @@
-name: Node.js CI
-
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-
+name: CI
+on: [push, pull_request]
 jobs:
   test:
+    name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: ['12', '14', '16']
-
+        os: [ubuntu-latest, macos-latest]
+        node: ["12", "14", "16", "17"]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Setup Node.js v${{ matrix.node }}
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install-test
-        env:
-          CI: true
+          node-version: ${{ matrix.node }}
+      - name: npm install and test
+        run: npm install-test
