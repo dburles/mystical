@@ -4,7 +4,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 ## Overview
 
-- Mystical is a small (< 12 KB [size limited](https://github.com/ai/size-limit/)) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
+- Mystical is a small (< 12 KB) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
 - A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook.
 - Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish to switch in the browser.
 - Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
@@ -44,9 +44,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 Wrap your app with [MysticalProvider](#mysticalprovider):
 
 ```js
-// While named imports are available, deep imports result in a small bundle size
-// regardless of the (often dubious) tree-shaking abilities of your bundler.
-import MysticalProvider from 'mystical/public/MysticalProvider.js';
+import MysticalProvider from "mystical/MysticalProvider.js";
 
 // Optional theme object
 const theme = {
@@ -66,36 +64,36 @@ This `Button` component attempts to illustrate some of the important parts of th
 2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
-import useModifiers from 'mystical/public/useModifiers.js';
+import useModifiers from "mystical/useModifiers.js";
 
 const modifiers = {
   variant: {
     primary: {
-      color: 'white',
-      backgroundColor: 'blues.600', // These values are picked up off the theme
-      ':hover:not(:disabled)': {
-        backgroundColor: 'blues.500',
+      color: "white",
+      backgroundColor: "blues.600", // These values are picked up off the theme
+      ":hover:not(:disabled)": {
+        backgroundColor: "blues.500",
       },
-      ':active:not(:disabled)': {
-        backgroundColor: 'blues.700',
+      ":active:not(:disabled)": {
+        backgroundColor: "blues.700",
       },
     },
   },
   size: {
     small: {
       fontSize: 0,
-      lineHeight: 'none',
-      padding: '2 3', // Shorthand 1-4 properties such as padding are also translated to spacing values defined in the theme
+      lineHeight: "none",
+      padding: "2 3", // Shorthand 1-4 properties such as padding are also translated to spacing values defined in the theme
     },
     medium: {
       fontSize: 1,
-      lineHeight: 'normal',
-      padding: '2 4',
+      lineHeight: "normal",
+      padding: "2 4",
     },
     large: {
       fontSize: 2,
-      lineHeight: 'normal',
-      padding: '3 5',
+      lineHeight: "normal",
+      padding: "3 5",
     },
   },
   shape: {
@@ -105,13 +103,13 @@ const modifiers = {
   },
 };
 
-const Button = ({
-  variant = 'primary',
-  size = 'small',
-  shape = 'rounded',
+function Button({
+  variant = "primary",
+  size = "small",
+  shape = "rounded",
   modifiers: customModifiers,
   ...props
-}) => {
+}) {
   const modifierStyle = useModifiers(
     { variant, size, shape },
     modifiers,
@@ -124,18 +122,18 @@ const Button = ({
       css={[
         // Objects passed within arrays are merged
         {
-          color: 'white',
-          fontFamily: 'body',
+          color: "white",
+          fontFamily: "body",
           border: 0,
-          ':disabled': {
-            opacity: 'disabled',
+          ":disabled": {
+            opacity: "disabled",
           },
         },
         modifierStyle,
       ]}
     />
   );
-};
+}
 ```
 
 ### Babel Configuration
@@ -149,7 +147,7 @@ Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) con
 ```js
 {
   runtime: 'automatic',
-  importSource: 'mystical/public',
+  importSource: 'mystical',
   development: process.env.NODE_ENV === 'development',
 }
 ```
@@ -160,11 +158,11 @@ If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and
 
 ```js
 /** @jsx jsx **/
-import jsx from 'mystical/public/jsx.js';
+import jsx from "mystical/jsx.js";
 
-const MyComponent = () => {
+function MyComponent() {
   // ...
-};
+}
 ```
 
 ## API
@@ -181,7 +179,7 @@ This is the primary method of applying styles to components and elements.
 // Example theme:
 const theme = {
   colors: {
-    primary: '#1282A2',
+    primary: "#1282A2",
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   // etc
@@ -189,9 +187,9 @@ const theme = {
 
 // `padding` is keyed to the `space` property of the theme and looks up the third index in the array.
 // `backgroundColor` is keyed to the `colors` property of the theme.
-const Component = () => (
-  <div css={{ padding: 3, backgroundColor: 'primary' }}>...</div>
-);
+function Component() {
+  return <div css={{ padding: 3, backgroundColor: "primary" }}>...</div>;
+}
 ```
 
 ##### Theme Lookup
@@ -205,11 +203,13 @@ Arrays and Object theme values can be retrieved by using dot properties:
 ```js
 const theme = {
   colors: {
-    red: ['#fed7d7', '#feb2b2', '#fc8181'],
+    red: ["#fed7d7", "#feb2b2", "#fc8181"],
   },
 };
 
-const Component = () => <div css={{ backgroundColor: 'red.2' }}>...</div>;
+function Component() {
+  return <div css={{ backgroundColor: "red.2" }}>...</div>;
+}
 ```
 
 ##### Shorthand Properties
@@ -223,7 +223,7 @@ const theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
 };
 
-const Component = () => <div css={{ margin: '3 5' }}>...</div>;
+const Component = () => <div css={{ margin: "3 5" }}>...</div>;
 ```
 
 ...the following style is generated: `margin: 16px 64px`
@@ -233,12 +233,12 @@ const Component = () => <div css={{ margin: '3 5' }}>...</div>;
 Instead of explicitly writing media queries, simply pass an array. Breakpoints can also be skipped, e.g. `['100%', , '25%']`.
 
 ```js
-const Component = () => {
+function Component() {
   // Applies width 100% to all viewport widths,
   // 50% above the first breakpoint,
   // and 25% above the next breakpoint
-  return <div css={{ width: ['100%', '50%', '25%'] }}>...</div>;
-};
+  return <div css={{ width: ["100%", "50%", "25%"] }}>...</div>;
+}
 ```
 
 ##### Merging Styles
@@ -246,9 +246,11 @@ const Component = () => {
 The css prop also accepts an array of style objects which are deeply merged in order:
 
 ```js
-const Component = () => (
-  <div css={[{ fontSize: 1 }, { fontSize: 2, color: 'white' }]}>...</div>
-);
+function Component() {
+  return (
+    <div css={[{ fontSize: 1 }, { fontSize: 2, color: "white" }]}>...</div>
+  );
+}
 ```
 
 #### MysticalProvider
@@ -256,9 +258,11 @@ const Component = () => (
 Your application must be wrapped with the `MysticalProvider` component:
 
 ```js
-const App = () => {
+import MysticalProvider from "mystical/MysticalProvider.js";
+
+function App() {
   return <MysticalProvider>...</MysticalProvider>;
-};
+}
 ```
 
 It accepts the following props:
@@ -278,15 +282,15 @@ const options = {
 Global style component that automatically removes its styles when unmounted.
 
 ```js
-import Global from 'mystical/public/Global.js';
+import Global from "mystical/Global.js";
 
-const App = () => {
+function App() {
   return (
     <div>
       <Global
         styles={{
           body: {
-            backgroundColor: 'white',
+            backgroundColor: "white",
             border: 0,
           },
         }}
@@ -294,7 +298,7 @@ const App = () => {
       ...
     </div>
   );
-};
+}
 ```
 
 #### keyframes
@@ -302,13 +306,13 @@ const App = () => {
 Install [@emotion/react](https://www.npmjs.com/package/@emotion/react) (`npm i @emotion/react`). See https://emotion.sh/docs/keyframes.
 
 ```js
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 
 const animationName = keyframes({
   // ...
 });
 
-const Component = () => {
+function Component() {
   return (
     <div
       css={{
@@ -319,7 +323,7 @@ const Component = () => {
       ...
     </div>
   );
-};
+}
 ```
 
 #### useTheme
@@ -327,9 +331,13 @@ const Component = () => {
 A simple way to pick out values from the theme similar to using the [`css` prop](#css-prop).
 
 ```js
-import useTheme from 'mystical/public/useTheme.js';
+import useTheme from "mystical/useTheme.js";
 
-const purple = useTheme('colors', 'purple');
+function Component() {
+  const purple = useTheme("colors", "purple");
+
+  return <div>The colour purple is {purple}!</div>;
+}
 ```
 
 #### useMystical
@@ -337,9 +345,13 @@ const purple = useTheme('colors', 'purple');
 Provides access to the complete [theme object](#theme-object).
 
 ```js
-import useMystical from 'mystical/public/useMystical.js';
+import useMystical from "mystical/useMystical.js";
 
-const { theme } = useMystical();
+function Component() {
+  const { theme } = useMystical();
+
+  return JSON.stringify(theme, null, 2);
+}
 ```
 
 #### useModifiers
@@ -347,13 +359,13 @@ const { theme } = useMystical();
 A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
 
 ```js
-import useModifiers from 'mystical/public/useModifiers.js';
+import useModifiers from "mystical/useModifiers.js";
 
 const modifiers = {
   // `default` is a special key for applying and overwriting default styles across each element (experimental).
   default: {
-    title: { fontFamily: 'heading' },
-    subtitle: { fontFamily: 'body' },
+    title: { fontFamily: "heading" },
+    subtitle: { fontFamily: "body" },
   },
   size: {
     small: {
@@ -367,7 +379,7 @@ const modifiers = {
   },
 };
 
-const Component = ({ size = 'small', modifiers: customModifiers }) => {
+function Component({ size = "small", modifiers: customModifiers }) {
   const modifierStyle = useModifiers(
     { size },
     modifiers,
@@ -380,7 +392,7 @@ const Component = ({ size = 'small', modifiers: customModifiers }) => {
       <div css={modifierStyle.subtitle}>{subtitle}</div>
     </div>
   );
-};
+}
 ```
 
 #### useColorMode
@@ -388,9 +400,13 @@ const Component = ({ size = 'small', modifiers: customModifiers }) => {
 Allows for altering the color mode on the fly.
 
 ```js
-import useColorMode from 'mystical/public/useColorMode.js';
+import useColorMode from "mystical/useColorMode.js";
 
-const [colorMode, setColorMode] = useColorMode();
+function Component() {
+  const [colorMode, setColorMode] = useColorMode();
+
+  return <div>Color mode is {colorMode}</div>;
+}
 ```
 
 ### Contributors
