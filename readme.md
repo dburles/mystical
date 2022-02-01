@@ -44,8 +44,6 @@ Build themeable, robust and maintainable React component libraries and applicati
 Wrap your app with [MysticalProvider](#mysticalprovider):
 
 ```js
-// While named imports are available, deep imports result in a small bundle size
-// regardless of the (often dubious) tree-shaking abilities of your bundler.
 import MysticalProvider from "mystical/MysticalProvider.js";
 
 // Optional theme object
@@ -105,13 +103,13 @@ const modifiers = {
   },
 };
 
-const Button = ({
+function Button({
   variant = "primary",
   size = "small",
   shape = "rounded",
   modifiers: customModifiers,
   ...props
-}) => {
+}) {
   const modifierStyle = useModifiers(
     { variant, size, shape },
     modifiers,
@@ -135,7 +133,7 @@ const Button = ({
       ]}
     />
   );
-};
+}
 ```
 
 ### Babel Configuration
@@ -162,9 +160,9 @@ If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and
 /** @jsx jsx **/
 import jsx from "mystical/jsx.js";
 
-const MyComponent = () => {
+function MyComponent() {
   // ...
-};
+}
 ```
 
 ## API
@@ -189,9 +187,9 @@ const theme = {
 
 // `padding` is keyed to the `space` property of the theme and looks up the third index in the array.
 // `backgroundColor` is keyed to the `colors` property of the theme.
-const Component = () => (
-  <div css={{ padding: 3, backgroundColor: "primary" }}>...</div>
-);
+function Component() {
+  return <div css={{ padding: 3, backgroundColor: "primary" }}>...</div>;
+}
 ```
 
 ##### Theme Lookup
@@ -209,7 +207,9 @@ const theme = {
   },
 };
 
-const Component = () => <div css={{ backgroundColor: "red.2" }}>...</div>;
+function Component() {
+  return <div css={{ backgroundColor: "red.2" }}>...</div>;
+}
 ```
 
 ##### Shorthand Properties
@@ -233,12 +233,12 @@ const Component = () => <div css={{ margin: "3 5" }}>...</div>;
 Instead of explicitly writing media queries, simply pass an array. Breakpoints can also be skipped, e.g. `['100%', , '25%']`.
 
 ```js
-const Component = () => {
+function Component() {
   // Applies width 100% to all viewport widths,
   // 50% above the first breakpoint,
   // and 25% above the next breakpoint
   return <div css={{ width: ["100%", "50%", "25%"] }}>...</div>;
-};
+}
 ```
 
 ##### Merging Styles
@@ -246,9 +246,11 @@ const Component = () => {
 The css prop also accepts an array of style objects which are deeply merged in order:
 
 ```js
-const Component = () => (
-  <div css={[{ fontSize: 1 }, { fontSize: 2, color: "white" }]}>...</div>
-);
+function Component() {
+  return (
+    <div css={[{ fontSize: 1 }, { fontSize: 2, color: "white" }]}>...</div>
+  );
+}
 ```
 
 #### MysticalProvider
@@ -256,9 +258,11 @@ const Component = () => (
 Your application must be wrapped with the `MysticalProvider` component:
 
 ```js
-const App = () => {
+import MysticalProvider from "mystical/MysticalProvider.js";
+
+function App() {
   return <MysticalProvider>...</MysticalProvider>;
-};
+}
 ```
 
 It accepts the following props:
@@ -280,7 +284,7 @@ Global style component that automatically removes its styles when unmounted.
 ```js
 import Global from "mystical/Global.js";
 
-const App = () => {
+function App() {
   return (
     <div>
       <Global
@@ -294,7 +298,7 @@ const App = () => {
       ...
     </div>
   );
-};
+}
 ```
 
 #### keyframes
@@ -308,7 +312,7 @@ const animationName = keyframes({
   // ...
 });
 
-const Component = () => {
+function Component() {
   return (
     <div
       css={{
@@ -319,7 +323,7 @@ const Component = () => {
       ...
     </div>
   );
-};
+}
 ```
 
 #### useTheme
@@ -329,7 +333,11 @@ A simple way to pick out values from the theme similar to using the [`css` prop]
 ```js
 import useTheme from "mystical/useTheme.js";
 
-const purple = useTheme("colors", "purple");
+function Component() {
+  const purple = useTheme("colors", "purple");
+
+  return <div>The colour purple is {purple}!</div>;
+}
 ```
 
 #### useMystical
@@ -339,7 +347,11 @@ Provides access to the complete [theme object](#theme-object).
 ```js
 import useMystical from "mystical/useMystical.js";
 
-const { theme } = useMystical();
+function Component() {
+  const { theme } = useMystical();
+
+  return JSON.stringify(theme, null, 2);
+}
 ```
 
 #### useModifiers
@@ -367,7 +379,7 @@ const modifiers = {
   },
 };
 
-const Component = ({ size = "small", modifiers: customModifiers }) => {
+function Component({ size = "small", modifiers: customModifiers }) {
   const modifierStyle = useModifiers(
     { size },
     modifiers,
@@ -380,7 +392,7 @@ const Component = ({ size = "small", modifiers: customModifiers }) => {
       <div css={modifierStyle.subtitle}>{subtitle}</div>
     </div>
   );
-};
+}
 ```
 
 #### useColorMode
@@ -390,7 +402,11 @@ Allows for altering the color mode on the fly.
 ```js
 import useColorMode from "mystical/useColorMode.js";
 
-const [colorMode, setColorMode] = useColorMode();
+function Component() {
+  const [colorMode, setColorMode] = useColorMode();
+
+  return <div>Color mode is {colorMode}</div>;
+}
 ```
 
 ### Contributors
