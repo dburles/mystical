@@ -1,11 +1,7 @@
-import {
-  jsx as emotionJsx,
-  jsxs as emotionJsxs,
-  // eslint-disable-next-line node/file-extension-in-import
-} from "@emotion/react/jsx-runtime";
+import runtime from "@emotion/react/jsx-runtime/dist/emotion-react-jsx-runtime.cjs.js";
 import createJsxFn from "./private/createJsxFn.mjs";
 
 // https://github.com/facebook/react/blob/master/packages/react/src/jsx/ReactJSX.js#L16-L19
-export const jsx = createJsxFn(emotionJsx);
+export const jsx = createJsxFn(runtime.jsx);
 
-export const jsxs = createJsxFn(emotionJsxs);
+export const jsxs = createJsxFn(runtime.jsxs);

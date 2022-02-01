@@ -1,5 +1,4 @@
-// eslint-disable-next-line node/file-extension-in-import
-import { jsxDEV as emotionJsxDev } from "@emotion/react/jsx-dev-runtime";
+import runtime from "@emotion/react/jsx-dev-runtime/dist/emotion-react-jsx-dev-runtime.cjs.js";
 import createJsxFn from "./private/createJsxFn.mjs";
 
-export const jsxDEV = createJsxFn(emotionJsxDev);
+export const jsxDEV = createJsxFn(runtime.jsxDEV);
