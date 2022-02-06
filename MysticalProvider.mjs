@@ -134,9 +134,10 @@ export default function MysticalProvider({
 
   const { modes, ...colors } = theme.colors;
 
-  return React.createElement(ThemeProvider, { theme: providerValue }, [
+  return React.createElement(
+    ThemeProvider,
+    { theme: providerValue },
     React.createElement(Global, {
-      key: "defaults",
       styles: {
         ":root": customProperties(colors, "colors"),
         '[data-color-mode="default"]': customProperties(colors, "colors"),
@@ -151,11 +152,10 @@ export default function MysticalProvider({
       },
     }),
     React.createElement(Global, {
-      key: "globals",
       styles: [defaultGlobalStyles, theme.global],
     }),
-    children,
-  ]);
+    children
+  );
 }
 
 MysticalProvider.propTypes = {
