@@ -67,6 +67,7 @@ const themeTokens = {
   maxHeight: "sizes",
   flexBasis: "sizes",
   size: "sizes",
+  textDecorationColor: "colors",
   // svg
   fill: "colors",
   stroke: "colors",
