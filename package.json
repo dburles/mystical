@@ -53,10 +53,10 @@
   },
   "types": "index.d.ts",
   "scripts": {
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:api",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:unit",
     "test:eslint": "eslint .",
     "test:prettier": "prettier -c .",
-    "test:api": "node test/run.mjs",
+    "test:unit": "node test/run.mjs",
     "dev": "chokidar . --initial -c 'npm run test:api --silent'",
     "prepublishOnly": "npm test"
   },

@@ -1,5 +1,7 @@
 "use strict";
 
+const get = require("./get");
+
 function customProperties(theme, prefix) {
   const customProperties = {};
 
@@ -17,12 +19,12 @@ function customProperties(theme, prefix) {
 
       if (Array.isArray(value)) {
         value.forEach((item, i) => {
-          customProperties[`--${newKey}-${i}`] = item;
+          customProperties[`--${newKey}-${i}`] = get(theme, item, item);
         });
       } else if (Object(value) === value) {
         generateProperties(value, newKey);
       } else {
-        customProperties[`--${newKey}`] = value;
+        customProperties[`--${newKey}`] = get(theme, value, value);
       }
     });
   }
