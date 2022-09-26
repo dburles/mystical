@@ -1,6 +1,6 @@
 # 🌌 mystical
 
-Build themeable, robust and maintainable React component libraries and applications following the [System UI Theme Specification](https://system-ui.com/theme/).
+Build themeable, robust and maintainable React component libraries and applications following the [System UI Theme Specification](https://github.com/system-ui/theme-specification).
 
 ## Overview
 
