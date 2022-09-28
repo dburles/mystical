@@ -12,9 +12,10 @@ Build themeable, robust and maintainable React component libraries and applicati
 ## Table of Contents
 
 - [Installation](#install)
-- [Getting Started](#getting-started)
+- [Guide](#guide)
   - [Context](#context)
   - [Example Component](#example-component)
+  - [Dark Mode](#dark-mode)
 - [Babel Configuration](#babel-configuration)
 - [API](#api)
   - [Theme Object](#theme-object)
@@ -30,6 +31,7 @@ Build themeable, robust and maintainable React component libraries and applicati
   - [useMystical](#usemystical)
   - [useModifiers](#usemodifiers)
   - [useColorMode](#usecolormode)
+  - [darkColorMode](#darkcolormode)
 - [Contributors](#contributors)
 - [License](#license)
 
@@ -37,9 +39,9 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 `npm i mystical`
 
-## Getting Started
+## Guide
 
-##### Context
+### Context
 
 Wrap your app with [MysticalProvider](#mysticalprovider):
 
@@ -56,7 +58,7 @@ const App = () => {
 };
 ```
 
-##### Example Component
+### Example Component
 
 This `Button` component attempts to illustrate some of the important parts of the Mystical API:
 
@@ -70,12 +72,12 @@ const modifiers = {
   variant: {
     primary: {
       color: "white",
-      backgroundColor: "blues.600", // These values are picked up off the theme
+      backgroundColor: "blue.600", // These values are picked up off the theme
       ":hover:not(:disabled)": {
-        backgroundColor: "blues.500",
+        backgroundColor: "blue.500",
       },
       ":active:not(:disabled)": {
-        backgroundColor: "blues.700",
+        backgroundColor: "blue.700",
       },
     },
   },
@@ -136,7 +138,25 @@ function Button({
 }
 ```
 
-### Babel Configuration
+### Dark Mode
+
+To apply styles for dark mode, import the [darkColorMode](#darkcolormode) utility.
+
+```js
+import darkColorMode from "mystical/darkColorMode.js";
+
+function Component() {
+  return (
+    <div css={{ color: "black", [darkColorMode]: { color: "white" } }}>
+      This text is black in 'default' more and white in 'dark' mode.
+    </div>
+  );
+}
+```
+
+If you wish to allow users to toggle between colour modes (overwriting system preference), import the [useColorMode](#usecolormode) hook. The current mode will be saved in local storage.
+
+### Babel Configuration for JSX
 
 #### Automatic (Recommended)
 
@@ -397,7 +417,7 @@ function Component({ size = "small", modifiers: customModifiers }) {
 
 #### useColorMode
 
-Allows for altering the color mode on the fly.
+Allows for altering the color mode on the fly. Takes precedence over system setting.
 
 ```js
 import useColorMode from "mystical/useColorMode.js";
@@ -406,6 +426,22 @@ function Component() {
   const [colorMode, setColorMode] = useColorMode();
 
   return <div>Color mode is {colorMode}</div>;
+}
+```
+
+#### darkColorMode
+
+A utility for applying dark mode styles.
+
+```js
+import darkColorMode from "mystical/darkColorMode.js";
+
+function Component() {
+  return (
+    <div css={{ color: "black", [darkColorMode]: { color: "white" } }}>
+      This text is black in 'default' more and white in 'dark' mode.
+    </div>
+  );
 }
 ```
 
@@ -418,3 +454,7 @@ function Component() {
 #### License
 
 MIT
+
+```
+
+```
