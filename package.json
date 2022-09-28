@@ -53,31 +53,27 @@
   },
   "types": "index.d.ts",
   "scripts": {
-    "test": "npm run test:eslint && npm run test:prettier && npm run test:unit",
-    "test:eslint": "eslint .",
+    "test": "npm run test:lint && npm run test:prettier && npm run test:unit",
+    "test:lint": "eslint .",
     "test:prettier": "prettier -c .",
     "test:unit": "node test/run.mjs",
-    "dev": "chokidar . --initial -c 'npm run test:api --silent'",
     "prepublishOnly": "npm test"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.2",
-    "chokidar-cli": "^3.0.0",
     "eslint": "^8.8.0",
-    "eslint-config-env": "^23.0.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.23.3",
-    "eslint-plugin-jsdoc": "^37.7.0",
+    "eslint-plugin-jsdoc": "^39.3.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "snapshot-assertion": "^4.0.1",
-    "test-director": "^8.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "snapshot-assertion": "^5.0.0",
+    "test-director": "^10.0.0"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -85,6 +81,6 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   }
 }

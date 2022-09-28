@@ -1,5 +1,22 @@
 {
-  "extends": ["env"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:jsdoc/recommended",
+    "plugin:node/recommended",
+    "plugin:import/recommended",
+    "plugin:compat/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["jsdoc", "react-hooks"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],
