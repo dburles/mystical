@@ -99,7 +99,7 @@ function MysticalProvider({
     prevThemeRef.current = stringifiedTheme;
   }, [stringifiedTheme]);
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     let hasSetColorMode = false;
     try {
       hasSetColorMode = Boolean(
@@ -114,6 +114,7 @@ function MysticalProvider({
     }
 
     if (
+      !isServer &&
       options.usePrefersColorScheme &&
       // useColorMode sets localStorage 'mystical-color-mode' which overrides system preferences.
       !hasSetColorMode
