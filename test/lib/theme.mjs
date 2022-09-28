@@ -18,6 +18,9 @@ const theme = {
     transparent: "transparent",
     black: "#000",
     white: "#fff",
+    brand: {
+      primary: "emerald.500",
+    },
     slate: {
       50: "#f8fafc",
       100: "#f1f5f9",
