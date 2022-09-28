@@ -115,10 +115,7 @@ function MysticalProvider({
 
     if (
       options.usePrefersColorScheme &&
-      theme.colors &&
-      theme.colors.modes &&
-      theme.colors.modes.dark &&
-      // only set mode based on system preferences the first time
+      // useColorMode sets localStorage 'mystical-color-mode' which overrides system preferences.
       !hasSetColorMode
     ) {
       const mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -134,23 +131,12 @@ function MysticalProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { modes, ...colors } = theme.colors;
-
   return React.createElement(
     ThemeProvider,
     { theme: providerValue },
     React.createElement(Global, {
       styles: {
-        ":root": customProperties(colors, "colors"),
-        '[data-color-mode="default"]': customProperties(colors, "colors"),
-        ...(modes &&
-          Object.keys(modes).reduce((acc, key) => {
-            acc[`[data-color-mode="${key}"]`] = customProperties(
-              theme.colors.modes[key],
-              "colors"
-            );
-            return acc;
-          }, {})),
+        ":root": customProperties(theme.colors, "colors"),
       },
     }),
     React.createElement(Global, {
