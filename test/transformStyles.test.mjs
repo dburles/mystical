@@ -1,4 +1,4 @@
-import snapshot from "snapshot-assertion";
+import snapshot from "snapshot-assertion/assertSnapshot.mjs";
 import transformStyles from "../private/transformStyles.js";
 import snapshotPath from "./lib/snapshotPath.mjs";
 import theme from "./lib/theme.mjs";
