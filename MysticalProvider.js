@@ -99,7 +99,7 @@ function MysticalProvider({
     prevThemeRef.current = stringifiedTheme;
   }, [stringifiedTheme]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     let hasSetColorMode = false;
     try {
       hasSetColorMode = Boolean(
