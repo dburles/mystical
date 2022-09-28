@@ -41,6 +41,11 @@ function MysticalProvider({
     (mode) => {
       if (mode !== colorMode) {
         setColorModeIntent(mode);
+        try {
+          window.localStorage.setItem("mystical-color-mode", mode);
+        } catch (error) {
+          // do nothing
+        }
       }
     },
     [colorMode]
@@ -48,11 +53,6 @@ function MysticalProvider({
 
   useLayoutEffect(() => {
     if (colorMode !== colorModeIntent) {
-      try {
-        window.localStorage.setItem("mystical-color-mode", colorModeIntent);
-      } catch (error) {
-        // do nothing
-      }
       document.body.setAttribute("data-color-mode", colorModeIntent);
       setColorModeState(colorModeIntent);
     }
@@ -110,9 +110,7 @@ function MysticalProvider({
     }
 
     function colorModeHandler({ matches }) {
-      if (matches) {
-        setColorModeIntent("dark");
-      }
+      setColorModeIntent(matches ? "dark" : "default");
     }
 
     if (
@@ -123,16 +121,14 @@ function MysticalProvider({
       // only set mode based on system preferences the first time
       !hasSetColorMode
     ) {
-      colorModeHandler(window.matchMedia("(prefers-color-scheme: dark)"));
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
 
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addListener(colorModeHandler);
+      colorModeHandler(mq);
+
+      mq.addEventListener("change", colorModeHandler);
 
       return () => {
-        window
-          .matchMedia("(prefers-color-scheme: dark)")
-          .removeListener(colorModeHandler);
+        mq.removeEventListener("change", colorModeHandler);
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

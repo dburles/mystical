@@ -3,16 +3,19 @@
 const React = require("react");
 
 function InitializeColorMode() {
-  return React.createElement("script", {
-    key: "mystical-no-flash",
-    dangerouslySetInnerHTML: {
-      __html: `
-        (function() { try {
-          var mode = localStorage.getItem('mystical-color-mode');
-          document.body.setAttribute('data-color-mode', mode || 'default');
-        } catch (e) {} })();`,
-    },
-  });
+  const ref = React.useRef();
+
+  const script = `<script>(function() { try {
+    const mode = localStorage.getItem('mystical-color-mode');
+    document.body.setAttribute('data-color-mode', mode || 'default');
+  } catch (e) {} })();</script>`;
+
+  React.useEffect(() => {
+    const fragment = document.createRange().createContextualFragment(script);
+    ref.current.append(fragment);
+  }, []);
+
+  return React.createElement("div", { ref });
 }
 
 module.exports = InitializeColorMode;
