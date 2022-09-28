@@ -425,7 +425,18 @@ import useColorMode from "mystical/useColorMode.js";
 function Component() {
   const [colorMode, setColorMode] = useColorMode();
 
-  return <div>Color mode is {colorMode}</div>;
+  return (
+    <div>
+      Color mode is: {colorMode}.{" "}
+      <button
+        onClick={() => {
+          setColorMode(colorMode === "default" ? "dark" : "default");
+        }}
+      >
+        Toggle color mode
+      </button>
+    </div>
+  );
 }
 ```
 
