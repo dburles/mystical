@@ -1,5 +1,6 @@
 import assert from "assert";
 import mergeModifiers from "../private/mergeModifiers.js";
+import TestDirector from "test-director/TestDirector.mjs";
 
 const modifiers = {
   default: {
@@ -33,37 +34,38 @@ const modifiers2 = {
 };
 
 export default function (tests) {
-  tests.add("mergeModifiers: basic", async () => {
-    const modifierStyles = mergeModifiers({ size: "small" }, modifiers);
+  tests.add("mergeModifiers", async () => {
+    const tests = new TestDirector();
 
-    assert.strictEqual(Object.keys(modifierStyles).length, 2);
-    assert.strictEqual(modifierStyles.fontFamily, "heading");
-    assert.strictEqual(modifierStyles.fontSize, 3);
-  });
+    tests.add("basic", async () => {
+      const modifierStyles = mergeModifiers({ size: "small" }, modifiers);
 
-  tests.add("mergeModifiers: basic with customModifiers", async () => {
-    const modifierStyles = mergeModifiers({ size: "small" }, modifiers, {
-      fontSize: 4,
+      assert.strictEqual(Object.keys(modifierStyles).length, 2);
+      assert.strictEqual(modifierStyles.fontFamily, "heading");
+      assert.strictEqual(modifierStyles.fontSize, 3);
     });
 
-    assert.strictEqual(Object.keys(modifierStyles).length, 2);
-    assert.strictEqual(modifierStyles.fontFamily, "heading");
-    assert.strictEqual(modifierStyles.fontSize, 4);
-  });
+    tests.add("basic with customModifiers", async () => {
+      const modifierStyles = mergeModifiers({ size: "small" }, modifiers, {
+        fontSize: 4,
+      });
 
-  tests.add("mergeModifiers: multiple elements", async () => {
-    const modifierStyles = mergeModifiers({ size: "small" }, modifiers2);
+      assert.strictEqual(Object.keys(modifierStyles).length, 2);
+      assert.strictEqual(modifierStyles.fontFamily, "heading");
+      assert.strictEqual(modifierStyles.fontSize, 4);
+    });
 
-    assert.strictEqual(Object.keys(modifierStyles).length, 2);
-    assert.strictEqual(modifierStyles.title.fontFamily, "heading");
-    assert.strictEqual(modifierStyles.subtitle.fontFamily, "body");
-    assert.strictEqual(modifierStyles.title.fontSize, 3);
-    assert.strictEqual(modifierStyles.subtitle.fontSize, 0);
-  });
+    tests.add("multiple elements", async () => {
+      const modifierStyles = mergeModifiers({ size: "small" }, modifiers2);
 
-  tests.add(
-    "mergeModifiers: multiple elements with customModifiers",
-    async () => {
+      assert.strictEqual(Object.keys(modifierStyles).length, 2);
+      assert.strictEqual(modifierStyles.title.fontFamily, "heading");
+      assert.strictEqual(modifierStyles.subtitle.fontFamily, "body");
+      assert.strictEqual(modifierStyles.title.fontSize, 3);
+      assert.strictEqual(modifierStyles.subtitle.fontSize, 0);
+    });
+
+    tests.add("multiple elements with customModifiers", async () => {
       const modifierStyles = mergeModifiers({ size: "small" }, modifiers2, {
         title: {
           fontSize: 4,
@@ -71,6 +73,8 @@ export default function (tests) {
       });
 
       assert.strictEqual(modifierStyles.title.fontSize, 4);
-    }
-  );
+    });
+
+    await tests.run(true);
+  });
 }
