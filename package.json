@@ -20,6 +20,7 @@
   "browserslist": "Node 14.17 - 15 and Node < 15, Node >= 16, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "sideEffects": false,
   "files": [
+    "ColorSchemeBoundary.js",
     "darkColorMode.js",
     "defaultColorMode.js",
     "Global.js",
@@ -36,6 +37,7 @@
     "useTheme.js"
   ],
   "exports": {
+    "./ColorSchemeBoundary.js": "./ColorSchemeBoundary.js",
     "./darkColorMode.js": "./darkColorMode.js",
     "./defaultColorMode.js": "./defaultColorMode.js",
     "./Global.js": "./Global.js",
