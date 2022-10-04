@@ -4,10 +4,13 @@ import customProperties from "./customProperties.test.mjs";
 import mergeModifiers from "./mergeModifiers.test.mjs";
 import transformStyles from "./transformStyles.test.mjs";
 import useTheme from "./useTheme.test.mjs";
+import jsx from "./jsx.test.mjs";
 
 const tests = new TestDirector();
 transformStyles(tests);
 mergeModifiers(tests);
 customProperties(tests);
 useTheme(tests);
+jsx(tests);
+
 tests.run();
