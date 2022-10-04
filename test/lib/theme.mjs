@@ -1,17 +1,7 @@
 const theme = {
-  space: [
-    0,
-    ".4rem",
-    ".8rem",
-    "1.6rem",
-    "3.2rem",
-    "6.4rem",
-    "12.8rem",
-    "25.6rem",
-    "51.2rem",
-  ],
-  breakpoints: ["6.40rem", "7.68rem", "10.24rem", "12.80rem"],
-  radii: [".1rem", ".2rem", ".3rem", ".4rem", ".5rem"],
+  space: ["0", "4px", "8px", "16px", "32px", "64px", "128px", "256px", "512px"],
+  breakpoints: ["640px", "768px", "1024px", "1280px"],
+  radii: ["0", "2px", "4px", "8px", "16px", "9999px"],
   colors: {
     inherit: "inherit",
     current: "currentColor",
@@ -303,7 +293,7 @@ const theme = {
     "5xl": "3rem",
     "6xl": "4rem",
   },
-  fontWeight: {
+  fontWeights: {
     hairline: "100",
     thin: "200",
     light: "300",
@@ -373,6 +363,11 @@ const theme = {
     40: "40",
     50: "50",
     auto: "auto",
+  },
+  opacities: {
+    disabled: 0.5,
+    placeholder: 0.6,
+    text: 0.5,
   },
 };
 
