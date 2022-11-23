@@ -6,7 +6,6 @@ Build themeable, robust and maintainable React component libraries and applicati
 
 - Mystical is a small (< 12 KB) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
 - A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook.
-- Color scheme support with a `prefers-color-scheme` media query listener which by default will automatically switch based on users system preferences. The [useColorMode](#usecolormode) hook can be used if you wish to switch in the browser.
 - Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
 
 ## Table of Contents
@@ -15,7 +14,6 @@ Build themeable, robust and maintainable React component libraries and applicati
 - [Guide](#guide)
   - [Context](#context)
   - [Example Component](#example-component)
-  - [Dark Mode](#dark-mode)
 - [Babel Configuration](#babel-configuration)
 - [API](#api)
   - [Theme Object](#theme-object)
@@ -26,12 +24,10 @@ Build themeable, robust and maintainable React component libraries and applicati
     - [Media Queries](#media-queries)
   - [MysticalProvider](#mysticalprovider)
   - [Global](#global)
-  - [InitializeColorMode](#initializecolormode)
   - [keyframes](#keyframes)
   - [useTheme](#usetheme)
   - [useMystical](#usemystical)
   - [useModifiers](#usemodifiers)
-  - [useColorMode](#usecolormode)
   - [darkColorMode](#darkcolormode)
 - [Contributors](#contributors)
 - [License](#license)
@@ -138,24 +134,6 @@ function Button({
   );
 }
 ```
-
-### Dark Mode
-
-To apply styles for dark mode, import the [darkColorMode](#darkcolormode) utility.
-
-```js
-import darkColorMode from "mystical/darkColorMode.js";
-
-function Component() {
-  return (
-    <div css={{ color: "black", [darkColorMode]: { color: "white" } }}>
-      This text is black in 'default' more and white in 'dark' mode.
-    </div>
-  );
-}
-```
-
-If you wish to allow users to toggle between colour modes (overwriting system preference), import the [useColorMode](#usecolormode) hook. The current mode will be saved in local storage. You'll also need to render the [InitializeColorMode](#initializecolormode) component.
 
 ### Babel Configuration for JSX
 
@@ -322,21 +300,6 @@ function App() {
 }
 ```
 
-#### InitializeColorMode
-
-This component avoids an unwanted flash of default styles when first loading the dark color mode set by [useColorMode](#usecolormode). Just import it and render it in your component tree.
-
-```js
-const App = () => {
-  return (
-    <MysticalProvider theme={theme}>
-      <InitializeColorMode />
-      ...
-    </MysticalProvider>
-  );
-};
-```
-
 #### keyframes
 
 Install [@emotion/react](https://www.npmjs.com/package/@emotion/react) (`npm i @emotion/react`). See https://emotion.sh/docs/keyframes.
@@ -431,36 +394,9 @@ function Component({ size = "small", modifiers: customModifiers }) {
 }
 ```
 
-#### useColorMode
-
-Allows for altering the color mode on the fly. Takes precedence over system setting.
-
-For this to function, ensure that the [InitializeColorMode](#initializecolormode) component is present in your app.
-
-```js
-import useColorMode from "mystical/useColorMode.js";
-
-function Component() {
-  const [colorMode, setColorMode] = useColorMode();
-
-  return (
-    <div>
-      Color mode is: {colorMode}.{" "}
-      <button
-        onClick={() => {
-          setColorMode(colorMode === "default" ? "dark" : "default");
-        }}
-      >
-        Toggle color mode
-      </button>
-    </div>
-  );
-}
-```
-
 #### darkColorMode
 
-A utility for applying dark mode styles.
+A helper utility for applying dark mode styles.
 
 ```js
 import darkColorMode from "mystical/darkColorMode.js";
@@ -483,7 +419,3 @@ function Component() {
 #### License
 
 MIT
-
-```
-
-```

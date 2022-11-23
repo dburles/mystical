@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   test:
     name: Test with Node.js v${{ matrix.node }} and ${{ matrix.os }}
@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: ["14", "16", "18"]
+        node: ["14", "16", "18", "19"]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js v${{ matrix.node }}
