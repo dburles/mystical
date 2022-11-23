@@ -9,7 +9,7 @@ const customProperties = require("./private/customProperties.js");
 function MysticalProvider({ theme = {}, children }) {
   return React.createElement(
     ThemeProvider,
-    { theme },
+    { theme: { theme } },
     React.createElement(Global, {
       styles: {
         ":root": customProperties(theme.colors, "colors"),
