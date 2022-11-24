@@ -16,6 +16,15 @@
   "env": {
     "node": true
   },
+  "overrides": [
+    {
+      "files": ["**/*.mjs"],
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      }
+    }
+  ],
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],
