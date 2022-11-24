@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert/strict";
 import useTheme from "../useTheme.js";
 import { act, create } from "react-test-renderer";
 import { createElement } from "react";

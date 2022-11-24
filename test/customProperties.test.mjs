@@ -1,5 +1,5 @@
 import TestDirector from "test-director/TestDirector.mjs";
-import assert from "assert";
+import assert from "node:assert/strict";
 import customProperties from "../private/customProperties.js";
 
 export default function (tests) {

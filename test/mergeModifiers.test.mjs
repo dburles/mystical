@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert/strict";
 import mergeModifiers from "../private/mergeModifiers.js";
 import TestDirector from "test-director/TestDirector.mjs";
 
