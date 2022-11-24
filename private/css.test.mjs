@@ -41,4 +41,37 @@ test("css", async (t) => {
       color: ["orange.500", "blue.500", "red.500", "pink.500"],
     });
   });
+
+  await t.test("dark mode", async (tt) => {
+    await tt.test("transform", () => {
+      const styles = css({
+        __dark_mode: {
+          color: "red",
+        },
+      })({});
+
+      assert.deepEqual(styles, {
+        "@media (prefers-color-scheme: dark)": {
+          color: "red",
+        },
+      });
+    });
+
+    await tt.test("transform with options.darkModeOverridable: true", () => {
+      const styles = css({
+        __dark_mode: {
+          color: "red",
+        },
+      })({ options: { darkModeOverridable: true } });
+
+      assert.deepEqual(styles, {
+        "@media (prefers-color-scheme: dark)": {
+          color: "red",
+        },
+        '[data-color-mode="dark"] &': {
+          color: "red",
+        },
+      });
+    });
+  });
 });

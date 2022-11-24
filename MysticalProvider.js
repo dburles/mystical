@@ -23,10 +23,10 @@ function MysticalGlobalStyles() {
   });
 }
 
-function MysticalProvider({ theme, children }) {
+function MysticalProvider({ theme, options = {}, children }) {
   return React.createElement(
     ThemeProvider,
-    { theme: { theme } },
+    { theme: { theme }, options },
     React.createElement(MysticalGlobalStyles),
     children
   );
@@ -34,6 +34,9 @@ function MysticalProvider({ theme, children }) {
 
 MysticalProvider.propTypes = {
   theme: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  options: PropTypes.objectOf({
+    darkModeOverridable: PropTypes.bool,
+  }),
   children: PropTypes.node.isRequired,
 };
 

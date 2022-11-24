@@ -1,5 +1,6 @@
 "use strict";
 
+const darkColorMode = require("../darkColorMode.js");
 const facepaint = require("./facepaint.js");
 const isObject = require("./isObject.js");
 const merge = require("./merge.js");
@@ -38,7 +39,16 @@ function css(rootStyles) {
       for (const property in styles) {
         const value = styles[property];
         if (isObject(value)) {
-          transformedStyles[property] = css(value)(context);
+          if (property === darkColorMode) {
+            const transformed = css(value)(context);
+            transformedStyles["@media (prefers-color-scheme: dark)"] =
+              transformed;
+            if (context.options?.darkModeOverridable) {
+              transformedStyles['[data-color-mode="dark"] &'] = transformed;
+            }
+          } else {
+            transformedStyles[property] = css(value)(context);
+          }
         } else {
           transformedStyles = {
             ...transformedStyles,
