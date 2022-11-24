@@ -8,7 +8,7 @@ const shorthandProperties = require("./shorthandProperties.js");
 const themeTokens = require("./themeTokens.js");
 const transformColors = require("./transformColors.js");
 
-function transformStyle(key, value, theme) {
+function transformStyle(key, value, theme = {}) {
   const themeKey = themeTokens[key];
 
   if (shorthandProperties[key]) {
@@ -46,7 +46,7 @@ function css(rootStyles) {
       }
     }
 
-    if (Array.isArray(context.theme.breakpoints)) {
+    if (Array.isArray(context.theme?.breakpoints)) {
       const mq = facepaint(
         context.theme.breakpoints.map((bp) => {
           return `@media (min-width: ${bp})`;
