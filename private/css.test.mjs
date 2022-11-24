@@ -2,6 +2,7 @@ import test from "node:test";
 import css from "./css.js";
 import theme from "../test-utils/theme.mjs";
 import assert from "node:assert/strict";
+import darkColorMode from "../darkColorMode.js";
 
 test("css", async (t) => {
   await t.test("colors", () => {
@@ -45,7 +46,7 @@ test("css", async (t) => {
   await t.test("dark mode", async (tt) => {
     await tt.test("transform", () => {
       const styles = css({
-        __dark_mode: {
+        [darkColorMode]: {
           color: "red",
         },
       })({});
@@ -59,7 +60,7 @@ test("css", async (t) => {
 
     await tt.test("transform with darkModeOff = true", () => {
       const styles = css({
-        __dark_mode: {
+        [darkColorMode]: {
           color: "red",
         },
       })({ options: { darkModeOff: true } });
@@ -71,7 +72,7 @@ test("css", async (t) => {
       "transform with options.darkModeForcedBoundary = true",
       () => {
         const styles = css({
-          __dark_mode: {
+          [darkColorMode]: {
             color: "red",
           },
         })({ options: { darkModeForcedBoundary: true } });
