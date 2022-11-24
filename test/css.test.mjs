@@ -1,14 +1,14 @@
 import TestDirector from "test-director/TestDirector.mjs";
-import transformStyles from "../private/transformStyles.js";
+import css from "../private/css.js";
 import theme from "./lib/theme.mjs";
 import assert from "node:assert/strict";
 
 export default function (tests) {
-  tests.add("transformStyles", async () => {
+  tests.add("css", async () => {
     const tests = new TestDirector();
 
     tests.add("colors", async () => {
-      const styles = transformStyles({
+      const styles = css({
         borderColor: "orange.500",
         color: "orange.500",
       })(theme);
@@ -20,7 +20,7 @@ export default function (tests) {
     });
 
     tests.add("media query", async () => {
-      const styles = transformStyles({
+      const styles = css({
         color: ["orange.500", "blue.500", "red.500", "pink.500"],
       })(theme);
 
@@ -36,7 +36,7 @@ export default function (tests) {
       // eslint-disable-next-line no-unused-vars
       const { breakpoints, ...themeWithoutBreakpoints } = theme;
       // Becomes a fallback: https://emotion.sh/docs/object-styles#fallbacks
-      const styles = transformStyles({
+      const styles = css({
         color: ["orange.500", "blue.500", "red.500", "pink.500"],
       })(themeWithoutBreakpoints);
 

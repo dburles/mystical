@@ -3,13 +3,12 @@
 const { Global: EmotionGlobal } = require("@emotion/react");
 const PropTypes = require("prop-types");
 const React = require("react");
-const transformStyles = require("./private/transformStyles.js");
+const css = require("./private/css.js");
 const useMystical = require("./useMystical.js");
 
-function Global({ styles: initialStyles }) {
+function Global({ styles }) {
   const context = useMystical();
-  const styles = transformStyles(initialStyles)(context);
-  return React.createElement(EmotionGlobal, { styles });
+  return React.createElement(EmotionGlobal, { styles: css(styles)(context) });
 }
 
 Global.propTypes = {

@@ -24,7 +24,7 @@ function transformStyle(key, value, theme) {
   return { [key]: value };
 }
 
-function transformStyles(rootStyles) {
+function css(rootStyles) {
   let mergedStyles = Array.isArray(rootStyles)
     ? merge(...rootStyles)
     : rootStyles;
@@ -32,11 +32,11 @@ function transformStyles(rootStyles) {
   return (context) => {
     let transformedStyles = {};
 
-    function transform(styles) {
+    function transformStyles(styles) {
       for (const property in styles) {
         const value = styles[property];
         if (isObject(value)) {
-          transformedStyles[property] = transformStyles(value)(context);
+          transformedStyles[property] = css(value)(context);
         } else {
           transformedStyles = {
             ...transformedStyles,
@@ -54,14 +54,14 @@ function transformStyles(rootStyles) {
       );
 
       for (const styles of mq(mergedStyles)) {
-        transform(styles);
+        transformStyles(styles);
       }
     } else {
-      transform(mergedStyles);
+      transformStyles(mergedStyles);
     }
 
     return transformedStyles;
   };
 }
 
-module.exports = transformStyles;
+module.exports = css;
