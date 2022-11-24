@@ -392,7 +392,7 @@ import darkColorMode from "mystical/darkColorMode.js";
 function Component() {
   return (
     <div css={{ color: "black", [darkColorMode]: { color: "white" } }}>
-      This text is black in 'default' more and white in 'dark' mode.
+      This text is black in light mode and white in dark mode.
     </div>
   );
 }
