@@ -4,7 +4,7 @@ const get = require("./private/get.js");
 const useMystical = require("./useMystical.js");
 
 function useTheme(key, value) {
-  const { theme } = useMystical();
+  const theme = useMystical();
   // Find the exact value on the theme,
   // or fall back to the value itself if there's no match.
   const translated = get(theme[key], value, value);

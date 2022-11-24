@@ -8,7 +8,7 @@ const shorthandProperties = require("./shorthandProperties.js");
 const themeTokens = require("./themeTokens.js");
 const transformColors = require("./transformColors.js");
 
-function transformStyle(key, value, { theme }) {
+function transformStyle(key, value, theme) {
   const themeKey = themeTokens[key];
 
   if (shorthandProperties[key]) {
@@ -24,31 +24,41 @@ function transformStyle(key, value, { theme }) {
   return { [key]: value };
 }
 
-function transformStyles(initialStyles) {
+function transformStyles(rootStyles) {
+  let mergedStyles = Array.isArray(rootStyles)
+    ? merge(...rootStyles)
+    : rootStyles;
+
   return (context) => {
     let transformedStyles = {};
 
-    const mq = facepaint(
-      context.theme.breakpoints.map((bp) => {
-        return `@media (min-width: ${bp})`;
-      })
-    );
-
-    mq(
-      Array.isArray(initialStyles) ? merge(...initialStyles) : initialStyles
-    ).forEach((styles) => {
-      Object.keys(styles).forEach((key) => {
-        const value = styles[key];
+    function transform(styles) {
+      for (const property in styles) {
+        const value = styles[property];
         if (isObject(value)) {
-          transformedStyles[key] = transformStyles(value)(context);
+          transformedStyles[property] = transformStyles(value)(context);
         } else {
           transformedStyles = {
             ...transformedStyles,
-            ...transformStyle(key, value, context),
+            ...transformStyle(property, value, context),
           };
         }
-      });
-    });
+      }
+    }
+
+    if (Array.isArray(context.breakpoints)) {
+      const mq = facepaint(
+        context.breakpoints.map((bp) => {
+          return `@media (min-width: ${bp})`;
+        })
+      );
+
+      for (const styles of mq(mergedStyles)) {
+        transform(styles);
+      }
+    } else {
+      transform(mergedStyles);
+    }
 
     return transformedStyles;
   };
