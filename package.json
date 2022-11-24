@@ -17,7 +17,6 @@
   "engines": {
     "node": "^18.0.0 || >= 19.0.0"
   },
-  "browserslist": "Node 14.17 - 15 and Node < 15, Node >= 16, > 0.5%, not OperaMini all, not IE > 0, not dead",
   "sideEffects": false,
   "files": [
     "darkColorMode.js",
