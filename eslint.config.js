@@ -1,7 +1,7 @@
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
+const reactPlugin = require("eslint-plugin-react");
+const reactHooksPlugin = require("eslint-plugin-react-hooks");
 
-export default [
+module.exports = [
   "eslint:recommended",
   {
     plugins: {
@@ -14,7 +14,6 @@ export default [
     languageOptions: {
       sourceType: "commonjs",
     },
-    ignores: ["eslint.config.js"],
   },
   {
     files: ["**/*.js", "**/*.mjs"],
