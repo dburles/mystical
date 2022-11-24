@@ -2,10 +2,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
-    "plugin:import/recommended",
-    "plugin:compat/recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:react-hooks/recommended"
   ],
   "plugins": ["react-hooks"],
   "parserOptions": {
