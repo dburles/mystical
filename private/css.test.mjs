@@ -57,21 +57,34 @@ test("css", async (t) => {
       });
     });
 
-    await tt.test("transform with options.darkModeOverridable: true", () => {
+    await tt.test("transform with darkModeOff = true", () => {
       const styles = css({
         __dark_mode: {
           color: "red",
         },
-      })({ options: { darkModeOverridable: true } });
+      })({ options: { darkModeOff: true } });
 
-      assert.deepEqual(styles, {
-        "@media (prefers-color-scheme: dark)": {
-          color: "red",
-        },
-        '[data-color-mode="dark"] &': {
-          color: "red",
-        },
-      });
+      assert.deepEqual(styles, {});
     });
+
+    await tt.test(
+      "transform with options.darkModeForcedBoundary = true",
+      () => {
+        const styles = css({
+          __dark_mode: {
+            color: "red",
+          },
+        })({ options: { darkModeForcedBoundary: true } });
+
+        assert.deepEqual(styles, {
+          "@media (prefers-color-scheme: dark)": {
+            color: "red",
+          },
+          '[data-color-mode="dark"] &': {
+            color: "red",
+          },
+        });
+      }
+    );
   });
 });
