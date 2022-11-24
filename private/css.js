@@ -40,13 +40,13 @@ function css(rootStyles) {
         const value = styles[property];
         if (isObject(value)) {
           if (property === darkColorMode) {
+            const transformed = css(value)(context);
             if (!context.options?.darkModeOff) {
-              const transformed = css(value)(context);
               transformedStyles["@media (prefers-color-scheme: dark)"] =
                 transformed;
-              if (context.options?.darkModeForcedBoundary) {
-                transformedStyles['[data-color-mode="dark"] &'] = transformed;
-              }
+            }
+            if (context.options?.darkModeForcedBoundary) {
+              transformedStyles['[data-color-mode="dark"] &'] = transformed;
             }
           } else {
             transformedStyles[property] = css(value)(context);
