@@ -11,7 +11,7 @@ export default function (tests) {
       const styles = css({
         borderColor: "orange.500",
         color: "orange.500",
-      })(theme);
+      })({ theme });
 
       assert.deepEqual(styles, {
         borderColor: "var(--colors-orange-500)",
@@ -22,7 +22,7 @@ export default function (tests) {
     tests.add("media query", async () => {
       const styles = css({
         color: ["orange.500", "blue.500", "red.500", "pink.500"],
-      })(theme);
+      })({ theme });
 
       assert.deepEqual(styles, {
         color: "var(--colors-orange-500)",
@@ -38,7 +38,7 @@ export default function (tests) {
       // Becomes a fallback: https://emotion.sh/docs/object-styles#fallbacks
       const styles = css({
         color: ["orange.500", "blue.500", "red.500", "pink.500"],
-      })(themeWithoutBreakpoints);
+      })({ theme: themeWithoutBreakpoints });
 
       assert.deepEqual(styles, {
         color: ["orange.500", "blue.500", "red.500", "pink.500"],

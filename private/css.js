@@ -40,15 +40,15 @@ function css(rootStyles) {
         } else {
           transformedStyles = {
             ...transformedStyles,
-            ...transformStyle(property, value, context),
+            ...transformStyle(property, value, context.theme),
           };
         }
       }
     }
 
-    if (Array.isArray(context.breakpoints)) {
+    if (Array.isArray(context.theme.breakpoints)) {
       const mq = facepaint(
-        context.breakpoints.map((bp) => {
+        context.theme.breakpoints.map((bp) => {
           return `@media (min-width: ${bp})`;
         })
       );
