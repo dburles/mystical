@@ -27,7 +27,7 @@ function transformStyle(property, value, theme = {}) {
   return { [property]: value };
 }
 
-function css(rootStyles) {
+function css(rootStyles, forceColorModeContext = {}) {
   let mergedStyles = Array.isArray(rootStyles)
     ? merge(...rootStyles)
     : rootStyles;
@@ -41,12 +41,17 @@ function css(rootStyles) {
         if (isObject(value)) {
           if (property === darkColorMode) {
             const transformed = css(value)(context);
-            if (!context.options?.darkModeOff) {
+            if (forceColorModeContext.mode === "dark") {
+              // Flatten, thus overriding.
+              transformedStyles = {
+                ...transformedStyles,
+                ...css(value)(context),
+              };
+            } else if (forceColorModeContext.mode === "light") {
+              // Do nothing.
+            } else {
               transformedStyles["@media (prefers-color-scheme: dark)"] =
                 transformed;
-            }
-            if (context.options?.darkModeForcedBoundary) {
-              transformedStyles['[data-color-mode="dark"] &'] = transformed;
             }
           } else {
             transformedStyles[property] = css(value)(context);

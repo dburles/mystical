@@ -2,6 +2,7 @@ import test from "node:test";
 import css from "./css.js";
 import theme from "../test-utils/theme.mjs";
 import assert from "node:assert/strict";
+import darkColorMode from "../darkColorMode.js";
 
 test("css", async (t) => {
   await t.test("colors", () => {
@@ -45,7 +46,7 @@ test("css", async (t) => {
   await t.test("dark mode", async (tt) => {
     await tt.test("transform", () => {
       const styles = css({
-        __dark_mode: {
+        [darkColorMode]: {
           color: "red",
         },
       })({});
@@ -57,34 +58,40 @@ test("css", async (t) => {
       });
     });
 
-    await tt.test("transform with darkModeOff = true", () => {
-      const styles = css({
-        __dark_mode: {
-          color: "red",
+    await tt.test("transform with forceColorModeContext mode 'dark'", () => {
+      const styles = css(
+        {
+          color: "blue",
+          [darkColorMode]: {
+            color: "red",
+            backgroundColor: "green",
+          },
         },
-      })({ options: { darkModeOff: true } });
+        { mode: "dark" }
+      )({});
 
-      assert.deepEqual(styles, {});
+      // Dark mode styles override anything before it.
+      assert.deepEqual(styles, {
+        color: "red",
+        backgroundColor: "green",
+      });
     });
 
-    await tt.test(
-      "transform with options.darkModeForcedBoundary = true",
-      () => {
-        const styles = css({
-          __dark_mode: {
+    await tt.test("transform with forceColorModeContext mode 'light'", () => {
+      const styles = css(
+        {
+          color: "blue",
+          [darkColorMode]: {
             color: "red",
           },
-        })({ options: { darkModeForcedBoundary: true } });
+        },
+        { mode: "light" }
+      )({});
 
-        assert.deepEqual(styles, {
-          "@media (prefers-color-scheme: dark)": {
-            color: "red",
-          },
-          '[data-color-mode="dark"] &': {
-            color: "red",
-          },
-        });
-      }
-    );
+      // Dark mode colors are not applied.
+      assert.deepEqual(styles, {
+        color: "blue",
+      });
+    });
   });
 });

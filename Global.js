@@ -4,11 +4,15 @@ const { Global: EmotionGlobal } = require("@emotion/react");
 const PropTypes = require("prop-types");
 const React = require("react");
 const css = require("./private/css.js");
+const ForceColorModeContext = require("./private/ForceColorModeContext.js");
 const useMystical = require("./useMystical.js");
 
 function Global({ styles }) {
   const context = useMystical();
-  return React.createElement(EmotionGlobal, { styles: css(styles)(context) });
+  const forceColorModeContext = React.useContext(ForceColorModeContext);
+  return React.createElement(EmotionGlobal, {
+    styles: css(styles, forceColorModeContext)(context),
+  });
 }
 
 Global.propTypes = {
