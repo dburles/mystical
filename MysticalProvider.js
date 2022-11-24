@@ -34,8 +34,9 @@ function MysticalProvider({ theme, options = {}, children }) {
 
 MysticalProvider.propTypes = {
   theme: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
-  options: PropTypes.objectOf({
-    darkModeOverridable: PropTypes.bool,
+  options: PropTypes.optionalObjectWithShape({
+    darkModeOff: PropTypes.bool,
+    darkModeForcedBoundary: PropTypes.bool,
   }),
   children: PropTypes.node.isRequired,
 };
