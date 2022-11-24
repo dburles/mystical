@@ -8,20 +8,22 @@ const shorthandProperties = require("./shorthandProperties.js");
 const themeTokens = require("./themeTokens.js");
 const transformColors = require("./transformColors.js");
 
-function transformStyle(key, value, theme = {}) {
-  const themeKey = themeTokens[key];
+function transformStyle(property, value, theme = {}) {
+  const themeKey = themeTokens[property];
 
-  if (shorthandProperties[key]) {
-    return shorthandProperties[key](theme, String(value));
+  if (shorthandProperties[property]) {
+    return shorthandProperties[property](theme, String(value));
   } else if (themeKey) {
     let currentThemeProperties = theme[themeKey];
     if (themeKey === "colors") {
-      return transformColors(theme.colors, key, value);
+      return transformColors(theme.colors, property, value);
     }
-    const transformNegatives = negativeTransform(key);
-    return { [key]: transformNegatives(currentThemeProperties, value, value) };
+    const transformNegatives = negativeTransform(property);
+    return {
+      [property]: transformNegatives(currentThemeProperties, value, value),
+    };
   }
-  return { [key]: value };
+  return { [property]: value };
 }
 
 function css(rootStyles) {
