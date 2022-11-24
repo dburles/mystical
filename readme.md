@@ -260,20 +260,8 @@ Your application must be wrapped with the `MysticalProvider` component:
 import MysticalProvider from "mystical/MysticalProvider.js";
 
 function App() {
-  return <MysticalProvider>...</MysticalProvider>;
+  return <MysticalProvider theme={theme}>...</MysticalProvider>;
 }
-```
-
-It accepts the following props:
-
-- theme – The theme object
-- options (optional)
-
-```js
-const options = {
-  // Defaults:
-  usePrefersColorScheme: true, // Sets color mode based on system preferences
-};
 ```
 
 #### Global
