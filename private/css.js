@@ -1,5 +1,6 @@
 "use strict";
 
+const darkColorMode = require("../darkColorMode.js");
 const facepaint = require("./facepaint.js");
 const isObject = require("./isObject.js");
 const merge = require("./merge.js");
@@ -8,20 +9,22 @@ const shorthandProperties = require("./shorthandProperties.js");
 const themeTokens = require("./themeTokens.js");
 const transformColors = require("./transformColors.js");
 
-function transformStyle(key, value, theme) {
-  const themeKey = themeTokens[key];
+function transformStyle(property, value, theme = {}) {
+  const themeKey = themeTokens[property];
 
-  if (shorthandProperties[key]) {
-    return shorthandProperties[key](theme, String(value));
+  if (shorthandProperties[property]) {
+    return shorthandProperties[property](theme, String(value));
   } else if (themeKey) {
     let currentThemeProperties = theme[themeKey];
     if (themeKey === "colors") {
-      return transformColors(theme.colors, key, value);
+      return transformColors(theme.colors, property, value);
     }
-    const transformNegatives = negativeTransform(key);
-    return { [key]: transformNegatives(currentThemeProperties, value, value) };
+    const transformNegatives = negativeTransform(property);
+    return {
+      [property]: transformNegatives(currentThemeProperties, value, value),
+    };
   }
-  return { [key]: value };
+  return { [property]: value };
 }
 
 function css(rootStyles) {
@@ -36,7 +39,18 @@ function css(rootStyles) {
       for (const property in styles) {
         const value = styles[property];
         if (isObject(value)) {
-          transformedStyles[property] = css(value)(context);
+          if (property === darkColorMode) {
+            const transformed = css(value)(context);
+            if (!context.options?.darkModeOff) {
+              transformedStyles["@media (prefers-color-scheme: dark)"] =
+                transformed;
+            }
+            if (context.options?.darkModeForcedBoundary) {
+              transformedStyles['[data-color-mode="dark"] &'] = transformed;
+            }
+          } else {
+            transformedStyles[property] = css(value)(context);
+          }
         } else {
           transformedStyles = {
             ...transformedStyles,
@@ -46,7 +60,7 @@ function css(rootStyles) {
       }
     }
 
-    if (Array.isArray(context.theme.breakpoints)) {
+    if (Array.isArray(context.theme?.breakpoints)) {
       const mq = facepaint(
         context.theme.breakpoints.map((bp) => {
           return `@media (min-width: ${bp})`;

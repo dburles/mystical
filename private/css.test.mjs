@@ -2,6 +2,7 @@ import test from "node:test";
 import css from "./css.js";
 import theme from "../test-utils/theme.mjs";
 import assert from "node:assert/strict";
+import darkColorMode from "../darkColorMode.js";
 
 test("css", async (t) => {
   await t.test("colors", () => {
@@ -40,5 +41,51 @@ test("css", async (t) => {
     assert.deepEqual(styles, {
       color: ["orange.500", "blue.500", "red.500", "pink.500"],
     });
+  });
+
+  await t.test("dark mode", async (tt) => {
+    await tt.test("transform", () => {
+      const styles = css({
+        [darkColorMode]: {
+          color: "red",
+        },
+      })({});
+
+      assert.deepEqual(styles, {
+        "@media (prefers-color-scheme: dark)": {
+          color: "red",
+        },
+      });
+    });
+
+    await tt.test("transform with darkModeOff = true", () => {
+      const styles = css({
+        [darkColorMode]: {
+          color: "red",
+        },
+      })({ options: { darkModeOff: true } });
+
+      assert.deepEqual(styles, {});
+    });
+
+    await tt.test(
+      "transform with options.darkModeForcedBoundary = true",
+      () => {
+        const styles = css({
+          [darkColorMode]: {
+            color: "red",
+          },
+        })({ options: { darkModeForcedBoundary: true } });
+
+        assert.deepEqual(styles, {
+          "@media (prefers-color-scheme: dark)": {
+            color: "red",
+          },
+          '[data-color-mode="dark"] &': {
+            color: "red",
+          },
+        });
+      }
+    );
   });
 });

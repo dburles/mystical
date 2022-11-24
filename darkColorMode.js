@@ -1,5 +1,5 @@
 "use strict";
 
-const darkColorMode = "@media (prefers-color-scheme: dark)";
+const darkColorMode = "__dark_mode";
 
 module.exports = darkColorMode;
