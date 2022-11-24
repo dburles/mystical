@@ -1,14 +1,13 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:jsdoc/recommended",
     "plugin:node/recommended",
     "plugin:import/recommended",
     "plugin:compat/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["jsdoc", "react-hooks"],
+  "plugins": ["react-hooks"],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
@@ -20,7 +19,6 @@
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],
-    "jsdoc/require-jsdoc": "off",
     "func-style": ["error", "declaration"]
   }
 }
