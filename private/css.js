@@ -2,6 +2,7 @@
 
 const darkColorMode = require("../darkColorMode.js");
 const facepaint = require("./facepaint.js");
+const forceDarkModeAttribute = require("./forceDarkModeAttribute.js");
 const isObject = require("./isObject.js");
 const merge = require("./merge.js");
 const negativeTransform = require("./negativeTransform.js");
@@ -47,7 +48,7 @@ function css(rootStyles) {
                 transformed;
             }
             if (context.options?.darkModeForcedBoundary) {
-              transformedStyles['[data-color-mode="dark"] &'] = transformed;
+              transformedStyles[`[${forceDarkModeAttribute}] &`] = transformed;
             }
           } else {
             transformedStyles[property] = css(value)(context);
