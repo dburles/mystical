@@ -254,13 +254,30 @@ function Component() {
 
 #### MysticalProvider
 
-Your application must be wrapped with the `MysticalProvider` component:
+Provides the theme context, this is required for Mystical to function.
+
+Arguments:
+
+- theme: The theme object.
+- options: Options (optional)
+  - darkModeOff = `false`: When enabled, dark mode styles are ignored and not added to the output.
+  - darkModeForcedBoundary = `false`: When enabled, Mystical also adds dark mode styles targeting `data-mystical-color-mode="dark"`.
 
 ```js
 import MysticalProvider from "mystical/MysticalProvider.js";
 
+// (Optional, defaults shown).
+const options = {
+  darkModeOff: false,
+  darkModeForcedBoundary: false,
+};
+
 function App() {
-  return <MysticalProvider theme={theme}>...</MysticalProvider>;
+  return (
+    <MysticalProvider options={options} theme={theme}>
+      ...
+    </MysticalProvider>
+  );
 }
 ```
 
