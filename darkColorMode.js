@@ -1,5 +1,5 @@
 "use strict";
 
-const darkColorMode = "__dark_mode";
+const darkColorMode = Symbol();
 
 module.exports = darkColorMode;
