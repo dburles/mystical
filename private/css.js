@@ -36,6 +36,7 @@ function css(rootStyles) {
     let transformedStyles = {};
 
     function transformStyles(styles) {
+      // Reflect.ownKeys allows us to get the darkColorMode Symbol.
       for (const property of Reflect.ownKeys(styles)) {
         const value = styles[property];
         if (isObject(value)) {
