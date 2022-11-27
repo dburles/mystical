@@ -36,7 +36,7 @@ function css(rootStyles) {
     let transformedStyles = {};
 
     function transformStyles(styles) {
-      for (const property in styles) {
+      for (const property of Reflect.ownKeys(styles)) {
         const value = styles[property];
         if (isObject(value)) {
           if (property === darkColorMode) {

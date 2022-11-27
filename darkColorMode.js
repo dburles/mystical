@@ -1,5 +1,5 @@
 "use strict";
 
-const darkColorMode = "__MYSTICAL_INTERNAL_DARK_MODE__";
+const darkColorMode = Symbol();
 
 module.exports = darkColorMode;
