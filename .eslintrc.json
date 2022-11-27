@@ -14,7 +14,9 @@
     }
   },
   "env": {
-    "node": true
+    "browser": true,
+    "node": true,
+    "es2022": true
   },
   "overrides": [
     {
