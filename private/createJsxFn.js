@@ -1,14 +1,14 @@
 "use strict";
 
-const transformStyles = require("./transformStyles.js");
+const css = require("./css.js");
 
 function createJsxFn(jsxFn) {
   return (type, props, ...rest) => {
-    const { css, ...restProps } = props || {};
+    const { css: styles, ...restProps } = props || {};
 
     return jsxFn(
       type,
-      css ? { css: transformStyles(css), ...restProps } : props,
+      styles ? { css: css(styles), ...restProps } : props,
       ...rest
     );
   };

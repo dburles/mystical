@@ -193,7 +193,7 @@ function Component() {
 
 ##### Theme Lookup
 
-Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup map](https://github.com/dburles/mystical/blob/master/src/lib/themeTokens.js), and will default to the literal value if there's no match.
+Just like [theme-ui](https://theme-ui.com/), values passed to CSS properties are automatically translated from the theme based on a [lookup table](https://github.com/dburles/mystical/blob/master/private/themeTokens.js), and will default to the literal value if there's no match.
 
 ##### Dot Properties
 
@@ -254,26 +254,31 @@ function Component() {
 
 #### MysticalProvider
 
-Your application must be wrapped with the `MysticalProvider` component:
+Provides the theme context, this is required for Mystical to function.
+
+Parameters:
+
+- theme: The theme object.
+- options: Options (optional)
+  - `darkModeOff` = `false`: When enabled, dark mode styles are ignored and not added to the output.
+  - `darkModeForcedBoundary` = `false`: When enabled, Mystical also adds dark mode styles targeting `data-mystical-color-mode="dark"`. This can be useful for development and visual testing environments (such as [Storybook](https://storybook.js.org/)), or for forcing a certain page into dark mode regardless of user system preferences.
 
 ```js
 import MysticalProvider from "mystical/MysticalProvider.js";
 
-function App() {
-  return <MysticalProvider>...</MysticalProvider>;
-}
-```
-
-It accepts the following props:
-
-- theme – The theme object
-- options (optional)
-
-```js
+// (Optional, defaults shown).
 const options = {
-  // Defaults:
-  usePrefersColorScheme: true, // Sets color mode based on system preferences
+  darkModeOff: false,
+  darkModeForcedBoundary: false,
 };
+
+function App() {
+  return (
+    <MysticalProvider options={options} theme={theme}>
+      ...
+    </MysticalProvider>
+  );
+}
 ```
 
 #### Global
@@ -404,7 +409,7 @@ import darkColorMode from "mystical/darkColorMode.js";
 function Component() {
   return (
     <div css={{ color: "black", [darkColorMode]: { color: "white" } }}>
-      This text is black in 'default' more and white in 'dark' mode.
+      This text is black in light mode and white in dark mode.
     </div>
   );
 }

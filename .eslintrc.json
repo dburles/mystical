@@ -1,26 +1,35 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:jsdoc/recommended",
-    "plugin:node/recommended",
-    "plugin:import/recommended",
-    "plugin:compat/recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:react-hooks/recommended"
   ],
-  "plugins": ["jsdoc", "react-hooks"],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "sourceType": "script"
   },
   "settings": {
     "react": {
       "version": "detect"
     }
   },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2022": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.mjs"],
+      "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      }
+    }
+  ],
   "rules": {
     "arrow-body-style": ["error", "always"],
     "curly": ["error", "all"],
-    "jsdoc/require-jsdoc": "off",
     "func-style": ["error", "declaration"]
   }
 }
