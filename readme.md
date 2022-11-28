@@ -260,8 +260,8 @@ Parameters:
 
 - theme: The theme object.
 - options: Options (optional)
-  - darkModeOff = `false`: When enabled, dark mode styles are ignored and not added to the output.
-  - darkModeForcedBoundary = `false`: When enabled, Mystical also adds dark mode styles targeting `data-mystical-color-mode="dark"`. This can be useful for development and visual testing environments (such as [Storybook](https://storybook.js.org/)), or for forcing a certain page into dark mode regardless of user system preferences.
+  - `darkModeOff` = `false`: When enabled, dark mode styles are ignored and not added to the output.
+  - `darkModeForcedBoundary` = `false`: When enabled, Mystical also adds dark mode styles targeting `data-mystical-color-mode="dark"`. This can be useful for development and visual testing environments (such as [Storybook](https://storybook.js.org/)), or for forcing a certain page into dark mode regardless of user system preferences.
 
 ```js
 import MysticalProvider from "mystical/MysticalProvider.js";
