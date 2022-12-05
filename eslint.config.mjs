@@ -1,7 +1,7 @@
-const reactPlugin = require("eslint-plugin-react");
-const reactHooksPlugin = require("eslint-plugin-react-hooks");
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
-module.exports = [
+export default [
   "eslint:recommended",
   {
     plugins: {
