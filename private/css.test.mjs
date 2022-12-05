@@ -3,6 +3,7 @@ import css from "./css.js";
 import theme from "../test-utils/theme.mjs";
 import assert from "node:assert/strict";
 import darkColorMode from "../darkColorMode.js";
+import forceDarkModeAttribute from "./forceDarkModeAttribute.js";
 
 test("css", async (t) => {
   await t.test("colors", () => {
@@ -81,7 +82,7 @@ test("css", async (t) => {
           "@media (prefers-color-scheme: dark)": {
             color: "red",
           },
-          '[data-color-mode="dark"] &': {
+          [`[${forceDarkModeAttribute}] &`]: {
             color: "red",
           },
         });

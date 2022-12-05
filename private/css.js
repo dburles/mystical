@@ -2,6 +2,7 @@
 
 const darkColorMode = require("../darkColorMode.js");
 const facepaint = require("./facepaint.js");
+const forceDarkModeAttribute = require("./forceDarkModeAttribute.js");
 const isObject = require("./isObject.js");
 const merge = require("./merge.js");
 const negativeTransform = require("./negativeTransform.js");
@@ -36,8 +37,7 @@ function css(rootStyles) {
     let transformedStyles = {};
 
     function transformStyles(styles) {
-      // Reflect.ownKeys allows us to get the darkColorMode Symbol.
-      for (const property of Reflect.ownKeys(styles)) {
+      for (const property in styles) {
         const value = styles[property];
         if (isObject(value)) {
           if (property === darkColorMode) {
@@ -47,7 +47,7 @@ function css(rootStyles) {
                 transformed;
             }
             if (context.options?.darkModeForcedBoundary) {
-              transformedStyles['[data-color-mode="dark"] &'] = transformed;
+              transformedStyles[`[${forceDarkModeAttribute}] &`] = transformed;
             }
           } else {
             transformedStyles[property] = css(value)(context);
