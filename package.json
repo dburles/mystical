@@ -50,7 +50,7 @@
   "types": "index.d.ts",
   "scripts": {
     "test": "npm run test:lint && npm run test:prettier && npm run test:unit",
-    "test:lint": "eslint .",
+    "test:lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs .",
     "test:prettier": "prettier -c .",
     "test:unit": "node --test",
     "prepublishOnly": "npm test"

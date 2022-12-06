@@ -1,18 +1,13 @@
-import reactPlugin from "eslint-plugin-react";
+import reactRecommended from "eslint-plugin-react/recommended.js";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 
 export default [
   "eslint:recommended",
+  reactRecommended,
   {
     plugins: {
       react: reactPlugin,
       "react-hooks": reactHooksPlugin,
-    },
-  },
-  {
-    files: ["**/*.js"],
-    languageOptions: {
-      sourceType: "commonjs",
     },
   },
   {
@@ -21,7 +16,6 @@ export default [
       "arrow-body-style": ["error", "always"],
       curly: ["error", "all"],
       "func-style": ["error", "declaration"],
-      ...reactPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
     },
   },
