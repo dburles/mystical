@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /**
  * React component for testing a React hook.
  *

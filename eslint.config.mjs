@@ -1,17 +1,20 @@
-import reactRecommended from "eslint-plugin-react/recommended.js";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
+import globals from "globals";
 
 export default [
   "eslint:recommended",
-  reactRecommended,
   {
     plugins: {
-      react: reactPlugin,
       "react-hooks": reactHooksPlugin,
     },
   },
   {
     files: ["**/*.js", "**/*.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
     rules: {
       "arrow-body-style": ["error", "always"],
       curly: ["error", "all"],
