@@ -88,5 +88,24 @@ test("css", async (t) => {
         });
       }
     );
+
+    await tt.test("merge styles", () => {
+      const styles = css([
+        {
+          color: "red.500",
+          fontSize: 2,
+        },
+        {
+          color: "blue.500",
+          backgroundColor: "green.500",
+        },
+      ])({});
+
+      assert.deepEqual(styles, {
+        backgroundColor: "green.500",
+        color: "blue.500",
+        fontSize: 2,
+      });
+    });
   });
 });
