@@ -1,11 +1,7 @@
-import deepmerge from "deepmerge";
-
-function merge(...cssArray) {
-  return deepmerge.all(cssArray.filter(Boolean), {
-    arrayMerge(destinationArray, sourceArray) {
-      return sourceArray;
-    },
-  });
+function merge(...array) {
+  return array.reduce(function (_, next) {
+    return next;
+  }, {});
 }
 
 export default merge;
