@@ -1,8 +1,6 @@
-"use strict";
-
-const get = require("./get.js");
-const isDevelopment = require("./isDevelopment.js");
-const merge = require("./merge.js");
+import get from "./get.js";
+import isDevelopment from "./isDevelopment.js";
+import merge from "./merge.js";
 
 function mergeModifiers(values, initialModifiers, modifiersOverride) {
   const { default: defaults, ...modifiers } = initialModifiers;
@@ -24,4 +22,4 @@ function mergeModifiers(values, initialModifiers, modifiersOverride) {
   );
 }
 
-module.exports = mergeModifiers;
+export default mergeModifiers;

@@ -7,7 +7,7 @@
  * @param {Array<any>} props.results Results of each render; the hook return value or error.
  * @returns {null} Null.
  */
-export default function ReactHookTest({ hook, results }) {
+function ReactHookTest({ hook, results }) {
   let result;
 
   try {
@@ -20,3 +20,5 @@ export default function ReactHookTest({ hook, results }) {
 
   return null;
 }
+
+export default ReactHookTest;

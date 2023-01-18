@@ -1,7 +1,5 @@
-"use strict";
-
-const get = require("./get.js");
-const positiveOrNegative = require("./positiveOrNegative.js");
+import get from "./get.js";
+import positiveOrNegative from "./positiveOrNegative.js";
 
 function negativeTransform(property) {
   return get(
@@ -26,4 +24,4 @@ function negativeTransform(property) {
   );
 }
 
-module.exports = negativeTransform;
+export default negativeTransform;

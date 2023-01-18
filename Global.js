@@ -1,10 +1,8 @@
-"use strict";
-
-const { Global: EmotionGlobal } = require("@emotion/react");
-const PropTypes = require("prop-types");
-const React = require("react");
-const css = require("./private/css.js");
-const useMystical = require("./useMystical.js");
+import { Global as EmotionGlobal } from "@emotion/react";
+import PropTypes from "prop-types";
+import React from "react";
+import css from "./private/css.js";
+import useMystical from "./useMystical.js";
 
 function Global({ styles }) {
   const context = useMystical();
@@ -15,4 +13,4 @@ Global.propTypes = {
   styles: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
 };
 
-module.exports = Global;
+export default Global;

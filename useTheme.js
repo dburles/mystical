@@ -1,7 +1,5 @@
-"use strict";
-
-const get = require("./private/get.js");
-const useMystical = require("./useMystical.js");
+import get from "./private/get.js";
+import useMystical from "./useMystical.js";
 
 function useTheme(key, value) {
   const { theme } = useMystical();
@@ -13,4 +11,4 @@ function useTheme(key, value) {
   return get(theme[key], translated, translated);
 }
 
-module.exports = useTheme;
+export default useTheme;

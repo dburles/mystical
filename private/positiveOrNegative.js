@@ -1,6 +1,4 @@
-"use strict";
-
-const get = require("./get.js");
+import get from "./get.js";
 
 function positiveOrNegative(scale, value) {
   if (typeof value !== "number" || value >= 0) {
@@ -14,4 +12,4 @@ function positiveOrNegative(scale, value) {
   return Number(n) * -1;
 }
 
-module.exports = positiveOrNegative;
+export default positiveOrNegative;

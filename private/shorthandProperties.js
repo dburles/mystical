@@ -1,9 +1,7 @@
-"use strict";
-
-const get = require("./get.js");
-const positiveOrNegative = require("./positiveOrNegative.js");
-const themeTokens = require("./themeTokens.js");
-const transformColors = require("./transformColors.js");
+import get from "./get.js";
+import positiveOrNegative from "./positiveOrNegative.js";
+import themeTokens from "./themeTokens.js";
+import transformColors from "./transformColors.js";
 
 function defaultValueTransformer(themeScales, value) {
   return get(themeScales, value, value);
@@ -54,4 +52,4 @@ const shorthandProperties = {
   }),
 };
 
-module.exports = shorthandProperties;
+export default shorthandProperties;

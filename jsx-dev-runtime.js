@@ -1,8 +1,4 @@
-"use strict";
+import { jsxDEV as emotionJsxDev } from "@emotion/react/jsx-dev-runtime";
+import createJsxFn from "./private/createJsxFn.js";
 
-const { jsxDEV: emotionJsxDev } = require("@emotion/react/jsx-dev-runtime");
-const createJsxFn = require("./private/createJsxFn.js");
-
-const jsxDEV = createJsxFn(emotionJsxDev);
-
-module.exports = { jsxDEV };
+export const jsxDEV = createJsxFn(emotionJsxDev);

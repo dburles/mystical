@@ -1,5 +1,3 @@
-"use strict";
-
 function facepaint(breakpoints, { literal, overlap } = {}) {
   const mq = literal ? breakpoints : ["&"].concat(breakpoints);
 
@@ -71,4 +69,4 @@ function facepaint(breakpoints, { literal, overlap } = {}) {
   };
 }
 
-module.exports = facepaint;
+export default facepaint;

@@ -1,6 +1,4 @@
-"use strict";
-
-const get = require("./get");
+import get from "./get.js";
 
 function customProperties(theme, prefix) {
   const customProperties = {};
@@ -34,4 +32,4 @@ function customProperties(theme, prefix) {
   return customProperties;
 }
 
-module.exports = customProperties;
+export default customProperties;

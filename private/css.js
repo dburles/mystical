@@ -1,14 +1,12 @@
-"use strict";
-
-const darkColorMode = require("../darkColorMode.js");
-const facepaint = require("./facepaint.js");
-const forceDarkModeAttribute = require("./forceDarkModeAttribute.js");
-const isObject = require("./isObject.js");
-const merge = require("./merge.js");
-const negativeTransform = require("./negativeTransform.js");
-const shorthandProperties = require("./shorthandProperties.js");
-const themeTokens = require("./themeTokens.js");
-const transformColors = require("./transformColors.js");
+import darkColorMode from "../darkColorMode.js";
+import facepaint from "./facepaint.js";
+import forceDarkModeAttribute from "./forceDarkModeAttribute.js";
+import isObject from "./isObject.js";
+import merge from "./merge.js";
+import negativeTransform from "./negativeTransform.js";
+import shorthandProperties from "./shorthandProperties.js";
+import themeTokens from "./themeTokens.js";
+import transformColors from "./transformColors.js";
 
 function transformStyle(property, value, theme = {}) {
   const themeKey = themeTokens[property];
@@ -79,4 +77,4 @@ function css(rootStyles) {
   };
 }
 
-module.exports = css;
+export default css;

@@ -1,6 +1,4 @@
-"use strict";
-
-const css = require("./css.js");
+import css from "./css.js";
 
 function createJsxFn(jsxFn) {
   return (type, props, ...rest) => {
@@ -14,4 +12,4 @@ function createJsxFn(jsxFn) {
   };
 }
 
-module.exports = createJsxFn;
+export default createJsxFn;

@@ -1,10 +1,8 @@
-"use strict";
-
-const { ThemeContext } = require("@emotion/react");
-const React = require("react");
+import { ThemeContext } from "@emotion/react";
+import React from "react";
 
 function useMystical() {
   return React.useContext(ThemeContext);
 }
 
-module.exports = useMystical;
+export default useMystical;

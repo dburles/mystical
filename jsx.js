@@ -1,8 +1,6 @@
-"use strict";
-
-const { jsx: emotionJsx } = require("@emotion/react");
-const createJsxFn = require("./private/createJsxFn.js");
+import { jsx as emotionJsx } from "@emotion/react";
+import createJsxFn from "./private/createJsxFn.js";
 
 const jsx = createJsxFn(emotionJsx);
 
-module.exports = jsx;
+export default jsx;
