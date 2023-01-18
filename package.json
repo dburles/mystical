@@ -67,7 +67,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
-    "deepmerge": "^4.2.2",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
