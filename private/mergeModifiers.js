@@ -1,5 +1,4 @@
 import get from "./get.js";
-import isDevelopment from "./isDevelopment.js";
 import merge from "./merge.js";
 
 function mergeModifiers(values, initialModifiers, modifiersOverride) {
@@ -10,7 +9,7 @@ function mergeModifiers(values, initialModifiers, modifiersOverride) {
     merge(
       ...Object.keys(values).map((value) => {
         const style = get(modifiers, value);
-        if (!style && isDevelopment) {
+        if (!style) {
           throw new Error(
             `useModifiers: '${value}' not found in modifiers object!`
           );
