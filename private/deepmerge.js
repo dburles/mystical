@@ -1,3 +1,5 @@
+"use strict";
+
 function defaultIsMergeableObject(value) {
   return !!value && typeof value === "object";
 }
@@ -118,4 +120,4 @@ deepmerge.all = function deepmergeAll(array, options) {
   }, {});
 };
 
-export default deepmerge;
+module.exports = deepmerge;
