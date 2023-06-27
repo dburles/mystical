@@ -35,7 +35,6 @@
   ],
   "exports": {
     "./darkColorMode.js": "./darkColorMode.js",
-    "./defaultColorMode.js": "./defaultColorMode.js",
     "./Global.js": "./Global.js",
     "./index.d.ts": "./index.d.ts",
     "./jsx-dev-runtime": "./jsx-dev-runtime.js",
