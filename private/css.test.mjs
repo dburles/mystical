@@ -1,9 +1,9 @@
 import test from "node:test";
-import css from "./css.js";
+import css from "./css.mjs";
 import theme from "../test-utils/theme.mjs";
 import assert from "node:assert/strict";
-import darkColorMode from "../darkColorMode.js";
-import forceDarkModeAttribute from "./forceDarkModeAttribute.js";
+import darkColorMode from "../darkColorMode.mjs";
+import forceDarkModeAttribute from "./forceDarkModeAttribute.mjs";
 
 test("css", async (t) => {
   await t.test("colors", () => {

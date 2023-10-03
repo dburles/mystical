@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import mergeModifiers from "./mergeModifiers.js";
+import mergeModifiers from "./mergeModifiers.mjs";
 import test from "node:test";
 
 const modifiers = {

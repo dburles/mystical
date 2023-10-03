@@ -1,4 +1,4 @@
-import css from "./css.js";
+import css from "./css.mjs";
 
 function wrapCreateElement(createElement) {
   return (type, props, ...rest) => {

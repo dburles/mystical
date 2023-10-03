@@ -1,5 +1,5 @@
-import get from "./get.js";
-import positiveOrNegative from "./positiveOrNegative.js";
+import get from "./get.mjs";
+import positiveOrNegative from "./positiveOrNegative.mjs";
 
 function negativeTransform(property) {
   return get(

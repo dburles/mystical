@@ -1,4 +1,4 @@
-import mergeModifiers from "./private/mergeModifiers.js";
+import mergeModifiers from "./private/mergeModifiers.mjs";
 
 function useModifiers(values, modifiers, modifiersOverride = {}) {
   return values ? mergeModifiers(values, modifiers, modifiersOverride) : {};

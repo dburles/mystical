@@ -1,5 +1,5 @@
-import get from "./get.js";
-import merge from "./merge.js";
+import get from "./get.mjs";
+import merge from "./merge.mjs";
 
 function mergeModifiers(values, initialModifiers, modifiersOverride) {
   const { default: defaults, ...modifiers } = initialModifiers;

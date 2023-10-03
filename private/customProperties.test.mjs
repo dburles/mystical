@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import customProperties from "./customProperties.js";
+import customProperties from "./customProperties.mjs";
 
 test("customProperties", async (t) => {
   await t.test("self referencing", () => {

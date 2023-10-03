@@ -1,5 +1,5 @@
-import get from "./private/get.js";
-import useMystical from "./useMystical.js";
+import get from "./private/get.mjs";
+import useMystical from "./useMystical.mjs";
 
 function useTheme(key, value) {
   const { theme } = useMystical();

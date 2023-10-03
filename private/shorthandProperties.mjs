@@ -1,7 +1,7 @@
-import get from "./get.js";
-import positiveOrNegative from "./positiveOrNegative.js";
-import themeTokens from "./themeTokens.js";
-import transformColors from "./transformColors.js";
+import get from "./get.mjs";
+import positiveOrNegative from "./positiveOrNegative.mjs";
+import themeTokens from "./themeTokens.mjs";
+import transformColors from "./transformColors.mjs";
 
 function defaultValueTransformer(themeScales, value) {
   return get(themeScales, value, value);

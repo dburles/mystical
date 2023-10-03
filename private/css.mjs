@@ -1,12 +1,12 @@
-import darkColorMode from "../darkColorMode.js";
-import facepaint from "./facepaint.js";
-import forceDarkModeAttribute from "./forceDarkModeAttribute.js";
-import isObject from "./isObject.js";
-import merge from "./merge.js";
-import negativeTransform from "./negativeTransform.js";
-import shorthandProperties from "./shorthandProperties.js";
-import themeTokens from "./themeTokens.js";
-import transformColors from "./transformColors.js";
+import darkColorMode from "../darkColorMode.mjs";
+import facepaint from "./facepaint.mjs";
+import forceDarkModeAttribute from "./forceDarkModeAttribute.mjs";
+import isObject from "./isObject.mjs";
+import merge from "./merge.mjs";
+import negativeTransform from "./negativeTransform.mjs";
+import shorthandProperties from "./shorthandProperties.mjs";
+import themeTokens from "./themeTokens.mjs";
+import transformColors from "./transformColors.mjs";
 
 function transformStyle(property, value, theme = {}) {
   const themeKey = themeTokens[property];

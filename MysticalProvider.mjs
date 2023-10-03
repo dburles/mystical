@@ -1,9 +1,9 @@
 import { ThemeProvider } from "@emotion/react";
 import PropTypes from "prop-types";
 import React from "react";
-import Global from "./Global.js";
-import customProperties from "./private/customProperties.js";
-import useMystical from "./useMystical.js";
+import Global from "./Global.mjs";
+import customProperties from "./private/customProperties.mjs";
+import useMystical from "./useMystical.mjs";
 
 function MysticalGlobalStyles() {
   const { theme } = useMystical();

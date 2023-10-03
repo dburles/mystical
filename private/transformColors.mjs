@@ -1,4 +1,4 @@
-import get from "./get.js";
+import get from "./get.mjs";
 
 function transformColors(colors, key, value) {
   if (get(colors, value)) {

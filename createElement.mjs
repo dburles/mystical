@@ -1,5 +1,5 @@
 import { jsx as emotionJsx } from "@emotion/react";
-import wrapCreateElement from "./private/wrapCreateElement.js";
+import wrapCreateElement from "./private/wrapCreateElement.mjs";
 
 const createElement = wrapCreateElement(emotionJsx);
 

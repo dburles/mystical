@@ -1,4 +1,4 @@
-import get from "./get.js";
+import get from "./get.mjs";
 
 function positiveOrNegative(scale, value) {
   if (typeof value !== "number" || value >= 0) {

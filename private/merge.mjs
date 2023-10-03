@@ -1,4 +1,4 @@
-import deepmerge from "./deepmerge.js";
+import deepmerge from "./deepmerge.mjs";
 
 function merge(...cssArray) {
   return deepmerge.all(cssArray.filter(Boolean), {
