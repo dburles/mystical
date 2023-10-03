@@ -4,7 +4,10 @@
   "version": "16.0.0-experimental.2",
   "author": "David Burles",
   "license": "MIT",
-  "repository": "github:dburles/mystical",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dburles/mystical.git"
+  },
   "homepage": "https://github.com/dburles/mystical#readme",
   "bugs": "https://github.com/dburles/mystical/issues",
   "keywords": [
