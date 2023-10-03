@@ -22,7 +22,6 @@
   "files": [
     "createElement.mjs",
     "darkColorMode.mjs",
-    "defaultColorMode.mjs",
     "Global.mjs",
     "index.d.ts",
     "jsx-dev-runtime.js",
