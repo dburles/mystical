@@ -43,7 +43,7 @@
     "./Global.mjs": "./Global.mjs",
     "./index.d.ts": "./index.d.ts",
     "./MysticalProvider.mjs": "./MysticalProvider.mjs",
-    "./package.mjson": "./package.mjson",
+    "./package.json": "./package.json",
     "./useModifiers.mjs": "./useModifiers.mjs",
     "./useMystical.mjs": "./useMystical.mjs",
     "./useTheme.mjs": "./useTheme.mjs"
