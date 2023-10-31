@@ -33,7 +33,7 @@ function MysticalProvider({ theme, options = {}, children }) {
 }
 
 MysticalProvider.propTypes = {
-  theme: PropTypes.oneOfType(PropTypes.object),
+  theme: PropTypes.object,
   options: PropTypes.shape({
     darkModeOff: PropTypes.bool,
     darkModeForcedBoundary: PropTypes.bool,
