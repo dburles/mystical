@@ -2,11 +2,11 @@
 
 const css = require("./css.js");
 
-function createJsxFn(jsxFn) {
+function wrapCreateElement(createElement) {
   return (type, props, ...rest) => {
     const { css: styles, ...restProps } = props || {};
 
-    return jsxFn(
+    return createElement(
       type,
       styles ? { css: css(styles), ...restProps } : props,
       ...rest
@@ -14,4 +14,4 @@ function createJsxFn(jsxFn) {
   };
 }
 
-module.exports = createJsxFn;
+module.exports = wrapCreateElement;

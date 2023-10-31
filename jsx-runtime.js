@@ -4,11 +4,11 @@ const {
   jsx: emotionJsx,
   jsxs: emotionJsxs,
 } = require("@emotion/react/jsx-runtime");
-const createJsxFn = require("./private/createJsxFn.js");
+const wrapCreateElement = require("./private/wrapCreateElement.js");
 
-const jsx = createJsxFn(emotionJsx);
+const jsx = wrapCreateElement(emotionJsx);
 
-const jsxs = createJsxFn(emotionJsxs);
+const jsxs = wrapCreateElement(emotionJsxs);
 
 module.exports = {
   // https://github.com/facebook/react/blob/master/packages/react/src/jsx/ReactJSX.js#L16-L19

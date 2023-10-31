@@ -1,8 +1,8 @@
 "use strict";
 
 const { jsx: emotionJsx } = require("@emotion/react");
-const createJsxFn = require("./private/createJsxFn.js");
+const wrapCreateElement = require("./private/wrapCreateElement.js");
 
-const jsx = createJsxFn(emotionJsx);
+const jsx = wrapCreateElement(emotionJsx);
 
 module.exports = jsx;
