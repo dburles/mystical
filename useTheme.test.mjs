@@ -9,7 +9,7 @@ import MysticalProvider from "./MysticalProvider.js";
 import test from "node:test";
 
 test("useTheme", async (t) => {
-  await t.test("useTheme: reads values", () => {
+  await t.test("reads values", () => {
     const hookResults = [];
 
     act(() => {
@@ -30,7 +30,7 @@ test("useTheme", async (t) => {
     assert.equal(hookResults[0], theme.colors.emerald["500"]);
   });
 
-  await t.test("useTheme: retains values that aren't found", () => {
+  await t.test("retains values that aren't found", () => {
     const hookResults = [];
 
     act(() => {
@@ -51,7 +51,7 @@ test("useTheme", async (t) => {
     assert.equal(hookResults[0], "emerald.1000");
   });
 
-  await t.test("useTheme: self referencing values are transformed", () => {
+  await t.test("self referencing values are transformed", () => {
     const hookResults = [];
 
     act(() => {
