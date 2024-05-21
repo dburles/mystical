@@ -222,7 +222,9 @@ const theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
 };
 
-const Component = () => <div css={{ margin: "3 5" }}>...</div>;
+function Component() {
+  return <div css={{ margin: "3 5" }}>...</div>;
+}
 ```
 
 ...the following style is generated: `margin: 16px 64px`
