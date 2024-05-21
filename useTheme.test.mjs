@@ -22,8 +22,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.500");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
@@ -43,8 +43,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.1000");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
@@ -64,8 +64,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "brand.primary");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
