@@ -135,9 +135,7 @@ function Button({
 }
 ```
 
-### Babel Configuration for JSX
-
-#### Automatic (Recommended)
+### Babel configuration for JSX
 
 Configure [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) to use the `automatic` runtime and point the `importSource` to mystical.
 
@@ -151,13 +149,24 @@ Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) con
 }
 ```
 
+### SWC configuration for JSX
+
+```json
+"transform": {
+  "react": {
+    "runtime": "automatic",
+    "importSource": "mystical"
+  }
+}
+```
+
 #### Classic
 
-If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `jsx` function:
+If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `createElement` function:
 
 ```js
-/** @jsx jsx **/
-import jsx from "mystical/jsx.js";
+/** @jsx createElement **/
+import createElement from "mystical/createElement.mjs";
 
 function MyComponent() {
   // ...
