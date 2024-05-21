@@ -86,7 +86,7 @@ test("css", async (t) => {
             color: "red",
           },
         });
-      }
+      },
     );
 
     await tt.test("merge styles", () => {

@@ -1,7 +1,7 @@
 {
   "name": "mystical",
   "description": "CSS prop constraint based styling",
-  "version": "16.0.0-experimental.3",
+  "version": "16.0.0-experimental.4",
   "author": "David Burles",
   "license": "MIT",
   "repository": {
@@ -18,7 +18,7 @@
     "react"
   ],
   "engines": {
-    "node": "^18.0.0 || >= 19.0.0"
+    "node": ">= 20.0.0"
   },
   "type": "commonjs",
   "sideEffects": false,
@@ -42,9 +42,9 @@
     "./defaultColorMode.mjs": "./defaultColorMode.mjs",
     "./Global.mjs": "./Global.mjs",
     "./index.d.ts": "./index.d.ts",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.js",
-    "./jsx-runtime": "./jsx-runtime.js",
-    "./jsx.js": "./jsx.js",
+    "./jsx-dev-runtime": "./jsx-dev-runtime.mjs",
+    "./jsx-runtime": "./jsx-runtime.mjs",
+    "./jsx.mjs": "./jsx.mjs",
     "./MysticalProvider.mjs": "./MysticalProvider.mjs",
     "./package.json": "./package.json",
     "./useModifiers.mjs": "./useModifiers.mjs",
@@ -64,7 +64,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.0",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0"

@@ -7,7 +7,7 @@ function wrapCreateElement(createElement) {
     return createElement(
       type,
       styles ? { css: css(styles), ...restProps } : props,
-      ...rest
+      ...rest,
     );
   };
 }

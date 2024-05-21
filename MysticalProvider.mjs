@@ -26,7 +26,7 @@ function MysticalProvider({ theme, options = {}, children }) {
     ThemeProvider,
     { theme: { theme, options } },
     React.createElement(MysticalGlobalStyles),
-    children
+    children,
   );
 }
 

@@ -77,7 +77,7 @@ function mergeObject(target, source, options) {
       destination[key] = getMergeFunction(key, options)(
         target[key],
         source[key],
-        options
+        options,
       );
     } else {
       destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);

@@ -11,13 +11,13 @@ function mergeModifiers(values, initialModifiers, modifiersOverride) {
         const style = get(modifiers, value);
         if (!style) {
           throw new Error(
-            `useModifiers: '${value}' not found in modifiers object!`
+            `useModifiers: '${value}' not found in modifiers object!`,
           );
         }
         return style[values[value]];
-      })
+      }),
     ),
-    modifiersOverride
+    modifiersOverride,
   );
 }
 

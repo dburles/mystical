@@ -20,7 +20,7 @@ function negativeTransform(property) {
       };
     }, {}),
     property,
-    get
+    get,
   );
 }
 

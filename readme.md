@@ -112,7 +112,7 @@ function Button({
   const modifierStyle = useModifiers(
     { variant, size, shape },
     modifiers,
-    customModifiers // optional
+    customModifiers, // optional
   );
 
   return (
@@ -387,7 +387,7 @@ function Component({ size = "small", modifiers: customModifiers }) {
   const modifierStyle = useModifiers(
     { size },
     modifiers,
-    customModifiers // Optional secondary modifiers object that will merge with `modifiers`.
+    customModifiers, // Optional secondary modifiers object that will merge with `modifiers`.
   );
 
   return (

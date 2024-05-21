@@ -63,7 +63,7 @@ function css(rootStyles) {
       const mq = facepaint(
         context.theme.breakpoints.map((bp) => {
           return `@media (min-width: ${bp})`;
-        })
+        }),
       );
 
       for (const styles of mq(mergedStyles)) {

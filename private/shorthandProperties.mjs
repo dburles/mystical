@@ -39,7 +39,7 @@ const shorthandProperties = {
       }
 
       return positiveOrNegative(themeScales, value);
-    }
+    },
   ),
   padding: transform("padding"),
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#Border_Properties
