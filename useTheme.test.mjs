@@ -9,7 +9,7 @@ import MysticalProvider from "./MysticalProvider.mjs";
 import test from "node:test";
 
 test("useTheme", async (t) => {
-  await t.test("useTheme: reads values", () => {
+  await t.test("reads values", () => {
     const hookResults = [];
 
     act(() => {
@@ -22,15 +22,15 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.500");
             },
             results: hookResults,
-          }),
-        ),
+          })
+        )
       );
     });
 
     assert.equal(hookResults[0], theme.colors.emerald["500"]);
   });
 
-  await t.test("useTheme: retains values that aren't found", () => {
+  await t.test("retains values that aren't found", () => {
     const hookResults = [];
 
     act(() => {
@@ -43,15 +43,15 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.1000");
             },
             results: hookResults,
-          }),
-        ),
+          })
+        )
       );
     });
 
     assert.equal(hookResults[0], "emerald.1000");
   });
 
-  await t.test("useTheme: self referencing values are transformed", () => {
+  await t.test("self referencing values are transformed", () => {
     const hookResults = [];
 
     act(() => {
@@ -64,8 +64,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "brand.primary");
             },
             results: hookResults,
-          }),
-        ),
+          })
+        )
       );
     });
 
