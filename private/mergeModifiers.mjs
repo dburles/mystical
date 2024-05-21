@@ -1,8 +1,5 @@
-"use strict";
-
-const get = require("./get.js");
-const isDevelopment = require("./isDevelopment.js");
-const merge = require("./merge.js");
+import get from "./get.mjs";
+import merge from "./merge.mjs";
 
 function mergeModifiers(values, initialModifiers, modifiersOverride) {
   const { default: defaults, ...modifiers } = initialModifiers;
@@ -12,16 +9,16 @@ function mergeModifiers(values, initialModifiers, modifiersOverride) {
     merge(
       ...Object.keys(values).map((value) => {
         const style = get(modifiers, value);
-        if (!style && isDevelopment) {
+        if (!style) {
           throw new Error(
-            `useModifiers: '${value}' not found in modifiers object!`
+            `useModifiers: '${value}' not found in modifiers object!`,
           );
         }
         return style[values[value]];
-      })
+      }),
     ),
-    modifiersOverride
+    modifiersOverride,
   );
 }
 
-module.exports = mergeModifiers;
+export default mergeModifiers;

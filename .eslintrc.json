@@ -6,7 +6,7 @@
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "script"
+    "sourceType": "module"
   },
   "settings": {
     "react": {

@@ -1,9 +1,7 @@
-"use strict";
-
-const get = require("./get.js");
-const positiveOrNegative = require("./positiveOrNegative.js");
-const themeTokens = require("./themeTokens.js");
-const transformColors = require("./transformColors.js");
+import get from "./get.mjs";
+import positiveOrNegative from "./positiveOrNegative.mjs";
+import themeTokens from "./themeTokens.mjs";
+import transformColors from "./transformColors.mjs";
 
 function defaultValueTransformer(themeScales, value) {
   return get(themeScales, value, value);
@@ -41,7 +39,7 @@ const shorthandProperties = {
       }
 
       return positiveOrNegative(themeScales, value);
-    }
+    },
   ),
   padding: transform("padding"),
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#Border_Properties
@@ -54,4 +52,4 @@ const shorthandProperties = {
   }),
 };
 
-module.exports = shorthandProperties;
+export default shorthandProperties;

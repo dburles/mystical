@@ -1,6 +1,4 @@
-"use strict";
-
-const css = require("./css.js");
+import css from "./css.mjs";
 
 function wrapCreateElement(createElement) {
   return (type, props, ...rest) => {
@@ -9,9 +7,9 @@ function wrapCreateElement(createElement) {
     return createElement(
       type,
       styles ? { css: css(styles), ...restProps } : props,
-      ...rest
+      ...rest,
     );
   };
 }
 
-module.exports = wrapCreateElement;
+export default wrapCreateElement;

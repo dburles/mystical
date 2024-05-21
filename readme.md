@@ -43,7 +43,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 Wrap your app with [MysticalProvider](#mysticalprovider):
 
 ```js
-import MysticalProvider from "mystical/MysticalProvider.js";
+import MysticalProvider from "mystical/MysticalProvider.mjs";
 
 // Optional theme object
 const theme = {
@@ -63,7 +63,7 @@ This `Button` component attempts to illustrate some of the important parts of th
 2. The concept of _modifiers_, the combination of a `modifiers` object with a [useModifiers hook](#usemodifiers). This makes prop based variations of components simple and declarative.
 
 ```js
-import useModifiers from "mystical/useModifiers.js";
+import useModifiers from "mystical/useModifiers.mjs";
 
 const modifiers = {
   variant: {
@@ -112,7 +112,7 @@ function Button({
   const modifierStyle = useModifiers(
     { variant, size, shape },
     modifiers,
-    customModifiers // optional
+    customModifiers, // optional
   );
 
   return (
@@ -135,9 +135,7 @@ function Button({
 }
 ```
 
-### Babel Configuration for JSX
-
-#### Automatic (Recommended)
+### Babel configuration for JSX
 
 Configure [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) to use the `automatic` runtime and point the `importSource` to mystical.
 
@@ -151,13 +149,24 @@ Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) con
 }
 ```
 
+### SWC configuration for JSX
+
+```json
+"transform": {
+  "react": {
+    "runtime": "automatic",
+    "importSource": "mystical"
+  }
+}
+```
+
 #### Classic
 
-If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `jsx` function:
+If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `createElement` function:
 
 ```js
-/** @jsx jsx **/
-import jsx from "mystical/jsx.js";
+/** @jsx createElement **/
+import createElement from "mystical/createElement.mjs";
 
 function MyComponent() {
   // ...
@@ -222,7 +231,9 @@ const theme = {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
 };
 
-const Component = () => <div css={{ margin: "3 5" }}>...</div>;
+function Component() {
+  return <div css={{ margin: "3 5" }}>...</div>;
+}
 ```
 
 ...the following style is generated: `margin: 16px 64px`
@@ -264,7 +275,7 @@ Parameters:
   - `darkModeForcedBoundary` = `false`: When enabled, Mystical also adds dark mode styles targeting `data-mystical-color-mode="dark"`. This can be useful for development and visual testing environments (such as [Storybook](https://storybook.js.org/)), or for forcing a certain page into dark mode regardless of user system preferences.
 
 ```js
-import MysticalProvider from "mystical/MysticalProvider.js";
+import MysticalProvider from "mystical/MysticalProvider.mjs";
 
 // (Optional, defaults shown).
 const options = {
@@ -286,7 +297,7 @@ function App() {
 Global style component that automatically removes its styles when unmounted.
 
 ```js
-import Global from "mystical/Global.js";
+import Global from "mystical/Global.mjs";
 
 function App() {
   return (
@@ -335,7 +346,7 @@ function Component() {
 A simple way to pick out values from the theme similar to using the [`css` prop](#css-prop).
 
 ```js
-import useTheme from "mystical/useTheme.js";
+import useTheme from "mystical/useTheme.mjs";
 
 function Component() {
   const purple = useTheme("colors", "purple");
@@ -349,7 +360,7 @@ function Component() {
 Provides access to the complete [theme object](#theme-object).
 
 ```js
-import useMystical from "mystical/useMystical.js";
+import useMystical from "mystical/useMystical.mjs";
 
 function Component() {
   const { theme } = useMystical();
@@ -363,7 +374,7 @@ function Component() {
 A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
 
 ```js
-import useModifiers from "mystical/useModifiers.js";
+import useModifiers from "mystical/useModifiers.mjs";
 
 const modifiers = {
   // `default` is a special key for applying and overwriting default styles across each element (experimental).
@@ -387,7 +398,7 @@ function Component({ size = "small", modifiers: customModifiers }) {
   const modifierStyle = useModifiers(
     { size },
     modifiers,
-    customModifiers // Optional secondary modifiers object that will merge with `modifiers`.
+    customModifiers, // Optional secondary modifiers object that will merge with `modifiers`.
   );
 
   return (
@@ -404,7 +415,7 @@ function Component({ size = "small", modifiers: customModifiers }) {
 A helper utility for applying dark mode styles.
 
 ```js
-import darkColorMode from "mystical/darkColorMode.js";
+import darkColorMode from "mystical/darkColorMode.mjs";
 
 function Component() {
   return (

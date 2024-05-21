@@ -1,14 +1,12 @@
-"use strict";
-
-const darkColorMode = require("../darkColorMode.js");
-const facepaint = require("./facepaint.js");
-const forceDarkModeAttribute = require("./forceDarkModeAttribute.js");
-const isObject = require("./isObject.js");
-const merge = require("./merge.js");
-const negativeTransform = require("./negativeTransform.js");
-const shorthandProperties = require("./shorthandProperties.js");
-const themeTokens = require("./themeTokens.js");
-const transformColors = require("./transformColors.js");
+import darkColorMode from "../darkColorMode.mjs";
+import facepaint from "./facepaint.mjs";
+import forceDarkModeAttribute from "./forceDarkModeAttribute.mjs";
+import isObject from "./isObject.mjs";
+import merge from "./merge.mjs";
+import negativeTransform from "./negativeTransform.mjs";
+import shorthandProperties from "./shorthandProperties.mjs";
+import themeTokens from "./themeTokens.mjs";
+import transformColors from "./transformColors.mjs";
 
 function transformStyle(property, value, theme = {}) {
   const themeKey = themeTokens[property];
@@ -65,7 +63,7 @@ function css(rootStyles) {
       const mq = facepaint(
         context.theme.breakpoints.map((bp) => {
           return `@media (min-width: ${bp})`;
-        })
+        }),
       );
 
       for (const styles of mq(mergedStyles)) {
@@ -79,4 +77,4 @@ function css(rootStyles) {
   };
 }
 
-module.exports = css;
+export default css;

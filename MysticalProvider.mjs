@@ -1,11 +1,9 @@
-"use strict";
-
-const { ThemeProvider } = require("@emotion/react");
-const PropTypes = require("prop-types");
-const React = require("react");
-const Global = require("./Global.js");
-const customProperties = require("./private/customProperties.js");
-const useMystical = require("./useMystical.js");
+import { ThemeProvider } from "@emotion/react";
+import PropTypes from "prop-types";
+import React from "react";
+import Global from "./Global.mjs";
+import customProperties from "./private/customProperties.mjs";
+import useMystical from "./useMystical.mjs";
 
 function MysticalGlobalStyles() {
   const { theme } = useMystical();
@@ -28,7 +26,7 @@ function MysticalProvider({ theme, options = {}, children }) {
     ThemeProvider,
     { theme: { theme, options } },
     React.createElement(MysticalGlobalStyles),
-    children
+    children,
   );
 }
 
@@ -41,4 +39,4 @@ MysticalProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-module.exports = MysticalProvider;
+export default MysticalProvider;

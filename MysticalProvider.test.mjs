@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import assert from "node:assert/strict";
 import { act, create } from "react-test-renderer";
-import { createElement } from "react";
-import MysticalProvider from "./MysticalProvider.js";
+import MysticalProvider from "./MysticalProvider.mjs";
 import test from "node:test";
-import jsx from "./jsx.js";
+import createElement from "./createElement.mjs";
 
 test("MysticalProvider", async (t) => {
   await t.test("theme object is optional", () => {
@@ -18,14 +17,14 @@ test("MysticalProvider", async (t) => {
               return {};
             },
           },
-          jsx(
+          createElement(
             "div",
             {
               css: { color: "red" },
             },
-            "Red text"
-          )
-        )
+            "Red text",
+          ),
+        ),
       );
     });
 

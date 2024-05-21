@@ -1,4 +1,4 @@
-declare module "mystical/Global.js" {
+declare module "mystical/Global.mjs" {
   export { Global as default } from "@emotion/react/types";
 }
 

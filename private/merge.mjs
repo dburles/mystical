@@ -1,6 +1,4 @@
-"use strict";
-
-const deepmerge = require("./deepmerge.js");
+import deepmerge from "./deepmerge.mjs";
 
 function merge(...cssArray) {
   return deepmerge.all(cssArray.filter(Boolean), {
@@ -10,4 +8,4 @@ function merge(...cssArray) {
   });
 }
 
-module.exports = merge;
+export default merge;

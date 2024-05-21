@@ -1,5 +1,3 @@
-"use strict";
-
 function defaultIsMergeableObject(value) {
   return !!value && typeof value === "object";
 }
@@ -79,7 +77,7 @@ function mergeObject(target, source, options) {
       destination[key] = getMergeFunction(key, options)(
         target[key],
         source[key],
-        options
+        options,
       );
     } else {
       destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
@@ -120,4 +118,4 @@ deepmerge.all = function deepmergeAll(array, options) {
   }, {});
 };
 
-module.exports = deepmerge;
+export default deepmerge;

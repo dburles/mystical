@@ -1,6 +1,4 @@
-"use strict";
-
-const get = require("./get.js");
+import get from "./get.mjs";
 
 function transformColors(colors, key, value) {
   if (get(colors, value)) {
@@ -9,4 +7,4 @@ function transformColors(colors, key, value) {
   return { [key]: value };
 }
 
-module.exports = transformColors;
+export default transformColors;

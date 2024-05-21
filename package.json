@@ -1,10 +1,13 @@
 {
   "name": "mystical",
   "description": "CSS prop constraint based styling",
-  "version": "15.0.3",
+  "version": "16.0.0",
   "author": "David Burles",
   "license": "MIT",
-  "repository": "github:dburles/mystical",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dburles/mystical.git"
+  },
   "homepage": "https://github.com/dburles/mystical#readme",
   "bugs": "https://github.com/dburles/mystical/issues",
   "keywords": [
@@ -15,52 +18,51 @@
     "react"
   ],
   "engines": {
-    "node": "^18.0.0 || >= 19.0.0"
+    "node": ">= 20.0.0"
   },
-  "type": "commonjs",
   "sideEffects": false,
   "files": [
-    "darkColorMode.js",
-    "defaultColorMode.js",
-    "Global.js",
+    "createElement.mjs",
+    "darkColorMode.mjs",
+    "Global.mjs",
     "index.d.ts",
-    "jsx-dev-runtime.js",
-    "jsx-runtime.js",
-    "jsx.js",
-    "MysticalProvider.js",
-    "private/css.js",
-    "private/customProperties.js",
-    "private/deepmerge.js",
-    "private/facepaint.js",
-    "private/forceDarkModeAttribute.js",
-    "private/get.js",
-    "private/isDevelopment.js",
-    "private/isObject.js",
-    "private/isServer.js",
-    "private/merge.js",
-    "private/mergeModifiers.js",
-    "private/negativeTransform.js",
-    "private/positiveOrNegative.js",
-    "private/shorthandProperties.js",
-    "private/themeTokens.js",
-    "private/transformColors.js",
-    "private/wrapCreateElement.js",
-    "useModifiers.js",
-    "useMystical.js",
-    "useTheme.js"
+    "jsx-dev-runtime.mjs",
+    "jsx-runtime.mjs",
+    "MysticalProvider.mjs",
+    "private/css.mjs",
+    "private/customProperties.mjs",
+    "private/deepmerge.mjs",
+    "private/facepaint.mjs",
+    "private/forceDarkModeAttribute.mjs",
+    "private/get.mjs",
+    "private/isDevelopment.mjs",
+    "private/isObject.mjs",
+    "private/isServer.mjs",
+    "private/merge.mjs",
+    "private/mergeModifiers.mjs",
+    "private/negativeTransform.mjs",
+    "private/positiveOrNegative.mjs",
+    "private/shorthandProperties.mjs",
+    "private/themeTokens.mjs",
+    "private/transformColors.mjs",
+    "private/wrapCreateElement.mjs",
+    "useModifiers.mjs",
+    "useMystical.mjs",
+    "useTheme.mjs"
   ],
   "exports": {
-    "./darkColorMode.js": "./darkColorMode.js",
-    "./Global.js": "./Global.js",
+    "./createElement.mjs": "./createElement.mjs",
+    "./darkColorMode.mjs": "./darkColorMode.mjs",
+    "./defaultColorMode.mjs": "./defaultColorMode.mjs",
+    "./Global.mjs": "./Global.mjs",
     "./index.d.ts": "./index.d.ts",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.js",
-    "./jsx-runtime": "./jsx-runtime.js",
-    "./jsx.js": "./jsx.js",
-    "./MysticalProvider.js": "./MysticalProvider.js",
+    "./jsx-dev-runtime": "./jsx-dev-runtime.mjs",
+    "./jsx-runtime": "./jsx-runtime.mjs",
+    "./MysticalProvider.mjs": "./MysticalProvider.mjs",
     "./package.json": "./package.json",
-    "./useModifiers.js": "./useModifiers.js",
-    "./useMystical.js": "./useMystical.js",
-    "./useTheme.js": "./useTheme.js"
+    "./useModifiers.mjs": "./useModifiers.mjs",
+    "./useMystical.mjs": "./useMystical.mjs",
+    "./useTheme.mjs": "./useTheme.mjs"
   },
   "types": "index.d.ts",
   "scripts": {
@@ -75,7 +77,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.0",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0"
@@ -85,6 +87,6 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react": "^18.0.0"
   }
 }

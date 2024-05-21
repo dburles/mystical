@@ -1,5 +1,3 @@
-"use strict";
-
 const themeTokens = {
   color: "colors",
   backgroundColor: "colors",
@@ -73,4 +71,4 @@ const themeTokens = {
   stroke: "colors",
 };
 
-module.exports = themeTokens;
+export default themeTokens;

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import assert from "node:assert/strict";
-import useTheme from "./useTheme.js";
+import useTheme from "./useTheme.mjs";
 import { act, create } from "react-test-renderer";
 import { createElement } from "react";
 import ReactHookTest from "./test-utils/ReactHookTest.mjs";
 import theme from "./test-utils/theme.mjs";
-import MysticalProvider from "./MysticalProvider.js";
+import MysticalProvider from "./MysticalProvider.mjs";
 import test from "node:test";
 
 test("useTheme", async (t) => {
@@ -22,8 +22,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.500");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
@@ -43,8 +43,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "emerald.1000");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
@@ -64,8 +64,8 @@ test("useTheme", async (t) => {
               return useTheme("colors", "brand.primary");
             },
             results: hookResults,
-          })
-        )
+          }),
+        ),
       );
     });
 
