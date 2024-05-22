@@ -14,7 +14,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 - [Guide](#guide)
   - [Context](#context)
   - [Example Component](#example-component)
-- [Babel Configuration](#babel-configuration)
+- [JSX Configuration](#jsx-configuration)
 - [API](#api)
   - [Theme Object](#theme-object)
   - [CSS Prop](#css-prop)
@@ -135,7 +135,9 @@ function Button({
 }
 ```
 
-### Babel configuration for JSX
+### JSX configuration
+
+### Babel
 
 Configure [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) to use the `automatic` runtime and point the `importSource` to mystical.
 
@@ -143,13 +145,13 @@ Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) con
 
 ```js
 {
-  runtime: 'automatic',
-  importSource: 'mystical',
-  development: process.env.NODE_ENV === 'development',
+  runtime: "automatic",
+  importSource: "mystical",
+  development: process.env.NODE_ENV === "development",
 }
 ```
 
-### SWC configuration for JSX
+### SWC
 
 ```json
 "transform": {
@@ -157,6 +159,26 @@ Example [@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react) con
     "runtime": "automatic",
     "importSource": "mystical"
   }
+}
+```
+
+### Next.js
+
+In `jsconfig.json` or `tsconfig.json`:
+
+```json
+"compilerOptions": {
+  "jsxImportSource": "mystical"
+}
+```
+
+### Vite
+
+In Vite config:
+
+```json
+esbuild: {
+  jsxImportSource: "mystical",
 }
 ```
 
