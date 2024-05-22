@@ -6,7 +6,7 @@ import customProperties from "./private/customProperties.mjs";
 import useMystical from "./useMystical.mjs";
 
 function MysticalGlobalStyles() {
-  const { theme } = useMystical();
+  const { theme = {} } = useMystical();
 
   return React.createElement(Global, {
     styles: [
