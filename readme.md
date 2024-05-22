@@ -176,9 +176,9 @@ In `jsconfig.json` or `tsconfig.json`:
 
 In Vite config:
 
-```json
+```
 esbuild: {
-  jsxImportSource: "mystical",
+  jsxImportSource: "mystical"
 }
 ```
 
