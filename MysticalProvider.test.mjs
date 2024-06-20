@@ -21,9 +21,9 @@ test("MysticalProvider", async (t) => {
           {
             css: { color: "red" },
           },
-          "Red text"
-        )
-      )
+          "Red text",
+        ),
+      ),
     );
 
     const element = getByText("Red text");
