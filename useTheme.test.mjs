@@ -22,8 +22,8 @@ test("useTheme", async (t) => {
             return useTheme("colors", "emerald.500");
           },
           results: hookResults,
-        })
-      )
+        }),
+      ),
     );
 
     assert.equal(hookResults[0], theme.colors.emerald["500"]);
@@ -41,8 +41,8 @@ test("useTheme", async (t) => {
             return useTheme("colors", "emerald.1000");
           },
           results: hookResults,
-        })
-      )
+        }),
+      ),
     );
 
     assert.equal(hookResults[0], "emerald.1000");
@@ -60,8 +60,8 @@ test("useTheme", async (t) => {
             return useTheme("colors", "brand.primary");
           },
           results: hookResults,
-        })
-      )
+        }),
+      ),
     );
 
     assert.equal(hookResults[0], theme.colors.emerald["500"]);
