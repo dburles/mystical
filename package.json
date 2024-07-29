@@ -1,7 +1,7 @@
 {
   "name": "mystical",
   "description": "CSS prop constraint based styling",
-  "version": "16.0.2",
+  "version": "16.1.0",
   "author": "David Burles",
   "license": "MIT",
   "repository": {

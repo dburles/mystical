@@ -5,7 +5,7 @@ Build themeable, robust and maintainable React component libraries and applicati
 ## Overview
 
 - Mystical is a small (< 12 KB) runtime CSS-in-JS library, inspired by [theme-ui](https://theme-ui.com/). Built on [Emotion](https://emotion.sh/).
-- A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook.
+- A powerful, declarative approach to altering the styles of a component based on its props with the [useModifiers](#usemodifiers) hook. Which also allows for responsive props.
 - Array values for defining media query breakpoint values, e.g. `margin: [0, 3]`.
 
 ## Table of Contents
@@ -393,7 +393,21 @@ function Component() {
 
 #### useModifiers
 
-A declarative API for handling prop based variations to component styles. This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
+A declarative API for handling prop based variations to component styles.
+
+Optionally an array can be passed as a prop to allow for responsive props:
+
+```js
+function Example() {
+  return (
+    <div>
+      <Button size={["small", "medium"]}>Responsive size Button</Button>
+    </div>
+  );
+}
+```
+
+This example demonstrates applying modifier styles to a component with multiple elements. See the [`Button` component above](#example-component) for another example.
 
 ```js
 import useModifiers from "mystical/useModifiers.mjs";
