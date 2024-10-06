@@ -25,7 +25,7 @@
     "createElement.mjs",
     "darkColorMode.mjs",
     "Global.mjs",
-    "index.d.ts",
+    "index.d.mts",
     "jsx-dev-runtime.mjs",
     "jsx-runtime.mjs",
     "MysticalProvider.mjs",
@@ -55,7 +55,6 @@
     "./darkColorMode.mjs": "./darkColorMode.mjs",
     "./defaultColorMode.mjs": "./defaultColorMode.mjs",
     "./Global.mjs": "./Global.mjs",
-    "./index.d.ts": "./index.d.ts",
     "./jsx-dev-runtime": "./jsx-dev-runtime.mjs",
     "./jsx-runtime": "./jsx-runtime.mjs",
     "./MysticalProvider.mjs": "./MysticalProvider.mjs",
@@ -64,7 +63,7 @@
     "./useMystical.mjs": "./useMystical.mjs",
     "./useTheme.mjs": "./useTheme.mjs"
   },
-  "types": "index.d.ts",
+  "types": "index.d.mts",
   "scripts": {
     "test": "npm run test:lint && npm run test:prettier && npm run test:unit",
     "test:lint": "eslint .",
