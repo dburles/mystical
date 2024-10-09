@@ -26,8 +26,10 @@
     "darkColorMode.mjs",
     "Global.d.mts",
     "Global.mjs",
+    "index.d.mts",
     "jsx-dev-runtime.d.mts",
     "jsx-dev-runtime.mjs",
+    "jsx-namespace.d.mts",
     "jsx-runtime.d.mts",
     "jsx-runtime.mjs",
     "MysticalProvider.mjs",
@@ -53,6 +55,9 @@
     "useTheme.mjs"
   ],
   "exports": {
+    ".": {
+      "types": "./index.d.mts"
+    },
     "./createElement.mjs": "./createElement.mjs",
     "./darkColorMode.mjs": "./darkColorMode.mjs",
     "./defaultColorMode.mjs": "./defaultColorMode.mjs",

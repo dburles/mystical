@@ -1,1 +1,1 @@
-export * from "@emotion/react/jsx-runtime";
+export type { MysticalJSX as JSX } from "./jsx-namespace.d.mts";
