@@ -26,7 +26,6 @@
     "darkColorMode.mjs",
     "Global.d.mts",
     "Global.mjs",
-    "index.d.mts",
     "jsx-dev-runtime.d.mts",
     "jsx-dev-runtime.mjs",
     "jsx-namespace.d.mts",
@@ -50,14 +49,12 @@
     "private/themeTokens.mjs",
     "private/transformColors.mjs",
     "private/wrapCreateElement.mjs",
+    "types.mjs",
     "useModifiers.mjs",
     "useMystical.mjs",
     "useTheme.mjs"
   ],
   "exports": {
-    ".": {
-      "types": "./index.d.mts"
-    },
     "./createElement.mjs": "./createElement.mjs",
     "./darkColorMode.mjs": "./darkColorMode.mjs",
     "./defaultColorMode.mjs": "./defaultColorMode.mjs",
@@ -66,6 +63,7 @@
     "./jsx-runtime": "./jsx-runtime.mjs",
     "./MysticalProvider.mjs": "./MysticalProvider.mjs",
     "./package.json": "./package.json",
+    "./types.mjs": "./types.mjs",
     "./useModifiers.mjs": "./useModifiers.mjs",
     "./useMystical.mjs": "./useMystical.mjs",
     "./useTheme.mjs": "./useTheme.mjs"
@@ -87,7 +85,8 @@
     "jsdom": "^24.0.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
