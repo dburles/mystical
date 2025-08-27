@@ -5,6 +5,7 @@ import {
   SerializedStyles,
 } from "@emotion/serialize";
 import { Theme } from "@emotion/react";
+import * as CSS from "csstype";
 
 // Adapted from: https://github.com/emotion-js/emotion/blob/e310c6e6a9f0b4f55030831ef65cd07c7105ae01/packages/serialize/src/index.ts
 
