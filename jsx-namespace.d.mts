@@ -1,8 +1,6 @@
 import {
   ComponentSelector,
-  CSSOthersObject,
   CSSProperties,
-  CSSPseudos,
   Keyframes,
   SerializedStyles,
 } from "@emotion/serialize";
@@ -12,20 +10,31 @@ import { Theme } from "@emotion/react";
 
 export type MysticalCSSProp = Interpolation<Theme>;
 
-export type CSSInterpolation = InterpolationPrimitive;
+export type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation;
 
 export type CSSPropertiesWithMultiValues = {
   [K in keyof CSSProperties]:
     | CSSProperties[K]
     // Modified to support empty array values for media queries:
     // Original: | ReadonlyArray<Extract<CSSProperties[K], string>>
-    | ReadonlyArray<Extract<CSSProperties[K], string | number | undefined>>;
+    | ReadonlyArray<CSSProperties[K] | number>;
+};
+
+export interface ArrayCSSInterpolation
+  extends ReadonlyArray<CSSInterpolation> {}
+
+export type CSSPseudos = {
+  [K in CSS.Pseudos]?: CSSObject;
 };
 
 export interface CSSObject
   extends CSSPropertiesWithMultiValues,
     CSSPseudos,
     CSSOthersObject {}
+
+export interface CSSOthersObject {
+  [propertiesName: string]: CSSInterpolation;
+}
 
 export type InterpolationPrimitive =
   | null
