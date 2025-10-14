@@ -4,7 +4,8 @@
  *
  * @param {object} props Props.
  * @param {Function} props.hook React hook.
- * @param {Array<any>} props.results Results of each render; the hook return value or error.
+ * @param {any[]} props.results Results of each render; the hook return value or
+ *   error.
  * @returns {null} Null.
  */
 function ReactHookTest({ hook, results }) {

@@ -187,7 +187,7 @@ esbuild: {
 If you wish to use the `classic` runtime instead, just add the `@jsx` pragma and import the `createElement` function:
 
 ```js
-/** @jsx createElement **/
+/** @jsx createElement */
 import createElement from "mystical/createElement.mjs";
 
 function MyComponent() {

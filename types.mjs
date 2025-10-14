@@ -1,4 +1,4 @@
-/** @import { MysticalCSSProp } from "./jsx-namespace.mjs" */
+/** @import {MysticalCSSProp} from "./jsx-namespace.mjs" */
 
 /** @typedef {MysticalCSSProp} MysticalCSSProp */
 
